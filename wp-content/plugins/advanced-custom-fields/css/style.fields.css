@@ -1,0 +1,284 @@
+/*---------------------------------------------------------------------------------------------
+	Postbox
+---------------------------------------------------------------------------------------------*/
+
+.postbox#acf_fields {
+
+}
+
+.postbox#acf_fields .handlediv {
+	display: none;
+}
+
+.postbox#acf_fields h3.hndle {
+	display: none;
+}
+
+.postbox#acf_fields .inside {
+	margin: 0;
+	padding: 0;
+}
+
+/*---------------------------------------------------------------------------------------------
+	Fields
+---------------------------------------------------------------------------------------------*/
+.fields {
+	position: relative;
+	overflow: hidden;
+	background: #F5F5F5;
+}
+
+.fields .field {
+	position: relative;
+	overflow: hidden;
+	border-top: #fff solid 1px;;
+	border-bottom: #DFDFDF solid 1px;
+}
+
+.fields .field:nth-child(even) {
+	background: #FCFCFC;
+}
+
+.fields .field:nth-child(odd) {
+	
+}
+
+.fields .field:hover {
+	background: #FFFFE0;
+}
+
+.fields .field.form_open {
+	background: #FFFFE0;
+}
+
+.fields .field_clone {
+	display: none;
+}
+
+.fields .field:first-child {
+	border-top: 0 none;
+}
+
+.fields .field:last-child {
+	border-bottom: 0 none;
+}
+
+table.widefat.acf {
+	border: 0 none;
+	background: transparent none;
+}
+
+table.widefat.acf td {
+	border: 0 none;
+}
+
+.acf,
+.acf tr,
+.acf tr td {
+	vertical-align: top;
+}
+
+
+/*---------------------------------------------------------------------------------------------
+	Table Heading
+---------------------------------------------------------------------------------------------*/
+/*.acf tr th {
+	background: url("../../../../wp-admin/images/gray-grad.png") repeat-x scroll left top #DFDFDF;
+    text-shadow: 0 1px 0 #FFFFFF;
+    color: #333;
+    font-weight: bold;
+	font-size: 11px;
+	line-height: 1.3;
+	padding: 8px;
+    text-align: left;
+}*/
+
+.acf tr th span {
+	color: #666;
+	font-size: 10px;
+	line-height: 1.2;
+	font-weight: normal;
+	text-shadow: 0 1px 0 #FFFFFF;
+}
+
+.acf tr td.field_order,
+.acf tr th.field_order  {
+ text-indent: 6px;
+}
+
+.acf tr td.field_order {
+	cursor: move;
+}
+
+
+/*---------------------------------------------------------------------------------------------
+	Table Cell Alignment
+---------------------------------------------------------------------------------------------*/
+.acf tr td.field_order,
+.acf tr th.field_order  {
+	width: 25%;
+}
+
+.acf tr td.field_label,
+.acf tr th.field_label  {
+	width: 25%;
+}
+
+.acf tr td.field_name,
+.acf tr th.field_name  {
+	width: 25%;
+}
+
+.acf tr td.field_type,
+.acf tr th.field_type  {
+	width: 25%;
+}
+
+/*---------------------------------------------------------------------------------------------
+	Table Body - Fields
+---------------------------------------------------------------------------------------------*/
+.no_fields_message {
+	padding: 15px 10px;
+	text-shadow: #fff 0 1px 0;
+	border-bottom: #DFDFDF solid 1px;
+}
+
+.acf tr td {
+	background: transparent;
+    padding: 8px;
+    position: relative;
+    font-size: 12px;
+}
+
+.acf td.field_label strong a {
+	text-decoration: none;
+}
+
+.acf td.field_label strong {
+	display: block;
+	padding-bottom: 6px;
+}
+
+.acf .row_options {
+	font-size: 11px;
+	visibility: hidden;
+}
+.acf:hover .row_options {
+	visibility: visible;
+}
+
+.acf:hover .acf .row_options {
+	visibility: hidden;
+}
+
+
+
+/*---------------------------------------------------------------------------------------------
+	Table Body - Field Options
+---------------------------------------------------------------------------------------------*/
+
+
+/*---------------------------------------------------------------------------------------------
+	Table Footer
+---------------------------------------------------------------------------------------------*/
+#acf_fields .table_footer {
+	position: relative;
+	overflow: hidden;
+	padding: 8px;
+	background: #EAF2FA;
+}
+
+#acf_fields .table_footer .order_message {
+	background: url(../images/drag_and_drop_to_reorder.png);
+	width: 161px;
+	height: 23px;
+	float: left;
+	margin-left: 5px;
+}
+
+#acf_fields .table_footer a#add_field{
+	display: block;
+    float: right;
+    margin: 0;
+    text-align: center;
+    width: 70px;
+}
+
+.inline_metabox {
+	border: 0 none;
+	width: 100%;
+}
+
+.inline_metabox h3 {
+	border: 0 none;
+}
+
+/*---------------------------------------------------------------------------------------------
+	Field Options
+---------------------------------------------------------------------------------------------*/
+.field_options {
+	background: #DFDFDF;
+	position: relative;
+	overflow: hidden;
+}
+
+.field_options .field_option {
+	display: none;
+	position: relative;
+	overflow: hidden;
+	padding: 6px;
+}
+
+.field_options .field_option.open {
+	display: block;
+}
+
+.field_options .field_option table {
+	border: #CCCCCC solid 1px;
+	-moz-border-radius: 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; border-radius: 5px; 
+}
+
+
+/*---------------------------------------------------------------------------------------------
+	Repeater
+---------------------------------------------------------------------------------------------*/
+.repeater {
+	border: #CCCCCC solid 1px;
+	-moz-border-radius: 5px; -webkit-border-radius: 5px; -khtml-border-radius: 5px; border-radius: 5px; 
+	position: relative;
+	overflow: hidden;
+}
+
+.field_options .field_option .repeater table {
+	border: 0 none;
+	-moz-border-radius: 0; -webkit-border-radius: 0; -khtml-border-radius: 0; border-radius: 0; 
+}
+
+table.acf_input tr td .acf tr td {
+	background: transparent;
+    padding: 8px;
+    position: relative;
+    font-size: 12px;
+    border: 0 none;
+}
+
+
+/*---------------------------------------------------------------------------------------------
+	Field Form
+---------------------------------------------------------------------------------------------*/
+.field_form_mask {
+	display: none;
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+.field_form {
+	padding: 0 10px 10px;
+}
+
+.field_form .field_option {
+	display: none;
+}
+
+

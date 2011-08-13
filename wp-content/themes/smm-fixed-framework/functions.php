@@ -508,6 +508,22 @@ function twentyten_posted_in() {
 endif;
 
 // Custom Functions
+function remove_dashboard_widgets(){
+  global$wp_meta_boxes;
+  unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
+  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
+  unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
+  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); 
+}
+
+add_action('wp_dashboard_setup', 'remove_dashboard_widgets');
+
+function modify_footer_admin () {
+  echo 'Created by <a href="http://sharpmachinemedia.com">Sharp Machine Media</a>.';
+  echo 'Powered by<a href="http://WordPress.org">WordPress</a>.';
+}
+
+add_filter('admin_footer_text', 'modify_footer_admin');
 
 //Custom logo should be 16 x16
 function custom_logo() {
@@ -527,3 +543,33 @@ function custom_login_logo() {
 }
 
 add_action('login_head', 'custom_login_logo');
+
+// Create the function to output the contents of our Dashboard Widget
+function help_dashboard_widget_function() {
+	// Display whatever it is you want to show
+	echo "<p>Watch some of these helpful tutorial videos if you get stuck:</p>";
+	echo "<ul>
+		<li><strong>Wordpress 101:</strong></li>
+		<li><a href=http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target=_blank>Part 1: The Dashboard</a></li>
+		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/ target=_blank>Part 2: Creating A New Post</a></li>
+		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/ target=_blank>Part 3: Edit Existing Post</a></li>
+		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/ target=_blank>Part 4: Using Categories and Tag</a></li>
+		</ul>
+		<ul>
+			<li><strong>Specific to your site:</strong></li>
+		<li><a href=# target=_blank>Video</a></li>
+		<li><a href=# target=_blank>Video</a></li>
+		<li><a href=# target=_blank>Video</a></li>
+		</ul>
+			<p>Still stuck?  Give us a call at (480) 648-8229 or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!  My site is attacking me!>info@sharpmachinemedia.com</a>.
+	";
+} 
+
+// Create the function use in the action hook
+function help_add_dashboard_widgets() {
+	wp_add_dashboard_widget('help_dashboard_widget', 'Need some help?', 'help_dashboard_widget_function');	
+} 
+
+// Hook into the 'wp_dashboard_setup' action to register our other functions
+add_action('wp_dashboard_setup', 'help_add_dashboard_widgets' );
+

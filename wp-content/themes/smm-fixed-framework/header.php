@@ -61,6 +61,9 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	
 	<script src="<?php bloginfo('template_directory'); ?>/js/modernizr-1.7.min.js"></script>
+	<!--[if lte IE 8]>
+		<script src="<?php bloginfo('template_directory'); ?>/js/selectivizr-min.js"></script>
+	<![endif]--> 
 
 <?php
 
