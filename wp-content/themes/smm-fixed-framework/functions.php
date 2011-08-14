@@ -561,6 +561,13 @@ function help_dashboard_widget_function() {
 		<li><a href=# target=_blank>Video</a></li>
 		<li><a href=# target=_blank>Video</a></li>
 		</ul>
+		
+		<ul>
+			<li><strong>Helpful Links:</strong></li>
+			<li><a href=http://login.mailchimp.com target=_blank>Mailchimp Login</a></li>
+			<li><a href=http://google.com/analytics target=_blank>Analytics Login</a></li>
+			<li><a href=http://mail.google.com target=_blank>Mail Login</a></li>
+		</ul>
 			<p>Still stuck?  Give us a call at (480) 648-8229 or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!>info@sharpmachinemedia.com</a>.
 	";
 } 
