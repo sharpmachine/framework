@@ -520,7 +520,7 @@ add_action('wp_dashboard_setup', 'remove_dashboard_widgets');
 
 function modify_footer_admin () {
   echo 'Created by <a href="http://sharpmachinemedia.com">Sharp Machine Media</a>.';
-  echo 'Powered by<a href="http://WordPress.org">WordPress</a>.';
+  echo '  Powered by <a href="http://WordPress.org">WordPress</a>.';
 }
 
 add_filter('admin_footer_text', 'modify_footer_admin');
@@ -561,7 +561,7 @@ function help_dashboard_widget_function() {
 		<li><a href=# target=_blank>Video</a></li>
 		<li><a href=# target=_blank>Video</a></li>
 		</ul>
-			<p>Still stuck?  Give us a call at (480) 648-8229 or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!  My site is attacking me!>info@sharpmachinemedia.com</a>.
+			<p>Still stuck?  Give us a call at (480) 648-8229 or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!>info@sharpmachinemedia.com</a>.
 	";
 } 
 

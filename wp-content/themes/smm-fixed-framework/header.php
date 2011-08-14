@@ -96,13 +96,22 @@
 						<img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="" />
 					<?php endif; ?>-->
 
-			<div id="access" role="navigation">
+			<nav role="navigation">
 			  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
 				<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
 				<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>
 				<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
-			</div><!-- #access -->
+			</nav><!-- nav -->
 			
+			<!-- Breadcrumbs NavXT-->
+			<div class="breadcrumbs">
+				<?php
+				if(function_exists('bcn_display'))
+				{
+				    bcn_display();
+				}
+				?>
+		</div>
 	</header>
 
 	<section id="page">

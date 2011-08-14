@@ -1,1 +1,124 @@
 article, aside, figure, footer, header, hgroup, menu, nav, section { display: block; }
+html { overflow-y: scroll; }
+nav {
+  background: #dddddd;
+  display: block;
+  float: left;
+  margin: 0 auto;
+  width: 940px;
+}
+nav .menu-header {
+  font-size: 13px;
+  margin-left: 12px;
+  width: 928px;
+}
+nav .menu-header ul {
+  list-style: none;
+  margin: 0;
+}
+nav .menu-header li {
+  float: left;
+  position: relative;
+}
+nav div.menu {
+  font-size: 13px;
+  margin-left: 12px;
+  width: 928px;
+}
+nav div.menu ul {
+  list-style: none;
+  margin: 0;
+}
+nav div.menu li {
+  float: left;
+  position: relative;
+}
+nav a {
+  color: #666666;
+  display: block;
+  line-height: 38px;
+  padding: 0 10px;
+  text-decoration: none;
+}
+nav ul ul {
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  display: none;
+  position: absolute;
+  top: 38px;
+  left: 0;
+  float: left;
+  width: 180px;
+  z-index: 99999;
+}
+nav ul ul li { min-width: 180px; }
+nav ul ul ul {
+  left: 100%;
+  top: 0;
+}
+nav ul ul a {
+  background: #333333;
+  line-height: 1em;
+  padding: 10px;
+  width: 160px;
+  height: auto;
+}
+nav li:hover > a {
+  background: #333333;
+  color: #ffffff;
+}
+nav ul ul:hover > a {
+  background: #333333;
+  color: #ffffff;
+}
+nav ul li:hover > ul { display: block; }
+nav ul li.current_page_item > a { color: #000000; }
+nav ul li.current-menu-ancestor > a { color: #000000; }
+nav ul li.current-menu-item > a { color: #000000; }
+nav ul li.current-menu-parent > a { color: #000000; }
+* html nav ul li.current_page_item a { color: #000000; }
+* html nav ul li.current-menu-ancestor a { color: #000000; }
+* html nav ul li.current-menu-item a { color: #000000; }
+* html nav ul li.current-menu-parent a { color: #000000; }
+* html nav ul li a:hover { color: #000000; }
+.wp-paginate {
+  padding: 0;
+  margin: 0;
+}
+.wp-paginate li {
+  display: inline;
+  list-style: none;
+}
+.wp-paginate a {
+  background: #dddddd;
+  border: 1px solid #cccccc;
+  color: #666666;
+  margin-right: 4px;
+  padding: 3px 6px;
+  text-align: center;
+  text-decoration: none;
+}
+.wp-paginate a:hover {
+  background: #cccccc;
+  color: #888888;
+}
+.wp-paginate a:active {
+  background: #cccccc;
+  color: #888888;
+}
+.wp-paginate .title {
+  color: #555555;
+  margin-right: 4px;
+}
+.wp-paginate .gap {
+  color: #999999;
+  margin-right: 4px;
+}
+.wp-paginate .current {
+  color: #ffffff;
+  background: #5f87ae;
+  border: 1px solid #89adcf;
+  margin-right: 4px;
+  padding: 3px 6px;
+}
