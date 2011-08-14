@@ -573,3 +573,4 @@ function help_add_dashboard_widgets() {
 // Hook into the 'wp_dashboard_setup' action to register our other functions
 add_action('wp_dashboard_setup', 'help_add_dashboard_widgets' );
 
+

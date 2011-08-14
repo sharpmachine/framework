@@ -55,8 +55,9 @@
 	<!-- Hashgrid - remove before moving to productions -->
 	<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/hashgrid.css">
 	
-	<!-- Uncomment if you are specifically targeting less enabled mobile browsers
-	<link rel="stylesheet" media="handheld" href="css/handheld.css?v=2">  -->
+	<!-- Uncomment for mobile browsers-->
+	<link rel="stylesheet" type="text/css" media="only screen and (max-width: 480px), only screen and (max-device-width: 480px)" href="<?php bloginfo('template_directory'); ?>/css/handheld.css" />
+
 	
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	
