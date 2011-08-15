@@ -514,6 +514,7 @@ function remove_dashboard_widgets(){
   unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
   unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
   unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); 
+  unset($wp_meta_boxes['dashboard']['normal']['core']['yoast_db_widget']);
 }
 
 add_action('wp_dashboard_setup', 'remove_dashboard_widgets');
@@ -530,6 +531,9 @@ function custom_logo() {
   echo '<style type="text/css">
     #header-logo  { 
     	background-image: url('.get_bloginfo('template_directory').'/images/admin-logo.png) !important; 
+	}
+	#cpt_info_box {
+		display: none !important; /* Hides Custom Post Type info box */
 	}
     </style>';
 }
@@ -548,33 +552,30 @@ add_action('login_head', 'custom_login_logo');
 function help_dashboard_widget_function() {
 	// Display whatever it is you want to show
 	echo "<p>Watch some of these helpful tutorial videos if you get stuck:</p>";
-	echo "<ul>
-		<li><strong>Wordpress 101:</strong></li>
+	echo "<ul style=width:283px;float:left>
+		<li style=color:#666;font-size:14px;>WordPress 101:</li>
 		<li><a href=http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target=_blank>Part 1: The Dashboard</a></li>
 		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/ target=_blank>Part 2: Creating A New Post</a></li>
 		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/ target=_blank>Part 3: Edit Existing Post</a></li>
 		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/ target=_blank>Part 4: Using Categories and Tag</a></li>
+		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-5-creating-and-editing-pages/ target=_blank>Part 5: Creating and Editing Pages</a></li>
+		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-6-adding-images/ target=_blank>Part 6: Adding Images</a></li>
 		</ul>
-		<ul>
-			<li><strong>Specific to your site:</strong></li>
+		<ul style=width:283px;float:left>
+			<li style=color:#666;font-size:14px;>Specific To Your Site:</li>
 		<li><a href=# target=_blank>Video</a></li>
 		<li><a href=# target=_blank>Video</a></li>
 		<li><a href=# target=_blank>Video</a></li>
 		</ul>
-		
-		<ul>
-			<li><strong>Helpful Links:</strong></li>
-			<li><a href=http://login.mailchimp.com target=_blank>Mailchimp Login</a></li>
-			<li><a href=http://google.com/analytics target=_blank>Analytics Login</a></li>
-			<li><a href=http://mail.google.com target=_blank>Mail Login</a></li>
-		</ul>
-			<p>Still stuck?  Give us a call at (480) 648-8229 or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!>info@sharpmachinemedia.com</a>.
+		<p style=clear:both;padding-top:5px;margin-bottom:0.5em;color:#666;font-size:14px;>Helpful Quick Links:</p>
+			<a href=http://login.mailchimp.com target=_blank>Mailchimp Login</a> | <a href=http://google.com/analytics target=_blank>Analytics Login</a> | <a href=http://mail.google.com target=_blank>Mail Login</a>
+			<p>Still stuck?  Give us a call at <strong>(480) 648-8229</strong> or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!><strong>info@sharpmachinemedia.com</strong></a>.
 	";
 } 
 
 // Create the function use in the action hook
 function help_add_dashboard_widgets() {
-	wp_add_dashboard_widget('help_dashboard_widget', 'Need some help?', 'help_dashboard_widget_function');	
+	wp_add_dashboard_widget('help_dashboard_widget', 'Need Help?', 'help_dashboard_widget_function');	
 } 
 
 // Hook into the 'wp_dashboard_setup' action to register our other functions
