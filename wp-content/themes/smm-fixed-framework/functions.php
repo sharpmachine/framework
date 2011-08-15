@@ -551,9 +551,8 @@ add_action('login_head', 'custom_login_logo');
 // Create the function to output the contents of our Dashboard Widget
 function help_dashboard_widget_function() {
 	// Display whatever it is you want to show
-	echo "<p>Watch some of these helpful tutorial videos if you get stuck:</p>";
-	echo "<ul style=width:283px;float:left>
-		<li style=color:#666;font-size:14px;>WordPress 101:</li>
+	echo "<ul style=width:254px;float:left;margin-right:55px;>
+		<li style=color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;>WordPress 101 Videos:</li>
 		<li><a href=http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target=_blank>Part 1: The Dashboard</a></li>
 		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/ target=_blank>Part 2: Creating A New Post</a></li>
 		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/ target=_blank>Part 3: Edit Existing Post</a></li>
@@ -561,8 +560,8 @@ function help_dashboard_widget_function() {
 		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-5-creating-and-editing-pages/ target=_blank>Part 5: Creating and Editing Pages</a></li>
 		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-6-adding-images/ target=_blank>Part 6: Adding Images</a></li>
 		</ul>
-		<ul style=width:283px;float:left>
-			<li style=color:#666;font-size:14px;>Specific To Your Site:</li>
+		<ul style=width:254px;float:left>
+			<li style=color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;>Videos Specific To Your Site:</li>
 		<li><a href=# target=_blank>Video</a></li>
 		<li><a href=# target=_blank>Video</a></li>
 		<li><a href=# target=_blank>Video</a></li>
