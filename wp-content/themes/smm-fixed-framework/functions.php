@@ -580,4 +580,29 @@ function help_add_dashboard_widgets() {
 // Hook into the 'wp_dashboard_setup' action to register our other functions
 add_action('wp_dashboard_setup', 'help_add_dashboard_widgets' );
 
+// Remove items from admin menu
+// function remove_admin_bar_links() {
+// 	global $wp_admin_bar;
+// 	$wp_admin_bar->remove_menu('themes');
+// 	$wp_admin_bar->remove_menu('background');
+// 	$wp_admin_bar->remove_menu('header');
+// 	$wp_admin_bar->remove_menu('new-theme');
+// 	$wp_admin_bar->remove_menu('new-plugin');
+// 	$wp_admin_bar->remove_menu('new-product_extras');
+// 	$wp_admin_bar->remove_menu('new-afc');
+// }
+// add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
 
+// Add items to admin menu
+// function my_admin_bar_link() {
+// 	global $wp_admin_bar;
+// 	if ( !is_super_admin() || !is_admin_bar_showing() )
+// 		return;
+// 	$wp_admin_bar->add_menu( array(
+// 	'id' => 'new_link',
+// 	'parent' => 'new-content',
+// 	'title' => __( 'Link'),
+// 	'href' => admin_url( 'link-add.php' )
+// 	) );
+// }
+// add_action('admin_bar_menu', 'my_admin_bar_link');
