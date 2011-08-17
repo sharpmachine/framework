@@ -551,24 +551,31 @@ add_action('login_head', 'custom_login_logo');
 // Create the function to output the contents of our Dashboard Widget
 function help_dashboard_widget_function() {
 	// Display whatever it is you want to show
-	echo "<ul style=width:254px;float:left;margin-right:55px;>
-		<li style=color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;>WordPress 101 Videos:</li>
-		<li><a href=http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target=_blank>Part 1: The Dashboard</a></li>
-		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/ target=_blank>Part 2: Creating A New Post</a></li>
-		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/ target=_blank>Part 3: Edit Existing Post</a></li>
-		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/ target=_blank>Part 4: Using Categories and Tag</a></li>
-		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-5-creating-and-editing-pages/ target=_blank>Part 5: Creating and Editing Pages</a></li>
-		<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-6-adding-images/ target=_blank>Part 6: Adding Images</a></li>
+	echo "
+		<ul style=width:40%;float:left;margin-right:55px;min-width:153px;>
+			<li style=color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;>WordPress 101 Videos:</li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target=_blank>Part 1: The Dashboard</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/ target=_blank>Part 2: Creating A New Post</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/ target=_blank>Part 3: Edit Existing Post</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/ target=_blank>Part 4: Using Categories and Tag</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-5-creating-and-editing-pages/ target=_blank>Part 5: Creating and Editing Pages</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-6-adding-images/ target=_blank>Part 6: Adding Images &amp; Photos</a></li>
 		</ul>
-		<ul style=width:254px;float:left>
+		
+		<ul style=width:40%;float:left;min-width:153px;>
 			<li style=color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;>Videos Specific To Your Site:</li>
-		<li><a href=# target=_blank>Video</a></li>
-		<li><a href=# target=_blank>Video</a></li>
-		<li><a href=# target=_blank>Video</a></li>
+			<li><a href=# target=_blank>Video</a></li>
+			<li><a href=# target=_blank>Video</a></li>
+			<li><a href=# target=_blank>Video</a></li>
 		</ul>
+		
 		<p style=clear:both;padding-top:5px;margin-bottom:0.5em;color:#666;font-size:14px;>Helpful Quick Links:</p>
-			<a href=http://login.mailchimp.com target=_blank>Mailchimp Login</a> | <a href=http://google.com/analytics target=_blank>Analytics Login</a> | <a href=http://mail.google.com target=_blank>Mail Login</a>
-			<p>Still stuck?  Give us a call at <strong>(480) 648-8229</strong> or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!><strong>info@sharpmachinemedia.com</strong></a>.
+		
+		<a href=http://login.mailchimp.com target=_blank>Mailchimp Login</a> | 
+		<a href=http://google.com/analytics target=_blank>Analytics Login</a> | 
+		<a href=http://mail.google.com target=_blank>Mail Login</a>
+		
+		<p>Still stuck?  Give us a call at <strong>(480) 648-8229</strong> or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!><strong>info@sharpmachinemedia.com</strong></a>.
 	";
 } 
 
