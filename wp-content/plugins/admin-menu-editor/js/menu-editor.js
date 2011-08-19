@@ -95,9 +95,9 @@ function buildTopMenu(menu){
 	var contents = [];
 	contents.push(
 		'<div class="ws_item_head">',
-			'<a class="ws_edit_link"> </a><div class="ws_flag_container"> </div>',
+			menu.separator ? '' : '<a class="ws_edit_link"> </a><div class="ws_flag_container"> </div>',
 			'<span class="ws_item_title">',
-				((menu.menu_title!=null)?menu.menu_title:menu.defaults.menu_title),
+				((menu.menu_title!=null) ? menu.menu_title : menu.defaults.menu_title),
 			'&nbsp;</span>',
 		'</div>',
 		'<div class="ws_editbox" style="display: none;"></div>'
@@ -292,7 +292,7 @@ var knownMenuFields = {
         advanced: true,
         type: 'checkbox',
         defaultValue: false,
-        visible: true
+        visible: false
     }
 };
 
@@ -604,7 +604,7 @@ function readAllFields(container){
 var item_flags = {
 	'custom_item' : 'This is a custom menu item',
 	'unused' : 'This item was automatically (re)inserted into your custom menu because it is present in the default WordPress menu',
-	'missing' : 'This item is not present in the default WordPress menu. Tick the &quot;Custom&quot; checkbox if you want it to be visible anyway.',
+	'missing' : 'This item is not present in the default WordPress menu.',
 	'hidden' : 'This item is hidden' 
 }
  
@@ -660,9 +660,9 @@ var ws_paste_count = 0;
 $(document).ready(function(){
 	if (window.wsMenuEditorPro) {
 		knownMenuFields['open_in'].visible = true;
-	};	
-
-    //Make the top menu box sortable (we only need to do this once)
+	}
+	
+	//Make the top menu box sortable (we only need to do this once)
     var mainMenuBox = $('#ws_menu_box');
     makeBoxSortable(mainMenuBox);
     
@@ -800,21 +800,21 @@ $(document).ready(function(){
 	
 	
 	/***************************************************************************
-	                  Dropdown list for combobox fields
+	 Dropdown list for combobox fields
 	 ***************************************************************************/
-	 
- 	var availableDropdowns = {
- 		'ws_cap_selector' : {
- 			list : $('#ws_cap_selector'),
- 			currentOwner : null,
- 			timeoutForgetOwner : 0
- 		},
- 		'ws_page_selector' : {
- 			list : $('#ws_page_selector'),
- 			currentOwner : null,
- 			timeoutForgetOwner : 0
- 		}
- 	}
+
+	var availableDropdowns = {
+		'ws_cap_selector' : {
+			list : $('#ws_cap_selector'),
+			currentOwner : null,
+			timeoutForgetOwner : 0
+		},
+		'ws_page_selector' : {
+			list : $('#ws_page_selector'),
+			currentOwner : null,
+			timeoutForgetOwner : 0
+		}
+	};
 	 
 	//Show/hide the capability dropdown list when the button is clicked   
 	$('#ws_menu_editor input.ws_dropdown_button').live('click',function(event){
@@ -1005,23 +1005,31 @@ $(document).ready(function(){
 		
 		//Remove the original menu and submenu		
 		selection.remove();
-		$('#'+selection.data('submenu_id')).remove;
+		$('#'+selection.data('submenu_id')).remove();
 	});
 	
 	//Paste menu
 	$('#ws_paste_menu').click(function () {
 		//Check if anything has been copied/cut
 		if (!menu_in_clipboard) return;
+
+		var menu = $.extend(true, {}, menu_in_clipboard);
+
+		//The user shouldn't need to worry about giving separators a unique filename.
+		if (menu.separator) {
+			menu.defaults.file = 'separator_'+randomMenuId();
+		}
+
 		//Get the selected menu
 		var selection = $('#ws_menu_box .ws_active');
 		
 		if (selection.length > 0) {
 			//If a menu is selected add the pasted item after it
-			outputTopMenu(menu_in_clipboard, selection);
+			outputTopMenu(menu, selection);
 		} else {
 			//Otherwise add the pasted item at the end
-			outputTopMenu(menu_in_clipboard);
-		};
+			outputTopMenu(menu);
+		}
 	});
 	
 	//New menu
@@ -1154,8 +1162,10 @@ $(document).ready(function(){
 	$('#ws_paste_item').click(function () {
 		//Check if anything has been copied/cut
 		if (!item_in_clipboard) return;
+
 		//Create a new editor widget for the copied item
-		var new_item = buildMenuItem(item_in_clipboard);
+		var item = $.extend(true, {}, item_in_clipboard);
+		var new_item = buildMenuItem(item);
 		
 		//Get the selected menu
 		var selection = $('#ws_submenu_box .ws_submenu:visible .ws_active');
@@ -1165,7 +1175,7 @@ $(document).ready(function(){
 		} else {
 			//Otherwise add the pasted item at the end
 			$('#ws_submenu_box .ws_submenu:visible').append(new_item); 
-		};
+		}
 		
 		new_item.show();
 	});

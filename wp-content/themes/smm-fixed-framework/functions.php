@@ -596,7 +596,7 @@ add_action('wp_dashboard_setup', 'help_add_dashboard_widgets' );
 // 	$wp_admin_bar->remove_menu('new-theme');
 // 	$wp_admin_bar->remove_menu('new-plugin');
 // 	$wp_admin_bar->remove_menu('new-product_extras');
-// 	$wp_admin_bar->remove_menu('new-afc');
+// 	$wp_admin_bar->remove_menu('new-acf');
 // }
 // add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
 

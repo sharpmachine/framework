@@ -226,6 +226,35 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 			$this->filter_menu();
 		}
 	}
+
+	/**
+	 * Activate the 'menu_order' filter.
+	 *
+	 * @return bool
+	 */
+	function hook_custom_menu_order(){
+		return true;
+	}
+
+	/**
+	 * Override the order of the top-level menu entries.
+	 *
+	 * @param array $menu_order
+	 * @return array
+	 */
+	function hook_menu_order($menu_order){
+		if (empty($this->custom_menu)){
+			return $menu_order;
+		}
+		$custom_menu_order = array();
+		foreach($this->custom_menu as $topmenu){
+			$filename = $this->get_menu_field($topmenu, 'file');
+			if ( in_array($filename, $menu_order) ){
+				$custom_menu_order[] = $filename;
+			}
+		}
+		return $custom_menu_order;
+	}
 	
 	/**
 	 * Determine if the current user may use the menu editor.
@@ -842,46 +871,46 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 		$action = isset($post['action'])?$post['action']:(isset($get['action'])?$get['action']:'');
 		do_action('admin_menu_editor_header', $action);
 		
-	//Handle form submissions
-	if (isset($post['data'])){
-		check_admin_referer('menu-editor-form');
-		
-		//Try to decode a menu tree encoded as JSON
-		$data = $this->json_decode($post['data'], true);
-		if (!$data || (count($data) < 2) ){
-			$fixed = stripslashes($post['data']);
-			$data = $this->json_decode( $fixed, true );
+		//Handle form submissions
+		if (isset($post['data'])){
+			check_admin_referer('menu-editor-form');
+
+			//Try to decode a menu tree encoded as JSON
+			$data = $this->json_decode($post['data'], true);
+			if (!$data || (count($data) < 2) ){
+				$fixed = stripslashes($post['data']);
+				$data = $this->json_decode( $fixed, true );
+			}
+
+			$url = remove_query_arg('noheader');
+			if ($data){
+				//Ensure the user doesn't change the required capability to something they themselves don't have.
+				if ( isset($data['options-general.php']['items']['menu_editor']) ){
+					$item = $data['options-general.php']['items']['menu_editor'];
+					if ( !empty($item['access_level']) && !current_user_can($item['access_level']) ){
+						$item['access_level'] = null;
+						$data['options-general.php']['items']['menu_editor'] = $item;
+					}
+				}
+
+				//Save the custom menu
+				$this->options['custom_menu'] = $data;
+				$this->save_options();
+				//Redirect back to the editor and display the success message
+				wp_redirect( add_query_arg('message', 1, $url) );
+			} else {
+				//Or redirect & display the error message
+				wp_redirect( add_query_arg('message', 2, $url) );
+			}
+			die();
 		}
-	
-		$url = remove_query_arg('noheader');
-		if ($data){
-		    //Ensure the user doesn't change the required capability to something they themselves don't have.
-            if ( isset($data['options-general.php']['items']['menu_editor']) ){
-                $item = $data['options-general.php']['items']['menu_editor'];
-                if ( !empty($item['access_level']) && !current_user_can($item['access_level']) ){
-                    $item['access_level'] = null;
-                    $data['options-general.php']['items']['menu_editor'] = $item;
-                }
-            }
-          
-			//Save the custom menu
-			$this->options['custom_menu'] = $data;
-			$this->save_options();
-			//Redirect back to the editor and display the success message
-			wp_redirect( add_query_arg('message', 1, $url) );
-		} else {
-			//Or redirect & display the error message
-			wp_redirect( add_query_arg('message', 2, $url) );
+
+		//Attach a "Feedback" link to the screen meta panel.
+		$this->print_uservoice_widget();
+		//Kindly remind the user to give me money
+		if ( !apply_filters('admin_menu_editor_is_pro', false) ){
+			$this->print_upgrade_notice();
 		}
-		die();
-	}
-	
-	//Attach a "Feedback" link to the screen meta panel.
-	$this->print_uservoice_widget();
-	//Kindly remind the user to give me money
-	if ( !apply_filters('admin_menu_editor_is_pro', false) ){
-		$this->print_upgrade_notice();
-	}	
 ?>
 <div class="wrap">
 <h2>
@@ -918,6 +947,14 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	
 	//Create a list of all known capabilities and roles. Used for the dropdown list on the access field.
 	$all_capabilities = $this->get_all_capabilities();
+	//"level_X" capabilities are deprecated so we don't want people using them.
+	//This would look better with array_filter() and an anonymous function  as a callback.
+	for($level = 0; $level <= 10; $level++){
+		$cap = 'level_' . $level;
+		if ( isset($all_capabilities[$cap]) ){
+			unset($all_capabilities[$cap]);
+		}
+	}
 	$all_capabilities = array_keys($all_capabilities);
 	natcasesort($all_capabilities);
 	
@@ -932,19 +969,19 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	<div class='ws_main_container'>
 		<div class='ws_toolbar'>
 			<div class="ws_button_container">		
-				<a id='ws_cut_menu' class='ws_button' href='javascript:void(0)' title='Cut'><img src='<?php echo $images_url; ?>/cut.png' /></a>
-				<a id='ws_copy_menu' class='ws_button' href='javascript:void(0)' title='Copy'><img src='<?php echo $images_url; ?>/page_white_copy.png' /></a>
-				<a id='ws_paste_menu' class='ws_button' href='javascript:void(0)' title='Paste'><img src='<?php echo $images_url; ?>/page_white_paste.png' /></a>
+				<a id='ws_cut_menu' class='ws_button' href='javascript:void(0)' title='Cut'><img src='<?php echo $images_url; ?>/cut.png' alt="Cut" /></a>
+				<a id='ws_copy_menu' class='ws_button' href='javascript:void(0)' title='Copy'><img src='<?php echo $images_url; ?>/page_white_copy.png' alt="Copy" /></a>
+				<a id='ws_paste_menu' class='ws_button' href='javascript:void(0)' title='Paste'><img src='<?php echo $images_url; ?>/page_white_paste.png' alt="Paste" /></a>
 				
 				<div class="ws_separator">&nbsp;</div>
 				
-				<a id='ws_new_menu' class='ws_button' href='javascript:void(0)' title='New menu'><img src='<?php echo $images_url; ?>/page_white_add.png' /></a>
-				<a id='ws_hide_menu' class='ws_button' href='javascript:void(0)' title='Show/Hide'><img src='<?php echo $images_url; ?>/plugin_disabled.png' /></a>
-				<a id='ws_delete_menu' class='ws_button' href='javascript:void(0)' title='Delete menu'><img src='<?php echo $images_url; ?>/page_white_delete.png' /></a>
+				<a id='ws_new_menu' class='ws_button' href='javascript:void(0)' title='New menu'><img src='<?php echo $images_url; ?>/page_white_add.png' alt="New menu" /></a>
+				<a id='ws_hide_menu' class='ws_button' href='javascript:void(0)' title='Show/Hide'><img src='<?php echo $images_url; ?>/plugin_disabled.png' alt="Show/Hide" /></a>
+				<a id='ws_delete_menu' class='ws_button' href='javascript:void(0)' title='Delete menu'><img src='<?php echo $images_url; ?>/page_white_delete.png' alt="Delete menu" /></a>
 				
 				<div class="ws_separator">&nbsp;</div>
 				
-				<a id='ws_new_separator' class='ws_button' href='javascript:void(0)' title='New separator'><img src='<?php echo $images_url; ?>/separator_add.png' /></a>
+				<a id='ws_new_separator' class='ws_button' href='javascript:void(0)' title='New separator'><img src='<?php echo $images_url; ?>/separator_add.png' alt="New separator" /></a>
 			</div>
 		</div>
 		
@@ -954,23 +991,23 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 	<div class='ws_main_container'>
 		<div class='ws_toolbar'>
 			<div class="ws_button_container">
-				<a id='ws_cut_item' class='ws_button' href='javascript:void(0)' title='Cut'><img src='<?php echo $images_url; ?>/cut.png' /></a>
-				<a id='ws_copy_item' class='ws_button' href='javascript:void(0)' title='Copy'><img src='<?php echo $images_url; ?>/page_white_copy.png' /></a>
-				<a id='ws_paste_item' class='ws_button' href='javascript:void(0)' title='Paste'><img src='<?php echo $images_url; ?>/page_white_paste.png' /></a>
+				<a id='ws_cut_item' class='ws_button' href='javascript:void(0)' title='Cut'><img src='<?php echo $images_url; ?>/cut.png' alt="Cut" /></a>
+				<a id='ws_copy_item' class='ws_button' href='javascript:void(0)' title='Copy'><img src='<?php echo $images_url; ?>/page_white_copy.png' alt="Copy" /></a>
+				<a id='ws_paste_item' class='ws_button' href='javascript:void(0)' title='Paste'><img src='<?php echo $images_url; ?>/page_white_paste.png' alt="Paste" /></a>
 				
 				<div class="ws_separator">&nbsp;</div>
 				
-				<a id='ws_new_item' class='ws_button' href='javascript:void(0)' title='New menu item'><img src='<?php echo $images_url; ?>/page_white_add.png' /></a>
-				<a id='ws_hide_item' class='ws_button' href='javascript:void(0)' title='Show/Hide'><img src='<?php echo $images_url; ?>/plugin_disabled.png' /></a>
-				<a id='ws_delete_item' class='ws_button' href='javascript:void(0)' title='Delete menu item'><img src='<?php echo $images_url; ?>/page_white_delete.png' /></a>
+				<a id='ws_new_item' class='ws_button' href='javascript:void(0)' title='New menu item'><img src='<?php echo $images_url; ?>/page_white_add.png' alt="New menu item" /></a>
+				<a id='ws_hide_item' class='ws_button' href='javascript:void(0)' title='Show/Hide'><img src='<?php echo $images_url; ?>/plugin_disabled.png' alt="Show/Hide" /></a>
+				<a id='ws_delete_item' class='ws_button' href='javascript:void(0)' title='Delete menu item'><img src='<?php echo $images_url; ?>/page_white_delete.png' alt="Delete menu item" /></a>
 				
 				<div class="ws_separator">&nbsp;</div>
 				
 				<a id='ws_sort_ascending' class='ws_button' href='javascript:void(0)' title='Sort ascending'>
-					<img src='<?php echo $images_url; ?>/sort_ascending.png' />
+					<img src='<?php echo $images_url; ?>/sort_ascending.png' alt="Sort ascending" />
 				</a>
 				<a id='ws_sort_descending' class='ws_button' href='javascript:void(0)' title='Sort descending'>
-					<img src='<?php echo $images_url; ?>/sort_descending.png' />
+					<img src='<?php echo $images_url; ?>/sort_descending.png' alt="Sort descending" />
 				</a>
 			</div>
 		</div>
@@ -998,7 +1035,7 @@ class WPMenuEditor extends MenuEd_ShadowPluginFramework {
 </div>
 
 <?php
-	//Createa a pop-up capability selector
+	//Create a pop-up capability selector
 	$capSelector = array('<select id="ws_cap_selector" class="ws_dropdown" size="10">');
 	
 	$capSelector[] = '<optgroup label="Roles">';
@@ -1099,6 +1136,7 @@ window.wsMenuEditorPro = false; //Will be overwritten if extras are loaded
    * @return array Associative array with capability names as keys
    */
 	function get_all_capabilities(){
+		/** @var WP_Roles $wp_roles */
 		global $wp_roles;
 		
 		$capabilities = array();
@@ -1108,7 +1146,7 @@ window.wsMenuEditorPro = false; //Will be overwritten if extras are loaded
 		}
 		
 		//Iterate over all known roles and collect their capabilities
-		foreach($wp_roles->roles as $role_id => $role){
+		foreach($wp_roles->roles as $role){
 			if ( !empty($role['capabilities']) && is_array($role['capabilities']) ){ //Being defensive here
 				$capabilities = array_merge($capabilities, $role['capabilities']);
 			}
@@ -1134,6 +1172,7 @@ window.wsMenuEditorPro = false; //Will be overwritten if extras are loaded
    * @return array Associative array with role IDs as keys and role display names as values
    */
 	function get_all_roles(){
+		/** @var WP_Roles $wp_roles */
 		global $wp_roles;
 		$roles = array();
 		
@@ -1174,7 +1213,7 @@ window.wsMenuEditorPro = false; //Will be overwritten if extras are loaded
 		<script type="text/javascript">
 		(function($){
 			$('#screen-meta-links').append(
-				'<div id="ws-ame-feedback-widget-wrap" class="hide-if-no-js screen-meta-toggle">' +
+				'<div id="ws-ame-feedback-widget-wrap">' +
 					'<a href="http://feedback.w-shadow.com/forums/58572-admin-menu-editor" id="ws-ame-feedback-widget" class="show-settings" target="_blank" title="Open the user feedback forum">Feedback</a>' +
 				'</div>'
 			);
@@ -1193,7 +1232,7 @@ window.wsMenuEditorPro = false; //Will be overwritten if extras are loaded
 		<script type="text/javascript">
 		(function($){
 			$('#screen-meta-links').append(
-				'<div id="ws-pro-version-notice" class="hide-if-no-js screen-meta-toggle">' +
+				'<div id="ws-pro-version-notice">' +
 					'<a href="http://wpplugins.com/plugin/146/admin-menu-editor-pro" id="ws-pro-version-notice-link" class="show-settings" target="_blank" title="View Pro version details">Upgrade to Pro</a>' +
 				'</div>'
 			);
