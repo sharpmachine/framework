@@ -120,7 +120,7 @@ class SU_MetaKeywords extends SU_Module {
 			}
 			
 		//If we're viewing a term, look for its meta data.
-		} elseif (is_category() || is_tag() || is_tax()) {
+		} elseif (suwp::is_tax()) {
 			global $wp_query;
 			$tax_keywords = $this->get_setting('taxonomy_keywords');
 			$kw = $tax_keywords[$wp_query->get_queried_object_id()];

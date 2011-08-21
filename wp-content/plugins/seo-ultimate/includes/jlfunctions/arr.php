@@ -169,7 +169,18 @@ class suarr {
 	}
 	
 	function has_keys($array, $keys) {
-		return count(array_diff($keys, array_keys($array))) == 0;
+		if (is_array($array) && is_array($keys)) {
+			if (count($keys))
+				return count(array_diff($keys, array_keys($array))) == 0;
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	function key_check($array, $function) {
+		return (count($array) == count(array_filter(array_keys($array), $function)));
 	}
 	
 	//Function based on http://php.net/manual/en/function.array-unique.php#82508

@@ -3,7 +3,7 @@
 Plugin Name: WP-DBManager
 Plugin URI: http://lesterchan.net/portfolio/programming/php/
 Description: Manages your WordPress database. Allows you to optimize database, repair database, backup database, restore database, delete backup database , drop/empty tables and run selected queries. Supports automatic scheduling of backing up, optimizing and repairing of database.
-Version: 2.62
+Version: 2.63
 Author: Lester 'GaMerZ' Chan
 Author URI: http://lesterchan.net
 */
@@ -59,7 +59,7 @@ add_action('admin_enqueue_scripts', 'dbmanager_stylesheets_admin');
 function dbmanager_stylesheets_admin($hook_suffix) {
 	$dbmanager_admin_pages = array('wp-dbmanager/database-manager.php', 'wp-dbmanager/database-backup.php', 'wp-dbmanager/database-manage.php', 'wp-dbmanager/database-optimize.php', 'wp-dbmanager/database-repair.php', 'wp-dbmanager/database-empty.php', 'wp-dbmanager/database-run.php', 'database_page_wp-dbmanager/wp-dbmanager', 'wp-dbmanager/database-uninstall.php');
 	if(in_array($hook_suffix, $dbmanager_admin_pages)) {
-		wp_enqueue_style('wp-dbmanager-admin', plugins_url('wp-dbmanager/database-admin-css.css'), false, '2.62', 'all');
+		wp_enqueue_style('wp-dbmanager-admin', plugins_url('wp-dbmanager/database-admin-css.css'), false, '2.63', 'all');
 	}
 }
 
@@ -81,17 +81,29 @@ function cron_dbmanager_backup() {
 		$backup['mysqlpath'] = $backup_options['mysqlpath'];
 		$backup['path'] = $backup_options['path'];
 		$backup['password'] = str_replace('$', '\$', DB_PASSWORD);
+		$backup['host'] = DB_HOST;
+		$backup['port'] = '';
+		$backup['sock'] = '';	
+		if(strpos(DB_HOST, ':') !== false) {
+			$db_host = explode(':', DB_HOST);
+			$backup['host'] = $db_host[0];
+			if(is_int($db_host[1])) {
+				$backup['port'] = ' --port="'.intval($db_host[1]).'"';
+			} else {
+				$backup['sock'] = ' --socket="'.$db_host[1].'"';
+			}
+		}
 		$backup['command'] = '';
 		$brace = (substr(PHP_OS, 0, 3) == 'WIN') ? '"' : '';
 		if(intval($backup_options['backup_gzip']) == 1) {
 			$backup['filename'] = $backup['date'].'_-_'.DB_NAME.'.sql.gz';
 			$backup['filepath'] = $backup['path'].'/'.$backup['filename'];
-			$backup['command'] = $brace.$backup['mysqldumppath'].$brace.' --host="'.DB_HOST.'" --user="'.DB_USER.'" --password="'.$backup['password'].'" --add-drop-table --skip-lock-tables '.DB_NAME.' | gzip > '.$brace.$backup['filepath'].$brace;
+			$backup['command'] = $brace.$backup['mysqldumppath'].$brace.' --host="'.$backup['host'].'" --user="'.DB_USER.'" --password="'.$backup['password'].'"'.$backup['port'].$backup['sock'].' --add-drop-table --skip-lock-tables '.DB_NAME.' | gzip > '.$brace.$backup['filepath'].$brace;
 		} else {
 			$backup['filename'] = $backup['date'].'_-_'.DB_NAME.'.sql';
 			$backup['filepath'] = $backup['path'].'/'.$backup['filename'];
-			$backup['command'] = $brace.$backup['mysqldumppath'].$brace.' --host="'.DB_HOST.'" --user="'.DB_USER.'" --password="'.$backup['password'].'" --add-drop-table --skip-lock-tables '.DB_NAME.' > '.$brace.$backup['filepath'].$brace;
-		}		
+			$backup['command'] = $brace.$backup['mysqldumppath'].$brace.' --host="'.$backup['host'].'" --user="'.DB_USER.'" --password="'.$backup['password'].'"'.$backup['port'].$backup['sock'].' --add-drop-table --skip-lock-tables '.DB_NAME.' > '.$brace.$backup['filepath'].$brace;
+		}
 		execute_backup($backup['command']);
 		if(!empty($backup_email)) {
 				// Get And Read The Database Backup File

@@ -151,7 +151,7 @@ class SU_InternalLinkAliases extends SU_Module {
 		
 		foreach ($aliases as $alias)
 			if ($to = $alias['to'])
-				if (suurl::current() == get_bloginfo('url') . "/$alias_dir/$to/")
+				if (suurl::equal(suurl::current(), get_bloginfo('url') . "/$alias_dir/$to/"))
 					wp_redirect($alias['from']);
 	}
 	

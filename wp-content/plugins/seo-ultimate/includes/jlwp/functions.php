@@ -13,11 +13,16 @@ class suwp {
 	 * @return int|false The ID of the current post, or false on failure.
 	 */
 	function get_post_id() {
-		if (is_admin())
-			return empty($_REQUEST['post']) ? false : intval($_REQUEST['post']);
-		elseif (in_the_loop())
+		if (is_admin()) {
+			if (!empty($_REQUEST['post']))
+				return intval($_REQUEST['post']);
+			elseif (!empty($_REQUEST['post_ID']))
+				return intval($_REQUEST['post_ID']);
+			else
+				return false;
+		} elseif (in_the_loop()) {
 			return intval(get_the_ID());
-		elseif (is_singular()) {
+		} elseif (is_singular()) {
 			global $wp_query;
 			return $wp_query->get_queried_object_id();
 		}
@@ -74,11 +79,15 @@ class suwp {
 		return $types;
 	}
 	
-	function is_tax($taxonomy, $term='') {
-		switch ($taxonomy) {
-			case 'category': return is_category($term); break;
-			case 'post_tag': return is_tag($term); break;
-			default: return is_tax($taxonomy, $term); break;
+	function is_tax($taxonomy='', $term='') {
+		if ($taxonomy) {
+			switch ($taxonomy) {
+				case 'category': return is_category($term); break;
+				case 'post_tag': return is_tag($term); break;
+				default: return is_tax($taxonomy, $term); break;
+			}
+		} else {
+			return is_category() || is_tag() || is_tax();
 		}
 	}
 	
@@ -251,6 +260,24 @@ class suwp {
 			return get_permalink($page_id);
 		
 		return home_url('/');
+	}
+	
+	function get_user_edit_url($user_id) {
+		if (is_object($user_id)) $user_id = intval($user_id->ID);
+		
+		if ( get_current_user_id() == $user_id )
+			return 'profile.php';
+		else
+			return esc_url( add_query_arg( 'wp_http_referer', urlencode( stripslashes( $_SERVER['REQUEST_URI'] ) ), "user-edit.php?user_id=$user_id" ) );
+	}
+	
+	function is_comment_subpage() {
+		if (is_singular()) {
+			global $cpage;
+			return $cpage > 1;
+		}
+		
+		return false;
 	}
 }
 

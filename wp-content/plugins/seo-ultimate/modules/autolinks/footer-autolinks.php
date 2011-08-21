@@ -91,7 +91,7 @@ class SU_FooterAutolinks extends SU_Module {
 				case 'url':
 					
 					if ($from_id) {
-						if (	    suurl::current() == $from_id
+						if (	    suurl::equal(suurl::current(), $from_id)
 								|| ($from_match_children && sustr::startswith(suurl::current(), $from_id))
 								)
 							$is_from = !$from_match_negative;

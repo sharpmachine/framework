@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.8 Plugin: WP-DBManager 2.62								|
+|	WordPress 2.8 Plugin: WP-DBManager 2.63								|
 |	Copyright (c) 2009 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -47,10 +47,22 @@ if($_POST['do']) {
 		case __('Restore', 'wp-dbmanager'):
 			if(!empty($database_file)) {
 				$brace = (substr(PHP_OS, 0, 3) == 'WIN') ? '"' : '';
+				$backup['host'] = DB_HOST;
+				$backup['port'] = '';
+				$backup['sock'] = '';	
+				if(strpos(DB_HOST, ':') !== false) {
+					$db_host = explode(':', DB_HOST);
+					$backup['host'] = $db_host[0];
+					if(is_int($db_host[1])) {
+						$backup['port'] = ' --port="'.intval($db_host[1]).'"';
+					} else {
+						$backup['sock'] = ' --socket="'.$db_host[1].'"';
+					}
+				}
 				if(stristr($database_file, '.gz')) {
-					$backup['command'] = 'gunzip < '.$brace.$backup['path'].'/'.$database_file.$brace.' | '.$brace.$backup['mysqlpath'].$brace.' --host="'.DB_HOST.'" --user="'.DB_USER.'" --password="'.$backup['password'].'" '.DB_NAME;
+					$backup['command'] = 'gunzip < '.$brace.$backup['path'].'/'.$database_file.$brace.' | '.$brace.$backup['mysqlpath'].$brace.' --host="'.$backup['host'].'" --user="'.DB_USER.'" --password="'.$backup['password'].'"'.$backup['port'].$backup['sock'].' '.DB_NAME;
 				} else {
-					$backup['command'] = $brace.$backup['mysqlpath'].$brace.' --host="'.DB_HOST.'" --user="'.DB_USER.'" --password="'.$backup['password'].'" '.DB_NAME.' < '.$brace.$backup['path'].'/'.$database_file.$brace;
+					$backup['command'] = $brace.$backup['mysqlpath'].$brace.' --host="'.$backup['host'].'" --user="'.DB_USER.'" --password="'.$backup['password'].'"'.$backup['port'].$backup['sock'].' '.DB_NAME.' < '.$brace.$backup['path'].'/'.$database_file.$brace;
 				}
 				passthru($backup['command'], $error);
 				if($error) {

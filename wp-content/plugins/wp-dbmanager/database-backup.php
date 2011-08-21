@@ -2,7 +2,7 @@
 /*
 +----------------------------------------------------------------+
 |																							|
-|	WordPress 2.8 Plugin: WP-DBManager 2.62								|
+|	WordPress 2.8 Plugin: WP-DBManager 2.63								|
 |	Copyright (c) 2009 Lester "GaMerZ" Chan									|
 |																							|
 |	File Written By:																	|
@@ -42,15 +42,27 @@ if($_POST['do']) {
 		case __('Backup', 'wp-dbmanager'):
 			check_admin_referer('wp-dbmanager_backup');
 			$brace = (substr(PHP_OS, 0, 3) == 'WIN') ? '"' : '';
+			$backup['host'] = DB_HOST;
+			$backup['port'] = '';
+			$backup['sock'] = '';	
+			if(strpos(DB_HOST, ':') !== false) {
+				$db_host = explode(':', DB_HOST);
+				$backup['host'] = $db_host[0];
+				if(is_int($db_host[1])) {
+					$backup['port'] = ' --port="'.intval($db_host[1]).'"';
+				} else {
+					$backup['sock'] = ' --socket="'.$db_host[1].'"';
+				}
+			}
 			$gzip = intval($_POST['gzip']);
 			if($gzip == 1) {
 				$backup['filename'] = $backup['date'].'_-_'.DB_NAME.'.sql.gz';
 				$backup['filepath'] = $backup['path'].'/'.$backup['filename'];
-				$backup['command'] = $brace.$backup['mysqldumppath'].$brace.' --host="'.DB_HOST.'" --user="'.DB_USER.'" --password="'.$backup['password'].'" --add-drop-table --skip-lock-tables '.DB_NAME.' | gzip > '.$brace.$backup['filepath'].$brace;
+				$backup['command'] = $brace.$backup['mysqldumppath'].$brace.' --host="'.$backup['host'].'" --user="'.DB_USER.'" --password="'.$backup['password'].'"'.$backup['port'].$backup['sock'].' --add-drop-table --skip-lock-tables '.DB_NAME.' | gzip > '.$brace.$backup['filepath'].$brace;
 			} else {
 				$backup['filename'] = $backup['date'].'_-_'.DB_NAME.'.sql';
 				$backup['filepath'] = $backup['path'].'/'.$backup['filename'];
-				$backup['command'] = $brace.$backup['mysqldumppath'].$brace.' --host="'.DB_HOST.'" --user="'.DB_USER.'" --password="'.$backup['password'].'" --add-drop-table --skip-lock-tables '.DB_NAME.' > '.$brace.$backup['filepath'].$brace;
+				$backup['command'] = $brace.$backup['mysqldumppath'].$brace.' --host="'.$backup['host'].'" --user="'.DB_USER.'" --password="'.$backup['password'].'"'.$backup['port'].$backup['sock'].' --add-drop-table --skip-lock-tables '.DB_NAME.' > '.$brace.$backup['filepath'].$brace;
 			}
 			$error = execute_backup($backup['command']);
 			if(!is_writable($backup['path'])) {

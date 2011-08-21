@@ -123,9 +123,9 @@ class SU_RichSnippets extends SU_Module {
 		$tags = array_reverse((array)$tags);
 		foreach ($tags as $tag) {
 			if (!sustr::startswith($tag, '<'))
-				$content = sprintf($template, $tag, $content);
+				$content = sprintf($template, su_esc_attr($tag), su_esc_attr($content));
 			else
-				$content = sprintf($tag, $content);
+				$content = sprintf($tag, su_esc_attr($content));
 		}
 		return $content;
 	}

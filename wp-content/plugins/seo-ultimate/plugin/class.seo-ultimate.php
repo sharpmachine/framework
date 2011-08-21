@@ -391,7 +391,15 @@ class SEO_Ultimate {
 		//Let modules run uninstallation tasks
 		do_action('su_uninstall');
 		
-		//Delete all database data
+		//Delete module data
+		$psdata = (array)get_option('seo_ultimate', array());
+		if (!empty($psdata['modules'])) {
+			$module_keys = array_keys($psdata['modules']);
+			foreach ($module_keys as $module)
+				delete_option("seo_ultimate_module_$module");
+		}
+		
+		//Delete plugin data
 		delete_option('seo_ultimate');
 	}
 	
@@ -754,7 +762,7 @@ class SEO_Ultimate {
 		//If subitems have numeric bubbles, then add them up and show the total by the main menu item
 		$count = 0;
 		foreach ($this->modules as $key => $module) {
-			if (	($psdata['modules'][$key] > SU_MODULE_SILENCED || !count($psdata['modules']))
+			if (	(empty($psdata['modules']) || $psdata['modules'][$key] > SU_MODULE_SILENCED)
 					&& $module->get_menu_count() > 0
 					&& $module->get_menu_parent() == 'seo'
 					&& $module->is_independent_module()
@@ -779,12 +787,12 @@ class SEO_Ultimate {
 				
 				//If the module is hidden, put the module under a non-existent menu parent
 				//(this will let the module's admin page be loaded, but it won't show up on the menu)
-				if ($psdata['modules'][$key] > SU_MODULE_HIDDEN || !count($psdata['modules']))
+				if (empty($psdata['modules']) || $psdata['modules'][$key] > SU_MODULE_HIDDEN)
 					$parent = $module->get_menu_parent();
 				else
 					$parent = 'su-hidden-modules';
 				
-				if ($psdata['modules'][$key] > SU_MODULE_SILENCED || !count($psdata['modules']))
+				if (empty($psdata['modules']) || $psdata['modules'][$key] > SU_MODULE_SILENCED)
 					$count_code = $this->get_menu_count_code($module->get_menu_count());
 				else
 					$count_code = '';
@@ -1490,7 +1498,7 @@ class SEO_Ultimate {
 		$post_id = (int)$post_id;
 		
 		//Run preliminary permissions checks
-		if ( !wp_verify_nonce($_REQUEST['_su_wpnonce'], 'su-update-postmeta') ) return;
+		if ( !isset($_REQUEST['_su_wpnonce']) || !wp_verify_nonce($_REQUEST['_su_wpnonce'], 'su-update-postmeta') ) return;
 		$post_type = isset($_POST['post_type']) ? $_POST['post_type'] : 'post';
 		if (function_exists('get_post_type_object')) { //If WP3.0+...
 			$post_type_object = get_post_type_object($post_type);

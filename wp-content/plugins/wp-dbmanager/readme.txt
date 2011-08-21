@@ -36,7 +36,7 @@ Allows you to optimize database, repair database, backup database, restore datab
 
 == Changelog ==
 
-= Version 2.62 (03-05-2011) =
+= Version 2.63 (03-05-2011) =
 * NEW: Added Auto Repair Functionality
 * NEW: Added nonce To All Forms For Added Security
 

@@ -91,7 +91,7 @@ class SU_MetaDescriptions extends SU_Module {
 			}
 			
 		//If we're viewing a term, look for its meta data.
-		} elseif (is_category() || is_tag() || is_tax()) {
+		} elseif (suwp::is_tax()) {
 			global $wp_query;
 			$tax_descriptions = $this->get_setting('taxonomy_descriptions');
 			$term_id  = $wp_query->get_queried_object_id();

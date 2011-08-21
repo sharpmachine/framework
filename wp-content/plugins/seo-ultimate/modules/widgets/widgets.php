@@ -55,6 +55,9 @@ class SU_Widget_SiloedTerms extends WP_Widget {
 			}
 		}
 		
+		$use_desc_for_title = isset($instance['use_desc_for_title']) ? $instance['use_desc_for_title'] : true;
+		$count = isset($instance['count']) ? $instance['count'] : false;
+		
 		$title = apply_filters('widget_title', $title, $instance, $this->id_base);
 		$current_term = false;
 		$current_term_id = $current_post_id = 0;
@@ -73,16 +76,12 @@ class SU_Widget_SiloedTerms extends WP_Widget {
 			}
 		}
 		
-		echo $before_widget;
-		if ( $title )
-			echo $before_title . $title . $after_title;
+		$term_args = array('taxonomy' => $current_taxonomy, 'orderby' => 'name', 'show_count' => $count ? '1' : '0', 'hierarchical' => '0', 'title_li' => '', 'parent' => $current_term_id, 'show_option_none' => false, 'use_desc_for_title' => $use_desc_for_title ? '1' : '0', 'echo' => false);
 		
-		$term_args = array('taxonomy' => $current_taxonomy, 'orderby' => 'name', 'show_count' => $instance['count'] ? '1' : '0', 'hierarchical' => '0', 'title_li' => '', 'parent' => $current_term_id, 'show_option_none' => false);
-		
-		echo "\n\t\t<ul>\n";
+		$category_output = $post_output = '';
 		
 		if (!$current_term || is_taxonomy_hierarchical($current_taxonomy))
-			wp_list_categories($term_args);
+			$category_output = wp_list_categories($term_args);
 		
 		if ($current_term) {
 			$child_posts = get_posts(array('taxonomy' => $current_taxonomy, 'term' => $current_term->slug, 'numberposts' => 5));
@@ -93,20 +92,28 @@ class SU_Widget_SiloedTerms extends WP_Widget {
 				if ($child_post->ID == $current_post_id)
 					$css_class = 'current_post_item';
 				
-				echo "\n\t\t\t<li class=\"" . $css_class . '"><a href="' . get_permalink($child_post->ID) . '" title="' . esc_attr( wp_strip_all_tags( apply_filters( 'the_title', $child_post->post_title, $child_post->ID ) ) ) . '">' . apply_filters( 'the_title', $child_post->post_title, $child_post->ID ) . "</a></li>\n";
+				$post_output .= "\n\t\t\t<li class=\"" . $css_class . '"><a href="' . get_permalink($child_post->ID) . '" title="' . esc_attr( wp_strip_all_tags( apply_filters( 'the_title', $child_post->post_title, $child_post->ID ) ) ) . '">' . apply_filters( 'the_title', $child_post->post_title, $child_post->ID ) . "</a></li>\n";
 			}
 		}
 		
-		echo "\n\t\t</ul>\n";
-		
-		echo $after_widget;
+		if ($category_output || $post_output) {
+			echo $before_widget;
+			if ( $title )
+				echo $before_title . $title . $after_title;
+			echo "\n\t\t<ul>\n";
+			echo $category_output;
+			echo $post_output;
+			echo "\n\t\t</ul>\n";
+			echo $after_widget;
+		}
 	}
-
+	
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags(stripslashes($new_instance['title']));
 		$instance['taxonomy'] = stripslashes($new_instance['taxonomy']);
 		$instance['count'] = !empty($new_instance['count']) ? 1 : 0;
+		$instance['use_desc_for_title'] = !empty($new_instance['use_desc_for_title']) ? 1 : 0;
 		
 		return $instance;
 	}
@@ -117,19 +124,22 @@ class SU_Widget_SiloedTerms extends WP_Widget {
 		//Defaults
 		$instance = wp_parse_args( (array) $instance, array( 'title' => '') );
 		$title = esc_attr( $instance['title'] );
-		$count = isset($instance['count']) ? (bool) $instance['count'] :false;
+		$count = isset($instance['count']) ? (bool)$instance['count'] : false;
+		$use_desc_for_title = isset($instance['use_desc_for_title']) ? (bool)$instance['use_desc_for_title'] : true;
 ?>
 		<p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e( 'Title:' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
 		
 		<p><input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('count'); ?>" name="<?php echo $this->get_field_name('count'); ?>"<?php checked( $count ); ?> />
-		<label for="<?php echo $this->get_field_id('count'); ?>"><?php _e( 'Show post counts' ); ?></label></p>
+		<label for="<?php echo $this->get_field_id('count'); ?>"><?php _e( 'Show post counts' ); ?></label>		
+		<br /><input type="checkbox" class="checkbox" id="<?php echo $this->get_field_id('use_desc_for_title'); ?>" name="<?php echo $this->get_field_name('use_desc_for_title'); ?>"<?php checked( $use_desc_for_title ); ?> />
+		<label for="<?php echo $this->get_field_id('use_desc_for_title'); ?>"><?php _e( 'Use term descriptions in title attributes' ); ?></label></p>
 		
 		<p><label for="<?php echo $this->get_field_id('taxonomy'); ?>"><?php _e('Taxonomy:') ?></label>
 		<select class="widefat" id="<?php echo $this->get_field_id('taxonomy'); ?>" name="<?php echo $this->get_field_name('taxonomy'); ?>">
 		<?php foreach ( get_object_taxonomies('post') as $taxonomy ) :
 					$tax = get_taxonomy($taxonomy);
-					if ( !$tax->show_tagcloud || empty($tax->labels->name) )
+					if ( empty($tax->labels->name) )
 						continue;
 		?>
 			<option value="<?php echo esc_attr($taxonomy) ?>" <?php selected($taxonomy, $current_taxonomy) ?>><?php echo $tax->labels->name; ?></option>

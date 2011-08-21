@@ -136,10 +136,10 @@ class SU_ContentAutolinks extends SU_Module {
 				else
 					$url = $this->jlsuggest_value_to_url($to_id ? "obj_$type/$to_id" : "obj_$type");
 				
-				if (!$this->get_setting('enable_current_url_links', false) && $url == suurl::current())
+				if (!$this->get_setting('enable_current_url_links', false) && suurl::equal($url, suurl::current()))
 					continue;
 				
-				if (!$this->get_setting('enable_self_links', false) && is_singular() && $url == get_permalink())
+				if (!$this->get_setting('enable_self_links', false) && is_singular() && suurl::equal($url, get_permalink()))
 					continue;
 				
 				if ($lpu_limit_enabled && isset($linked_urls[$url]) && $linked_urls[$url] >= $lpu_limit)
