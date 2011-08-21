@@ -560,6 +560,8 @@ function help_dashboard_widget_function() {
 			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/ target=_blank>Part 4: Using Categories and Tag</a></li>
 			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-5-creating-and-editing-pages/ target=_blank>Part 5: Creating and Editing Pages</a></li>
 			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-6-adding-images/ target=_blank>Part 6: Adding Images &amp; Photos</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-7-embedding-video/ target=_blank>Part 7: Embedding Video</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-8-media-library/ target=_blank>Part 8: Media Library</a></li>
 		</ul>
 		
 		<ul style=width:40%;float:left;min-width:153px;>
