@@ -119,13 +119,14 @@ class SU_RichSnippets extends SU_Module {
 		return $current_type;
 	}
 	
-	function add_tags($content, $tags, $template) {
+	function add_tags($content, $tags, $template, $escape=true) {
+		if ($escape) $content = su_esc_attr($content);
 		$tags = array_reverse((array)$tags);
 		foreach ($tags as $tag) {
-			if (!sustr::startswith($tag, '<'))
-				$content = sprintf($template, su_esc_attr($tag), su_esc_attr($content));
+			if (sustr::startswith($tag, '<'))
+				$content = sprintf($tag, $content);
 			else
-				$content = sprintf($tag, su_esc_attr($content));
+				$content = sprintf($template, $tag, $content);
 		}
 		return $content;
 	}
@@ -212,7 +213,7 @@ class SU_RichSnippets extends SU_Module {
 		}
 		
 		if ($num_properties)
-			$content = $this->add_tags("$content<div>$append</div>", $type_data['tags'][$format], $formats[$format]['item_tags_template']);
+			$content = $this->add_tags("$content<div>$append</div>", $type_data['tags'][$format], $formats[$format]['item_tags_template'], false);
 		
 		//Return filtered content
 		return $content;

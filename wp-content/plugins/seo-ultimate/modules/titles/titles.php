@@ -30,8 +30,8 @@ class SU_Titles extends SU_Module {
 	function get_admin_page_tabs() {
 		return array_merge(
 			  array(
-				  array('title' => __('Default Formats'), 'id' => 'su-default-formats', 'callback' => 'formats_tab')
-				, array('title' => __('Settings'), 'id' => 'su-settings', 'callback' => 'settings_tab')
+				  array('title' => __('Default Formats', 'seo-ultimate'), 'id' => 'su-default-formats', 'callback' => 'formats_tab')
+				, array('title' => __('Settings', 'seo-ultimate'), 'id' => 'su-settings', 'callback' => 'settings_tab')
 				)
 			, $this->get_meta_edit_tabs(array(
 				  'type' => 'textbox'

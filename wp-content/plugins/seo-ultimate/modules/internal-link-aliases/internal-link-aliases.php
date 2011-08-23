@@ -26,7 +26,7 @@ class SU_InternalLinkAliases extends SU_Module {
 		$this->child_admin_form_start();
 		$this->textbox('alias_dir', __('Alias Directory', 'seo-ultimate'), $this->get_default_setting('alias_dir'));
 		if ($this->plugin->module_exists('link-nofollow'))
-			$this->checkbox('nofollow_aliased_links', __('Nofollow aliased links', 'seo-ultimate'), __('Link Attributes'));
+			$this->checkbox('nofollow_aliased_links', __('Nofollow aliased links', 'seo-ultimate'), __('Link Attributes', 'seo-ultimate'));
 		$this->child_admin_form_end();
 	}
 	

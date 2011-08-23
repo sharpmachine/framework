@@ -19,7 +19,7 @@ class SU_MetaRobots extends SU_Module {
 	
 	function get_admin_page_tabs() {
 		return array(
-			array('title' => __('Global'), 'id' => 'su-global', 'callback' => 'global_tab')
+			array('title' => __('Global', 'seo-ultimate'), 'id' => 'su-global', 'callback' => 'global_tab')
 		);
 	}
 	

@@ -40,7 +40,7 @@ class SU_Noindex extends SU_Module {
 		
 		return array_merge(
 			  array(
-				  array('title' => __('Default Values'), 'id' => 'su-default-values', 'callback' => 'defaults_tab')
+				  array('title' => __('Default Values', 'seo-ultimate'), 'id' => 'su-default-values', 'callback' => 'defaults_tab')
 				)
 			, $this->get_postmeta_edit_tabs(array(
 				  array(

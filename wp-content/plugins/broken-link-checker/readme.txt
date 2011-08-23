@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: links, broken, maintenance, blogroll, custom fields, admin, comments, posts
 Requires at least: 3.2
 Tested up to: 3.2.1
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 This plugin will check your posts, comments and other content for broken links and missing images, and notify you if any are found. 
 
@@ -55,7 +55,7 @@ You can also click on the contents of the "Status" or "Link Text" columns to get
 * Italian - [Gianni Diurno](http://gidibao.net/index.php/portfolio/) and [Giacomo Ross](http://www.luxemozione.com/) (alternative)
 * Japanese - [ningendesu](http://ningendesu.com/)
 * Korean - [MinHyeong Lim](http://ssamture.net/)
-* Persian - Omid Sheerkavand
+* Persian - [Omid Sheerkavand](http://qanal.ir/)
 * Polish - [http://positionmaker.pl](http://positionmaker.pl/)
 * Portuguese - [PedroDM](http://development.mowster.net/)
 * Romanian - [Ovidiu](http://www.jibo.ro)
@@ -87,6 +87,13 @@ To upgrade your installation
 1. Reactivate the plugin. Your settings will be retained from the previous version.
 
 == Changelog ==
+
+= 1.3.1 =
+* Added support for the new YouTube embed code style. It needs to be explicitly enabled in options.
+* Added credits link for the Persian language translator.
+* Updated Portuguese translation.
+* Updated German translation.
+* Partial fix for Mediafire checker failing with a fatal error in some situations.
 
 = 1.3 =
 * Dropped PHP 4 support.
