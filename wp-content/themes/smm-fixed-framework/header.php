@@ -111,7 +111,6 @@
 				    bcn_display();
 				}
 				?>
-		</div>
+			</div>
 	</header>
-
 	<section id="page">
