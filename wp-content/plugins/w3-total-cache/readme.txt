@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: fredericktownes
-Tags: user experience, cache, caching, page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, gzip, deflate, minify, cdn, content delivery network, media library, performance, speed, multiple hosts, css, merge, combine, unobtrusive javascript, compress, optimize, optimizer, javascript, js, cascading style sheet, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, s3, cloudfront, aws, amazon web services, cloud files, rackspace, cotendo, max cdn, limelight, cloudflare, microsoft, microsoft azure, iis, nginx, apache, varnish, xcache, apc, eacclerator, wincache, mysql, w3 total cache, batcache, wp cache, wp super cache, buddypress
+Tags: user experience, cache, caching, page cache, css cache, js cache, db cache, disk cache, disk caching, database cache, http compression, gzip, deflate, minify, cdn, content delivery network, media library, performance, speed, multiple hosts, css, merge, combine, unobtrusive javascript, compress, optimize, optimizer, javascript, js, cascading style sheet, plugin, yslow, yui, google, google rank, google page speed, mod_pagespeed, s3, cloudfront, aws, amazon web services, cloud files, rackspace, cotendo, max cdn, limelight, cloudflare, microsoft, microsoft azure, iis, nginx, litespeed, apache, varnish, xcache, apc, eacclerator, wincache, mysql, w3 total cache, batcache, wp cache, wp super cache, buddypress
 Requires at least: 2.8
-Tested up to: 3.2
-Stable tag: 0.9.2.3
+Tested up to: 3.2.1
+Stable tag: 0.9.2.4
 
 Improve site performance and user experience via caching: browser, page, object, database, minify and content delivery network support.
 
@@ -13,7 +13,7 @@ The **most complete** WordPress performance framework.
 
 Recommended by web hosts like: MediaTemple, Host Gator, Page.ly and WP Engine and countless more.
 
-Trusted by countless sites like: mattcutts.com, mashable.com, smashingmagazine.com, makeuseof.com, yoast.com, kiss925.com, pearsonified.com, lockergnome.com, johnchow.com, ilovetypography.com, webdesignerdepot.com, css-tricks.com and tens of thousands of others.
+Trusted by countless sites like: stevesouders.com, mattcutts.com, mashable.com, smashingmagazine.com, makeuseof.com, yoast.com, kiss925.com, pearsonified.com, lockergnome.com, johnchow.com, ilovetypography.com, webdesignerdepot.com, css-tricks.com and tens of thousands of others.
 
 W3 Total Cache improves the user experience of your site by improving your server performance, caching every aspect of your site, reducing the download times and providing transparent content delivery network (CDN) integration.
 
@@ -68,7 +68,7 @@ Search engines like Google, measure and factor in the speed of web sites in thei
 
 = Why is W3 Total Cache better than other cache plugins? =
 
-**It's complete.** Most of the popular cache plugins available do a great job and serve their purpose very well. Our plugin remedies numerous performance reducing aspects of any web site going far beyond merely reducing CPU usage (load) and bandwidth consumption for HTML pages alone. Equally important, the plugin requires no theme modifications, modifications to your .htaccess (mod_rewrite rules) or programming compromises to get started. Most importantly, it's the only plugin designed to optimize all practical hosting environments small or large. The options are many and setup is easy.
+**It's a complete framework.** Many of the popular cache plugins available do a great job at achieving some performance aims. Our plugin remedies numerous performance reducing aspects of any web site going far beyond merely reducing CPU usage (load) and bandwidth consumption for HTML pages alone. Equally important, the plugin requires no theme modifications, modifications to your .htaccess (mod_rewrite rules) or programming compromises to get started. Most importantly, it's the only plugin designed to optimize all practical hosting environments small or large. The options are many and setup is easy.
 
 = I've never heard of any of this stuff; my site is fine, no one complains about the speed. Why should I install this? =
 
@@ -76,9 +76,26 @@ Rarely do readers take the time to complain. They typically just stop browsing e
 
 It's in every web site owner's best interest is to make sure that the performance of your site is not hindering its success.
 
+= Which web servers do you support? =
+
+We are aware of no incompatibilities with [apache](http://httpd.apache.org/) 1.3+, [nginx](http://wiki.nginx.org/) 0.7+, , [IIS](http://www.iis.net/) 5+ or [litespeed](http://litespeedtech.com/products/webserver/overview/) 4.0.2+. If there's a web server you feel we should be actively testing (e.g. [lighttpd](http://www.lighttpd.net/)), we're [interested in hearing](mailto:wordpressexperts@w3-edge.com).
+
 = Which WordPress versions are supported? =
 
 To use all features in the suite, a minimum of version WordPress 2.8 with PHP 5 is required. Earlier versions will benefit from our Media Library Importer to get them back on the upgrade path and into a CDN of their choosing.
+
+= Who do you recommend as a CDN (Content Delivery Network) provider? =
+
+That depends on how you use your site and where most of your readers read your site (regionally). Here's a short list:
+
+* [MaxCDN](http://bit.ly/pXZ4t1)
+* [EdgeCast](http://bit.ly/bIjSWC)
+* [Amazon Cloudfront](http://bit.ly/ao1sGt)
+* [Rackspace Cloud Files](http://bit.ly/9hpX8T)
+* [VPS NET (Level 3)](http://bit.ly/d5hfFt)
+* [Cotendo](http://bit.ly/bnVs0a)
+* [Limelight Networks](http://bit.ly/aCW04j)
+* [Akamai](http://bit.ly/a5GBLV)
 
 = What about comments? Does the plugin slow down the rate at which comments appear? =
 
@@ -123,20 +140,6 @@ Use the "Help" button available on the Minify settings tab. Once open, the tool 
 = I don't understand what a CDN has to do with caching, that's completely different, no? =
 
 Technically no, a CDN is a high performance cache that stores static assets (your theme files, media library etc) in various locations throughout the world in order to provide low latency access to them by readers in those regions.
-
-= Who do you recommend as a CDN (Content Delivery Network) provider? =
-
-That depends on how you use your site and where most of your readers read your site (regionally). Here's a short list:
-
-* [Amazon Cloudfront](http://bit.ly/ao1sGt)
-* [Rackspace Cloud Files](http://bit.ly/9hpX8T)
-* [MaxCDN](http://bit.ly/acaXXt)
-* [VPS NET (Level 3)](http://bit.ly/d5hfFt)
-* [EdgeCast](http://bit.ly/bIjSWC)
-* [Cotendo](http://bit.ly/bnVs0a)
-* [Limelight Networks](http://bit.ly/aCW04j)
-* [Akamai](http://bit.ly/a5GBLV)
-* [SimpleCDN](http://bit.ly/93EAKK)
 
 = What if I don't want to work with a CDN right now, is there any other use for this feature? =
 
@@ -248,6 +251,18 @@ Install the plugin to read the full FAQ.
 * Read [testimonials](http://bit.ly/6Wbvpt) from W3TC users.
 
 == Press: Mentions, Tutorials &amp; Reviews ==
+
+**August 2011:**
+
+* [Matt Mullenweg: State of the Word 2011 (4:49)](http://wordpress.tv/2011/08/14/matt-mullenweg-state-of-the-word-2011/), Matt Mullenweg
+* [W3 Total Cache Setup with CloudFlare and CDN : Complete Tutorial Guide](http://thecustomizewindows.com/2011/08/w3-total-cache-setup-with-cloudflare-and-cdn-complete-tutorial-guide/), Abhishek Ghosh
+
+**July 2011:**
+
+* [Speeding Up Your Blog - Part II: WordPress & Cloudflare Integration](http://www.thewebhostinghero.com/tutorials/wordpress-cloudflare.html)
+* [How Your Website Loses 7% of Potential Conversions](http://www.clickz.com/clickz/column/2097323/website-loses-potential-conversions), Bryan Eisenberg
+* [How to Integrate Google Page Speed with W3 Total Cache](http://geekscalling.com/google/how-to-integrate-google-page-speed-with-w3-total-cache), Anish
+* [22 WordPress Plugins for Content Marketers](http://www.business2community.com/content-marketing/22-wordpress-plugins-for-content-marketers-040787), Brody Dorland
 
 **June 2011:**
 
@@ -447,10 +462,32 @@ Please reach out to all of these people and support their projects if you're so 
 
 == Changelog ==
 
+= 0.9.2.4 =
+* Added support for Microsoft SQL Server
+* Added API support for MediaTemple ProCDN (EdgeCast)
+* Added set_time_limit to self test
+* Fixed LiteSpeed web server support
+* Fixed native hostname 301 redirect
+* Fixed redundant object origin push export
+* Fixed WSOD (white screen of death) caused by minify in some hosting configurations
+* Fixed text encoding in feeds
+* Fixed incorrect mime-type in feeds (which caused feedburner anomalies)
+* Fixed array to string notices
+* Fixed expires header support for AWS
+* Fixed minification of font-family
+* Fixed object cache write issue in WP Admin
+* Improved (reduced) memory utilization by up to 70%
+* Improved disk enhanced page caching performance
+* Improved object caching performance
+* Improved activation reliability
+* Improved reliability of minify auto mode
+* Improved security (added nonces, no directory indexing, prevent direct file access)
+* Improved compatibility with network based file systems
+
 = 0.9.2.3 =
 * Added additional CloudFlare IP range
-* Fixed bug in html tidy encoding
-* Fixed bug with NetDNA / MaxCDN purging
+* Fixed html tidy encoding
+* Fixed NetDNA / MaxCDN purging
 * Improved handling of markers in .htaccess files - easier upgrades
 * Improved cache busting logic
 * Improved numerous notifications and user interface behaviors
@@ -458,21 +495,21 @@ Please reach out to all of these people and support their projects if you're so 
 * Improved reliability of minify auto mode
 
 = 0.9.2.2 =
-* Fixed bug with minify directives, e.g.: "File param is missing," causing minify caching to fail
-* Fixed bug with document root detection for IIS server
-* Fixed bug with HTTP compression when using CloudFlare
-* Fixed bug with HTML validation with JavaScript embed tags
-* Fixed bug with fancy permalinks, sites with or without trailing slashes can now cache pages using disk enhanced
-* Fixed bug with appending WP_CACHE define into wp-config.php for some users
-* Fixed bug with path to JSON.php
-* Fixed bug with listing of buckets error with AWS S3
+* Fixed minify directives, e.g.: "File param is missing," causing minify caching to fail
+* Fixed document root detection for IIS server
+* Fixed HTTP compression when using CloudFlare
+* Fixed HTML validation with JavaScript embed tags
+* Fixed fancy permalinks, sites with or without trailing slashes can now cache pages using disk enhanced
+* Fixed appending WP_CACHE define into wp-config.php for some users
+* Fixed path to JSON.php
+* Fixed listing of buckets error with AWS S3
 * Improved compatibility with WordPress SEO by Yoast, 404 error exception list sitemap value changed to: sitemap(_index|[0-9]+)?\.xml(\.gz)?
 
 = 0.9.2.1 =
-* Fixed bug with existing installation upgrades: set minify to manual mode by default
-* Fixed bug with unsuccessful transfer queue button
-* Fixed bug with background in lightbox
-* Fixed bug with handling of local http requests being blocked on some hosts
+* Fixed existing installation upgrades: set minify to manual mode by default
+* Fixed unsuccessful transfer queue button
+* Fixed background in lightbox
+* Fixed handling of local http requests being blocked on some hosts
 * Disabled CDN for minify files when auto mode is selected and the CDN method is origin push
 
 = 0.9.2 =
@@ -504,15 +541,15 @@ Please reach out to all of these people and support their projects if you're so 
 * Improved varnish support
 * Fixed bugs with API changes with Rackspace Cloudfiles
 * Fixed bugs with origin push content delivery network methods
-* Fixed bug with HTML encoding
-* Fixed bug with emptying cache for various cache keys
-* Fixed bug with rejected CDN file support
-* Fixed bug with HTTPS mode in WP Admin
-* Fixed bug with relative document root for disk enhanced page cache
-* Fixed bug with trailing slash for disk enhanced page cache
-* Fixed bug with minify template group settings being lost upon upgrade
+* Fixed HTML encoding
+* Fixed emptying cache for various cache keys
+* Fixed rejected CDN file support
+* Fixed HTTPS mode in WP Admin
+* Fixed relative document root for disk enhanced page cache
+* Fixed trailing slash for disk enhanced page cache
+* Fixed minify template group settings being lost upon upgrade
 * Fixed division by zero error
-* Fixed bug with object cache clones
+* Fixed object cache clones
 * Moved browser cache rules to site root instead of document root
 
 = 0.9.1.3 =
@@ -521,11 +558,11 @@ Please reach out to all of these people and support their projects if you're so 
 * Added control for CDN queue upload interval
 * Added option for 404 file exceptions list in browser cache
 * Added exception for NextGen Gallery flash image rotator to CDN settings
-* Fixed bug with external file imports
-* Fixed bug with document root detection for CDN
-* Fixed bug with minify file search
+* Fixed external file imports
+* Fixed document root detection for CDN
+* Fixed minify file search
 * Fixed bugs with AWS CloudFront distribution creation and saving
-* Fixed bug with Rackspace Cloud Files API
+* Fixed Rackspace Cloud Files API
 
 = 0.9.1.2 =
 * Improved media library import compatibility
@@ -534,18 +571,18 @@ Please reach out to all of these people and support their projects if you're so 
 * Resolved Apache 1.3 compatibility issue
 * Fixed issues with document root detection on some servers
 * Fixed an issue with minification of script tags with HTML comments inside
-* Fixed bug with minify gzip compression
-* Fixed bug with cache-control headers
-* Fixed bug with empty fatal error notification on network activation
-* Fixed bug with minify when https is active
-* Fixed bug with fatal error upon activation when uploads path does not exist
+* Fixed minify gzip compression
+* Fixed cache-control headers
+* Fixed empty fatal error notification on network activation
+* Fixed minify when https is active
+* Fixed fatal error upon activation when uploads path does not exist
 
 = 0.9.1.1 =
 * Added an additional notification to help users identify incomplete installations upon activation
 * Reverted previous Cloud Files workaround
-* Fixed bug with preview mode buttons
-* Fixed bug with duplicate entries appearing when using minify help tool more than once
-* Fixed bug with browser cache rules generation for media files
+* Fixed preview mode buttons
+* Fixed duplicate entries appearing when using minify help tool more than once
+* Fixed browser cache rules generation for media files
 
 = 0.9.1 =
 * Improved Rackspace Cloud Files implementation
@@ -622,9 +659,9 @@ Please reach out to all of these people and support their projects if you're so 
 * Improved reliability of handling file names containing spaces in CDN functionality
 * Improved non-blocking embedding reliability
 * Improved memcached detection by supporting only PECL memcache
-* Fixed bug with disk enhanced method of page cache in WordPress MU
+* Fixed disk enhanced method of page cache in WordPress MU
 * Fixed false match of page cache files in disk enhanced method of page cache
-* Fixed bug with cron anomalies caused by caching of wp_options table
+* Fixed cron anomalies caused by caching of wp_options table
 * Fixed missing trailing slash issue when using disk enhanced page caching
 * Fixed auto-embed bug CSS and JS when already manually embedded
 
@@ -668,17 +705,17 @@ Please reach out to all of these people and support their projects if you're so 
 * Improved handing of subdomains for CDN settings
 * Improved various notifications and error messages
 * Improved optional .htaccess directives (located in /ini/_htaccess)
-* Fixed bug with JS minifcation saving group settings
-* Fixed bug with false positives for duplicate CSS or JS in minify settings
+* Fixed JS minifcation saving group settings
+* Fixed false positives for duplicate CSS or JS in minify settings
 * Fixed bug causing settings to be lost on upgrade
-* Fixed bug with attachment URI when CDN mode enabled
+* Fixed attachment URI when CDN mode enabled
 * Fixed small bug with FTP upload when CDN Method is Mirror (Origin Pull)
-* Fixed bug with the URI for wlwmanfiest.xml when CDN enabled 
-* Fixed bug with handling of HTTPS objects according to options
-* Fixed bug with emptying disk cache under various obscure permutations
-* Fixed bug with handling of obscure open_basedir restrictions
+* Fixed the URI for wlwmanfiest.xml when CDN enabled 
+* Fixed handling of HTTPS objects according to options
+* Fixed emptying disk cache under various obscure permutations
+* Fixed handling of obscure open_basedir restrictions
 * Fixed various bugs with emptying cache under various obscure permutations
-* Fixed bug with installations deeper than document root
+* Fixed installations deeper than document root
 
 = 0.8 =
 * Added disk as method for page caching
@@ -707,8 +744,8 @@ Please reach out to all of these people and support their projects if you're so 
 * Improved reliability of memcache flush
 * Minified files now (optionally) upload automatically according to update interval (expiry time)
 * Changed directory of minify working files to wp-content/w3tc-cache/
-* Fixed bug with parsing memcached server strings
-* Fixed bug with minify sometimes not creating files as it should
+* Fixed parsing memcached server strings
+* Fixed minify sometimes not creating files as it should
 * Addressed WordPress network activation/deactivation issues
 * Provided memcache.ini directives updated to improve network throughput
 
@@ -719,7 +756,7 @@ Please reach out to all of these people and support their projects if you're so 
 * Improved notification handling
 * Improved compatibility with suPHP
 * Improved reliability of Media Library Export
-* Fixed bug with database cache that caused comment counts to become out of date
+* Fixed database cache that caused comment counts to become out of date
 * Fixed minor issue with URI with CDN functionality enabled
 * Removed unnecessary minify options
 * Minification error dialogs now disabled when JS or CSS minify settings disabled

@@ -5,24 +5,12 @@ table.acf_input {
 	border: 0 none;
 }
 
-.field_form table.acf_input {
-	border: #DFDFDF solid 1px;
-}
-
 table.acf_input tbody tr td {
 	padding: 10px;
 }
 
-table.acf_input tr:nth-child(even) {
-	background: #FCFCFC;
-}
-
-table.acf_input tr:nth-child(odd) {
-	background: transparent;
-}
-
 table.acf_input tr.field_save {
-	background: #EAF2FA;
+	
 }
 
 table.acf_input tbody tr:last-child td {
@@ -32,7 +20,7 @@ table.acf_input tbody tr:last-child td {
 table.acf_input tbody tr td.label {
 	width: 24%;
 	vertical-align: top;
-	border-right: #DFDFDF solid 1px;
+	border-right: #ebebeb solid 1px;
 }
 
 table.acf_input tbody tr td.label label{
@@ -66,4 +54,30 @@ table.acf_input input[type=text],
 table.acf_input textarea,
 table.acf_input select{
 	width: 99.95%;
+	padding: 5px;
+	outline: none;
+}
+
+table.acf_input input[type=text]:focus,
+table.acf_input textarea:focus,
+table.acf_input select:focus {
+	border-color:#98B6CB;
+}
+
+
+ul.radio_list {
+	position: relative;
+	overflow: hidden;
+	display: block;
+	padding: 3px 0;
+}
+
+ul.radio_list input[type="radio"] {
+	margin-right: 5px;
+	
+}
+
+ul.radio_list.horizontal li {
+	float: left;
+	margin-right: 20px;
 }

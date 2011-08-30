@@ -34,7 +34,7 @@ class acf_True_false
 			{
 				$selected = 'checked="yes"';
 			}
-			echo '<li><input type="checkbox" class="'.$field->input_class.'" name="'.$field->input_name.'" value="'.$key.'" '.$selected.' />'.$value.'</li>';
+			echo '<li><label><input type="checkbox" class="'.$field->input_class.'" name="'.$field->input_name.'" value="'.$key.'" '.$selected.' />'.$value.'</label></li>';
 		}
 		
 		echo '</ul>';
@@ -51,8 +51,10 @@ class acf_True_false
 	 * @since 1.1
 	 * 
 	 ---------------------------------------------------------------------------------------------*/
-	function options_html($key, $options)
+	function options_html($key, $field)
 	{
+		$options = $field->options;
+		
 		if(!isset($options['message']))
 		{
 			$options['message'] = "";
@@ -82,7 +84,7 @@ class acf_True_false
 	 * @since 1.1
 	 * 
 	 ---------------------------------------------------------------------------------------------*/
-	function format_value_for_api($value)
+	function format_value_for_api($value, $options = null)
 	{
 		return $this->format_value_for_input($value);	
 	}

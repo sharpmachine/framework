@@ -48,6 +48,9 @@
 
 		});
 		
+		// add active to Settings Menu
+		$('#adminmenu #menu-settings').addClass('current');
+		
 				
 	});
 

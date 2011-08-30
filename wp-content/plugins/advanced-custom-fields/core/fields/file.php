@@ -28,12 +28,13 @@ class acf_File
 	 * @since 2.0.3
 	 * 
 	 ---------------------------------------------------------------------------------------------*/
-	function options_html($key, $options)
+	function options_html($key, $field)
 	{
+		$options = $field->options;
 		?>
 		<tr class="field_option field_option_file">
 			<td class="label">
-				<label><?php _e("Save Format",'acf'); ?></label>
+				<label><?php _e("Return Value",'acf'); ?></label>
 			</td>
 			<td>
 				<?php 
@@ -138,66 +139,80 @@ class acf_File
 			?>
 			<script type="text/javascript">
 				
-				if(self.parent.acf_div.find('input.value').hasClass('id'))
-				{
-					self.parent.acf_div.find('input.value').val('<?php echo $id; ?>');
-				}
-				else
-				{
-					self.parent.acf_div.find('input.value').val('<?php echo $file_src; ?>');
-				}
-				
-			 	self.parent.acf_div.find('p.file span').html('<?php echo $file_src; ?>');
+				self.parent.acf_div.find('input.value').val('<?php echo $id; ?>');
+			 	self.parent.acf_div.find('span.file_url').text('<?php echo $file_src; ?>');
 			 	self.parent.acf_div.addClass('active');
 			 	
 			 	// reset acf_div and return false
 			 	self.parent.acf_div = null;
-			 	
 			 	self.parent.tb_remove();
 				
 			</script>
 			<?php
 			exit;
 		} 
-		else 
-		{
-			return $html;
-		}
-		
 	}
 		
+	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	html
+	*
+	*	@author Elliot Condon
+	*	@since 2.0.6
+	* 
+	*-------------------------------------------------------------------------------------*/
 	
 	function html($field)
 	{
 		
 		$class = "";
-		$file = "";
+		$file_src = "";
 		
-		if($field->value != '')
+		if($field->value != '' && is_numeric($field->value))
 		{
-			$file = $field->value;
-			$class = " active";
-		}
-		
-		if(!isset($field->options['save_format'])){$field->options['save_format'] = 'url';}
-		
-		echo '<div class="acf_file_uploader'.$class.'">';
-			echo '<a href="#" class="remove_file"></a>';
-			if($field->options['save_format'] == 'id')
-			{
-				$file_src = wp_get_attachment_url($field->value);
-				echo '<p class="file"><span>'.$file_src.'</span> <input type="button" class="button" value="'.__('Remove File','acf').'" /></p>';
-			}
-			else
-			{
-				echo '<p class="file"><span>'.$field->value.'</span> <input type="button" class="button" value="'.__('Remove File','acf').'" /></p>';
-			}
+			$file_src = wp_get_attachment_url($field->value);
 			
-			echo '<input class="value '.$field->options['save_format'].'" type="hidden" name="'.$field->input_name.'" value="'.$field->value.'" />';
+			if($file_src)
+			{
+				$class = " active";
+			}
+		}
+
+
+		echo '<div class="acf_file_uploader'.$class.'">';
+			echo '<p class="file"><span class="file_url">'.$file_src.'</span> <input type="button" class="button" value="'.__('Remove File','acf').'" /></p>';
+			echo '<input class="value" type="hidden" name="'.$field->input_name.'" value="'.$field->value.'" />';
 			echo '<p class="no_file">'.__('No File selected','acf').'. <input type="button" class="button" value="'.__('Add File','acf').'" /></p>';
 		echo '</div>';
 
 	}
+	
+	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	Format Value
+	*	- this is called from api.php
+	*
+	*	@author Elliot Condon
+	*	@since 2.0.6
+	* 
+	*-------------------------------------------------------------------------------------*/
+
+	function format_value_for_api($value, $options = null)
+	{
+
+		$format = isset($options['save_format']) ? $options['save_format'] : 'url';
+		
+		if($format == 'url')
+		{
+			$value = wp_get_attachment_url($value);
+		}
+		
+		return $value;
+		
+	}
+	
 	
 }
 

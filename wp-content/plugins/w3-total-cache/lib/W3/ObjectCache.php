@@ -103,27 +103,33 @@ class W3_ObjectCache {
     var $_debug = false;
 
     /**
+     * Returns instance. for backward compatibility with 0.9.2.3 version of /wp-content files
+     *
+     * @return W3_ObjectCache
+     */
+    function &instance() {
+        return w3_instance('W3_ObjectCache');
+    }
+
+    /**
      * PHP5 style constructor
      */
     function __construct() {
-        require_once W3TC_LIB_W3_DIR . '/Config.php';
+        global $_wp_using_ext_object_cache;
 
-        $this->_config = & W3_Config::instance();
+        $this->_config = & w3_instance('W3_Config');
         $this->_lifetime = $this->_config->get_integer('objectcache.lifetime');
         $this->_debug = $this->_config->get_boolean('objectcache.debug');
+        $this->_caching = $_wp_using_ext_object_cache = $this->_can_cache();
 
         $this->global_groups = $this->_config->get_array('objectcache.groups.global');
         $this->nonpersistent_groups = $this->_config->get_array('objectcache.groups.nonpersistent');
 
-        $this->_caching = $this->_can_cache();
-
-        $GLOBALS['_wp_using_ext_object_cache'] = $this->_caching;
-
         if ($this->_can_ob()) {
             ob_start(array(
-                &$this,
-                'ob_callback'
-            ));
+                          &$this,
+                          'ob_callback'
+                     ));
         }
     }
 
@@ -132,22 +138,6 @@ class W3_ObjectCache {
      */
     function W3_ObjectCache() {
         $this->__construct();
-    }
-
-    /**
-     * Returns onject instance
-     *
-     * @return W3_ObjectCache
-     */
-    function &instance() {
-        static $instances = array();
-
-        if (!isset($instances[0])) {
-            $class = __CLASS__;
-            $instances[0] = & new $class();
-        }
-
-        return $instances[0];
     }
 
     /**
@@ -163,39 +153,26 @@ class W3_ObjectCache {
         }
 
         $key = $this->_get_cache_key($id, $group);
+        $internal = isset($this->cache[$key]);
 
-        $caching = true;
-        $internal = true;
-        $reason = '';
-
-        if (isset($this->cache[$key])) {
-            if (is_object($this->cache[$key])) {
-                $value = wp_clone($this->cache[$key]);
-            } else {
-                $value = $this->cache[$key];
-            }
+        if ($internal) {
+            $value = $this->cache[$key];
+        } elseif ($this->_caching && !in_array($group, $this->nonpersistent_groups)) {
+            $cache = & $this->_get_cache();
+            $value = $cache->get($key);
         } else {
-            $caching = $this->_can_cache2($id, $group, $reason);
-            $internal = false;
-
-            if ($caching) {
-                $cache = & $this->_get_cache();
-                $value = $cache->get($key);
-            } else {
-                $value = false;
-            }
-
-            if (is_object($value)) {
-                $this->cache[$key] = wp_clone($value);
-            } else {
-                $this->cache[$key] = $value;
-            }
+            $value = false;
         }
 
         if ($value === null) {
             $value = false;
         }
 
+        if (is_object($value)) {
+            $value = wp_clone($value);
+        }
+
+        $this->cache[$key] = $value;
         $this->cache_total++;
 
         if ($value !== false) {
@@ -220,8 +197,6 @@ class W3_ObjectCache {
             $this->debug_info[] = array(
                 'id' => $id,
                 'group' => $group,
-                'caching' => $caching,
-                'reason' => $reason,
                 'cached' => $cached,
                 'internal' => $internal,
                 'data_size' => ($value ? strlen(serialize($value)) : 0),
@@ -248,15 +223,9 @@ class W3_ObjectCache {
             $data = wp_clone($data);
         }
 
-        if (isset($this->cache[$key]) && $this->cache[$key] === $data) {
-            return true;
-        }
-
         $this->cache[$key] = $data;
 
-        $reason = '';
-
-        if ($this->_can_cache2($id, $group, $reason)) {
+        if ($this->_caching && !in_array($group, $this->nonpersistent_groups)) {
             $cache = & $this->_get_cache();
 
             return $cache->set($key, $data, ($expire ? $expire : $this->_lifetime));
@@ -270,16 +239,19 @@ class W3_ObjectCache {
      *
      * @param string $id
      * @param string $group
+     * @param bool $force
      * @return boolean
      */
-    function delete($id, $group = 'default') {
+    function delete($id, $group = 'default', $force = false) {
+        if (!$force && $this->get($id, $group) === false) {
+            return false;
+        }
+
         $key = $this->_get_cache_key($id, $group);
 
         unset($this->cache[$key]);
 
-        $reason = '';
-
-        if ($this->_can_cache2($id, $group, $reason)) {
+        if ($this->_caching && !in_array($group, $this->nonpersistent_groups)) {
             $cache = & $this->_get_cache();
 
             return $cache->delete($key);
@@ -323,6 +295,19 @@ class W3_ObjectCache {
     }
 
     /**
+     * Reset keys
+     *
+     * @return boolean
+     */
+    function reset() {
+        global $_wp_using_ext_object_cache;
+
+        $_wp_using_ext_object_cache = $this->_caching;
+
+        return true;
+    }
+
+    /**
      * Flush cache
      *
      * @return boolean
@@ -330,9 +315,13 @@ class W3_ObjectCache {
     function flush() {
         $this->cache = array();
 
-        $cache = & $this->_get_cache();
+        if ($this->_caching) {
+            $cache = & $this->_get_cache();
 
-        return $cache->flush();
+            return $cache->flush();
+        }
+
+        return true;
     }
 
     /**
@@ -377,6 +366,51 @@ class W3_ObjectCache {
         }
 
         return $buffer;
+    }
+
+    /**
+     * Print Object Cache stats
+     *
+     * @return void
+     */
+    function stats()
+    {
+        echo '<h2>Summary</h2>';
+        echo '<p>';
+        echo '<strong>Engine</strong>: ' . w3_get_engine_name($this->_config->get_string('objectcache.engine')) . '<br />';
+        echo '<strong>Caching</strong>: ' . ($this->_caching ? 'enabled' : 'disabled') . '<br />';
+
+        if (!$this->_caching) {
+            echo '<strong>Reject reason</strong>: ' . $this->_cache_reject_reason . '<br />';
+        }
+
+        echo '<strong>Total calls</strong>: ' . $this->cache_total . '<br />';
+        echo '<strong>Cache hits</strong>: ' . $this->cache_hits . '<br />';
+        echo '<strong>Cache misses</strong>: ' . $this->cache_misses . '<br />';
+        echo '<strong>Total time</strong>: '. round($this->time_total, 4) . 's';
+        echo '</p>';
+
+        echo '<h2>Cache info</h2>';
+
+        if ($this->_debug) {
+            echo '<table cellpadding="0" cellspacing="3" border="1">';
+            echo '<tr><td>#</td><td>Status</td><td>Source</td><td>Data size (b)</td><td>Query time (s)</td><td>ID:Group</td></tr>';
+
+            foreach ($this->debug_info as $index => $debug) {
+                echo '<tr>';
+                echo '<td>' . ($index + 1) . '</td>';
+                echo '<td>' . ($debug['cached'] ? 'cached' : 'not cached') . '</td>';
+                echo '<td>' . ($debug['internal'] ? 'internal' : 'persistent') . '</td>';
+                echo '<td>' . $debug['data_size'] . '</td>';
+                echo '<td>' . round($debug['time'], 4) . '</td>';
+                echo '<td>' . sprintf('%s:%s', $debug['id'], $debug['group']) . '</td>';
+                echo '</tr>';
+            }
+
+            echo '</table>';
+        } else {
+            echo '<p>Enable debug mode.</p>';
+        }
     }
 
     /**
@@ -450,7 +484,7 @@ class W3_ObjectCache {
             }
 
             require_once W3TC_LIB_W3_DIR . '/Cache.php';
-            $cache[0] = & W3_Cache::instance($engine, $engineConfig);
+            @$cache[0] = & W3_Cache::instance($engine, $engineConfig);
         }
 
         return $cache[0];
@@ -472,103 +506,12 @@ class W3_ObjectCache {
         }
 
         /**
-         * Check for DONOTCACHCEOBJECT constant
+         * Check for DONOTCACHEOBJECT constant
          */
-        if (defined('DONOTCACHCEOBJECT') && DONOTCACHCEOBJECT) {
-            $this->_cache_reject_reason = 'DONOTCACHCEOBJECT constant is defined';
+        if (defined('DONOTCACHEOBJECT') && DONOTCACHEOBJECT) {
+            $this->_cache_reject_reason = 'DONOTCACHEOBJECT constant is defined';
 
             return false;
-        }
-
-        /**
-         * Skip if admin
-         */
-        if ($this->_config->get_boolean('objectcache.reject.admin') && defined('WP_ADMIN')) {
-            $this->_cache_reject_reason = 'wp-admin';
-
-            return false;
-        }
-
-        /**
-         * Check request URI
-         */
-        if (!$this->_check_request_uri()) {
-            $this->_cache_reject_reason = 'Request URI is rejected';
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Check if caching allowed runtime
-     *
-     * @param string $id
-     * @param string $group
-     * @param string $cache_reject_reason
-     * @return boolean
-     */
-    function _can_cache2($id, $group, &$cache_reject_reason) {
-        /**
-         * Skip if disabled
-         */
-        if (!$this->_caching) {
-            $cache_reject_reason = $this->_cache_reject_reason;
-
-            return false;
-        }
-
-        /**
-         * Check for DONOTCACHCEOBJECT constant
-         */
-        if (defined('DONOTCACHCEOBJECT') && DONOTCACHCEOBJECT) {
-            $cache_reject_reason = 'DONOTCACHCEOBJECT constant is defined';
-
-            return false;
-        }
-
-        /**
-         * Skip if key in non-persistent group
-         */
-        if (!$group) {
-            $group = 'default';
-        }
-
-        if (in_array($group, $this->nonpersistent_groups)) {
-            $cache_reject_reason = 'Non-persistent group';
-
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Check request URI
-     *
-     * @return boolean
-     */
-    function _check_request_uri() {
-        $auto_reject_uri = array(
-            'wp-login',
-            'wp-register'
-        );
-
-        foreach ($auto_reject_uri as $uri) {
-            if (strstr($_SERVER['REQUEST_URI'], $uri) !== false) {
-                return false;
-            }
-        }
-
-        $reject_uri = $this->_config->get_array('objectcache.reject.uri');
-        $reject_uri = array_map('w3_parse_path', $reject_uri);
-
-        foreach ($reject_uri as $expr) {
-            $expr = trim($expr);
-            if ($expr != '' && preg_match('~' . $expr . '~i', $_SERVER['REQUEST_URI'])) {
-                return false;
-            }
         }
 
         return true;
@@ -590,19 +533,12 @@ class W3_ObjectCache {
         /**
          * Debug should be enabled
          */
-        if (!$this->_config->get_boolean('objectcache.debug')) {
+        if (!$this->_debug) {
             return false;
         }
 
         /**
-         * Skip if admin
-         */
-        if (defined('WP_ADMIN')) {
-            return false;
-        }
-
-        /**
-         * Skip if doint AJAX
+         * Skip if doing AJAX
          */
         if (defined('DOING_AJAX')) {
             return false;
@@ -654,16 +590,34 @@ class W3_ObjectCache {
     function _get_debug_info() {
         $debug_info = "<!-- W3 Total Cache: Object Cache debug info:\r\n";
         $debug_info .= sprintf("%s%s\r\n", str_pad('Engine: ', 20), w3_get_engine_name($this->_config->get_string('objectcache.engine')));
+        $debug_info .= sprintf("%s%s\r\n", str_pad('Caching: ', 20), ($this->_caching ? 'enabled' : 'disabled'));
+
+        if (!$this->_caching) {
+            $debug_info .= sprintf("%s%s\r\n", str_pad('Reject reason: ', 20), $this->_cache_reject_reason);
+        }
+
         $debug_info .= sprintf("%s%d\r\n", str_pad('Total calls: ', 20), $this->cache_total);
         $debug_info .= sprintf("%s%d\r\n", str_pad('Cache hits: ', 20), $this->cache_hits);
         $debug_info .= sprintf("%s%d\r\n", str_pad('Cache misses: ', 20), $this->cache_misses);
         $debug_info .= sprintf("%s%.4f\r\n", str_pad('Total time: ', 20), $this->time_total);
 
         $debug_info .= "W3TC Object Cache info:\r\n";
-        $debug_info .= sprintf("%s | %s | %s | %s | %s | %s | %s\r\n", str_pad('#', 5, ' ', STR_PAD_LEFT), str_pad('Caching (Reject reason)', 30, ' ', STR_PAD_BOTH), str_pad('Status', 15, ' ', STR_PAD_BOTH), str_pad('Source', 15, ' ', STR_PAD_BOTH), str_pad('Data size (b)', 13, ' ', STR_PAD_LEFT), str_pad('Query time (s)', 14, ' ', STR_PAD_LEFT), 'ID:Group');
+        $debug_info .= sprintf("%s | %s | %s | %s | %s | %s\r\n",
+                               str_pad('#', 5, ' ', STR_PAD_LEFT),
+                               str_pad('Status', 15, ' ', STR_PAD_BOTH),
+                               str_pad('Source', 15, ' ', STR_PAD_BOTH),
+                               str_pad('Data size (b)', 13, ' ', STR_PAD_LEFT),
+                               str_pad('Query time (s)', 14, ' ', STR_PAD_LEFT),
+                               'ID:Group');
 
         foreach ($this->debug_info as $index => $debug) {
-            $debug_info .= sprintf("%s | %s | %s | %s | %s | %s | %s\r\n", str_pad($index + 1, 5, ' ', STR_PAD_LEFT), str_pad(($debug['caching'] ? 'enabled' : sprintf('disabled (%s)', $debug['reason'])), 30, ' ', STR_PAD_BOTH), str_pad(($debug['cached'] ? 'cached' : 'not cached'), 15, ' ', STR_PAD_BOTH), str_pad(($debug['internal'] ? 'internal' : 'persistent'), 15, ' ', STR_PAD_BOTH), str_pad($debug['data_size'], 13, ' ', STR_PAD_LEFT), str_pad(round($debug['time'], 4), 14, ' ', STR_PAD_LEFT), sprintf('%s:%s', $debug['id'], $debug['group']));
+            $debug_info .= sprintf("%s | %s | %s | %s | %s | %s\r\n",
+                                   str_pad($index + 1, 5, ' ', STR_PAD_LEFT),
+                                   str_pad(($debug['cached'] ? 'cached' : 'not cached'), 15, ' ', STR_PAD_BOTH),
+                                   str_pad(($debug['internal'] ? 'internal' : 'persistent'), 15, ' ', STR_PAD_BOTH),
+                                   str_pad($debug['data_size'], 13, ' ', STR_PAD_LEFT),
+                                   str_pad(round($debug['time'], 4), 14, ' ', STR_PAD_LEFT),
+                                   sprintf('%s:%s', $debug['id'], $debug['group']));
         }
 
         $debug_info .= '-->';

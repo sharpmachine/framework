@@ -41,37 +41,16 @@ class W3_Minifier {
 
     /**
      * PHP5-style constructor
-     *
-     * @return void
      */
     function __construct() {
-        require_once W3TC_LIB_W3_DIR . '/Config.php';
-        $this->_config = & W3_Config::instance();
+        $this->_config = & w3_instance('W3_Config');
     }
 
     /**
      * PHP4-style constructor
-     *
-     * @return void
      */
     function W3_Minifier() {
         $this->__construct();
-    }
-
-    /**
-     * Returns instance of object
-     *
-     * @return W3_Minifier
-     */
-    function &instance() {
-        static $instance = null;
-
-        if (!$instance) {
-            $class = __CLASS__;
-            $instance = & new $class();
-        }
-
-        return $instance;
     }
 
     /**
@@ -88,7 +67,7 @@ class W3_Minifier {
      * Returns true if minifier available
      *
      * @param string $engine
-     * @return void
+     * @return boolean
      */
     function available($engine) {
         switch ($engine) {
@@ -286,12 +265,20 @@ class W3_Minifier {
         }
 
         if ($this->_config->get_boolean('browsercache.enabled') && ($this->_config->get_boolean('browsercache.cssjs.replace') || $this->_config->get_boolean('browsercache.html.replace') || $this->_config->get_boolean('browsercache.other.replace'))) {
-            require_once W3TC_LIB_W3_DIR . '/Plugin/BrowserCache.php';
-            $w3_plugin_browsercache =& W3_Plugin_Browsercache::instance();
+            $w3_plugin_browsercache = & w3_instance('W3_Plugin_BrowserCache');
 
             $options = array_merge($options, array(
                 'browserCacheId' => $w3_plugin_browsercache->get_replace_id(),
                 'browserCacheExtensions' => $w3_plugin_browsercache->get_replace_extensions()
+            ));
+        }
+
+        if ($this->_config->get_boolean('cdn.enabled') && $this->_config->get_boolean('cdn.minify.enable')) {
+            $w3_plugin_cdn =& w3_instance('W3_Plugin_CdnCommon');
+            $cdn =& $w3_plugin_cdn->get_cdn();
+
+            $options = array_merge($options, array(
+                'prependAbsolutePathCallback' => array(&$cdn, 'get_prepend_path'),
             ));
         }
 

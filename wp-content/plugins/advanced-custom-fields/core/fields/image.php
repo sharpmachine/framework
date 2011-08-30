@@ -28,12 +28,13 @@ class acf_Image
 	 * @since 2.0.3
 	 * 
 	 ---------------------------------------------------------------------------------------------*/
-	function options_html($key, $options)
+	function options_html($key, $field)
 	{
+		$options = $field->options;
 		?>
 		<tr class="field_option field_option_image">
 			<td class="label">
-				<label><?php _e("Save Format",'acf'); ?></label>
+				<label><?php _e("Return Value",'acf'); ?></label>
 			</td>
 			<td>
 				<?php 
@@ -119,30 +120,6 @@ class acf_Image
 	
 	
 	/*---------------------------------------------------------------------------------------------
-	 * rename_buttons - RENAMES MEDIA THICKBOX BUTTONS
-	 *
-	 * @author Elliot Condon
-	 * @since 1.1.4
-	 * 
-	 ---------------------------------------------------------------------------------------------
-	function admin_init() 
-	{
-		//if(isset($_GET["acf_type"]) && $_GET["acf_type"] == "image")
-		//{
-		//	add_filter('gettext', array($this, 'rename_buttons'), 1, 3);
-		//}
-	}
-	
-	function rename_buttons($translated_text, $source_text, $domain) {
-		if ($source_text == 'Insert into Post') {
-			return __('Select Image', 'acf' );
-		}
-		
-		return $translated_text;
-	}*/
-	
-	
-	/*---------------------------------------------------------------------------------------------
 	 * media_send_to_editor - SEND IMAGE TO ACF DIV
 	 *
 	 * @author Elliot Condon
@@ -161,33 +138,19 @@ class acf_Image
 			?>
 			<script type="text/javascript">
 				
-				if(self.parent.acf_div.find('input.value').hasClass('id'))
-				{
-					self.parent.acf_div.find('input.value').val('<?php echo $id; ?>');
-				}
-				else
-				{
-					self.parent.acf_div.find('input.value').val('<?php echo $file_src; ?>');
-				}
-				
-				
+				self.parent.acf_div.find('input.value').val('<?php echo $id; ?>');
 			 	self.parent.acf_div.find('img').attr('src','<?php echo $file_src; ?>');
 			 	self.parent.acf_div.addClass('active');
 			 	
 			 	// reset acf_div and return false
 			 	self.parent.acf_div = null;
-			 	
 			 	self.parent.tb_remove();
 				
 			</script>
 			<?php
 			exit;
 		} 
-		else 
-		{
-			return $html;
-		}
-		
+
 	}
 	
 	
@@ -195,32 +158,53 @@ class acf_Image
 	{
 		
 		$class = "";
+		$file_src = "";
 		
-		if($field->value != '')
+		if($field->value != '' && is_numeric($field->value))
 		{
-			$class = " active";
+			$file_src = wp_get_attachment_url($field->value);
+			
+			if($file_src)
+			{
+				$class = " active";
+			}
 		}
-		
-		if(!isset($field->options['save_format'])){$field->options['save_format'] = 'url';}
+
 
 		echo '<div class="acf_image_uploader'.$class.'">';
 			echo '<a href="#" class="remove_image"></a>';
-			if($field->options['save_format'] == 'id')
-			{
-				$file_src = wp_get_attachment_url($field->value);
-				echo '<img src="'.$file_src.'" alt=""/>';
-			}
-			else
-			{
-				echo '<img src="'.$field->value.'" alt=""/>';
-			}
-			
-			echo '<input class="value '.$field->options['save_format'].'" type="hidden" name="'.$field->input_name.'" value="'.$field->value.'" />';
+			echo '<img src="'.$file_src.'" alt=""/>';	
+			echo '<input class="value" type="hidden" name="'.$field->input_name.'" value="'.$field->value.'" />';
 			echo '<p>'.__('No image selected','acf').'. <input type="button" class="button" value="'.__('Add Image','acf').'" /></p>';
 		echo '</div>';
 
 	}
 	
+	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	Format Value
+	*	- this is called from api.php
+	*
+	*	@author Elliot Condon
+	*	@since 2.0.6
+	* 
+	*-------------------------------------------------------------------------------------*/
+
+	function format_value_for_api($value, $options)
+	{
+		
+		$format = isset($options['save_format']) ? $options['save_format'] : 'url';
+		
+		if($format == 'url')
+		{
+			$value = wp_get_attachment_url($value);
+		}
+		
+		return $value;
+		
+	}
+		
 }
 
 ?>

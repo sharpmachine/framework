@@ -3,10 +3,14 @@
 /**
  * W3 CDN Netdna Class
  */
-require_once W3TC_LIB_W3_DIR . '/Cdn/Mirror.php';
+if (!defined('ABSPATH')) {
+    die();
+}
 
 define('W3TC_CDN_MIRROR_NETDNA_TZ', 'America/Los_Angeles');
 define('W3TC_CDN_MIRROR_NETDNA_URL', 'http://api.netdna.com/xmlrpc/cache');
+
+require_once W3TC_LIB_W3_DIR . '/Cdn/Mirror.php';
 
 /**
  * Class W3_Cdn_Mirror_Netdna
@@ -103,29 +107,6 @@ class W3_Cdn_Mirror_Netdna extends W3_Cdn_Mirror {
         }
 
         return !$this->_is_error($results);
-    }
-
-    /**
-     * Tests NetDNA
-     *
-     * @param string $error
-     * @return bool
-     */
-    function test(&$error) {
-        if (!parent::test($error)) {
-            return false;
-        }
-
-        $results = array();
-        $files = array('' => 'purge_test_' . time());
-
-        if (!$this->purge($files, $results) && isset($results[0]['error'])) {
-            $error = $results[0]['error'];
-
-            return false;
-        }
-
-        return true;
     }
 
     /**

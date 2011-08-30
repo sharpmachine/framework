@@ -3,18 +3,9 @@
 /**
  * W3 CDN Base class
  */
-
-if (!defined('W3TC_CDN_RESULT_HALT')) {
-    define('W3TC_CDN_RESULT_HALT', -1);
-}
-
-if (!defined('W3TC_CDN_RESULT_ERROR')) {
-    define('W3TC_CDN_RESULT_ERROR', 0);
-}
-
-if (!defined('W3TC_CDN_RESULT_OK')) {
-    define('W3TC_CDN_RESULT_OK', 1);
-}
+define('W3TC_CDN_RESULT_HALT', -1);
+define('W3TC_CDN_RESULT_ERROR', 0);
+define('W3TC_CDN_RESULT_OK', 1);
 
 /**
  * Class W3_Cdn_Base
@@ -249,6 +240,25 @@ class W3_Cdn_Base {
     }
 
     /**
+     * Returns prepend path
+     *
+     * @param string $path
+     * @return string
+     */
+    function get_prepend_path($path) {
+        $domain = $this->get_domain($path);
+
+        if ($domain) {
+            $scheme = $this->_get_scheme();
+            $url = sprintf('%s://%s', $scheme, $domain);
+
+            return $url;
+        }
+
+        return false;
+    }
+
+    /**
      * Formats URL
      *
      * @param string $path
@@ -330,6 +340,8 @@ class W3_Cdn_Base {
      * @return array
      */
     function _get_headers($file) {
+        require_once W3TC_INC_DIR . '/functions/mime.php';
+
         $mime_type = w3_get_mime_type($file);
         $last_modified = time();
 
@@ -346,6 +358,10 @@ class W3_Cdn_Base {
 
             if ($this->cache_config[$mime_type]['w3tc']) {
                 $headers['X-Powered-By'] = W3TC_POWERED_BY;
+            }
+
+            if ($this->cache_config[$mime_type]['lifetime']) {
+                $headers['Expires'] = w3_http_date(time() + $this->cache_config[$mime_type]['lifetime']);
             }
 
             switch ($this->cache_config[$mime_type]['cache_control']) {
@@ -431,14 +447,22 @@ class W3_Cdn_Base {
             $_domains = array_map('trim', explode(',', $domain));
 
             foreach ($_domains as $_domain) {
-                if (!$_domain) {
-                    $error = 'Empty domain';
+                $matches = null;
+
+                if (preg_match('~^([a-z0-9\-\.]*)~i', $_domain, $matches)) {
+                    $hostname = $matches[1];
+                } else {
+                    $hostname = $_domain;
+                }
+
+                if (!$hostname) {
+                    $error = 'Empty hostname';
 
                     return false;
                 }
 
-                if (gethostbyname($_domain) === $_domain) {
-                    $error = sprintf('Unable to resolve domain: %s.', $_domain);
+                if (gethostbyname($hostname) === $hostname) {
+                    $error = sprintf('Unable to resolve hostname: %s.', $hostname);
 
                     return false;
                 }

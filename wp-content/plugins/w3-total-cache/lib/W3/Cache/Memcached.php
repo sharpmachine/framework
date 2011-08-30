@@ -3,6 +3,10 @@
 /**
  * PECL Memcached class
  */
+if (!defined('W3TC')) {
+    die();
+}
+
 require_once W3TC_LIB_W3_DIR . '/Cache/Base.php';
 
 /**
@@ -22,7 +26,7 @@ class W3_Cache_Memcached extends W3_Cache_Base {
      * @param array $config
      */
     function __construct($config) {
-        $this->_memcache = & new Memcache();
+        @$this->_memcache = & new Memcache();
 
         if (!empty($config['servers'])) {
             $persistant = isset($config['persistant']) ? (boolean) $config['persistant'] : false;

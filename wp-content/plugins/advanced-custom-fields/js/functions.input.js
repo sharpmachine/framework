@@ -1,210 +1,297 @@
+window.acf_div = null;
+	
 (function($){
 
-	// exists
+	/*----------------------------------------------------------------------
+	*
+	*	Exists
+	*
+	*---------------------------------------------------------------------*/
+	
 	$.fn.exists = function()
 	{
 		return $(this).length>0;
 	};
 	
-	// vars
+	
+	
+	/*----------------------------------------------------------------------
+	*
+	*	WYSIWYG
+	*
+	*---------------------------------------------------------------------*/
 	var wysiwyg_count = 0;
-	var post_id = 0;
-
-	// global vars
-	window.acf_div = null;
 	
-	
-	/*-------------------------------------------
-		Wysiwyg
-	-------------------------------------------*/
-	$.fn.make_acf_wysiwyg = function()
-	{	
-		wysiwyg_count++;
-		var id = 'acf_wysiwyg_'+wysiwyg_count;
-		//alert(id);
-		$(this).find('textarea').attr('id',id);
-		tinyMCE.execCommand('mceAddControl', false, id);
-	};
-	
-	/*-------------------------------------------
-		Datepicker
-	-------------------------------------------*/
-	$.fn.make_acf_datepicker = function()
+	$.fn.setup_wysiwyg = function()
 	{
-		var format = 'dd/mm/yy';
-		if($(this).siblings('input[name="date_format"]').val() != '')
-		{
-			format = $(this).siblings('input[name="date_format"]').val();
-		}
 		
-		$(this).datepicker({ 
-			dateFormat: format 
+		$(this).find('.acf_wysiwyg').each(function(){
+			
+			
+			if($(this).find('table').exists())
+			{
+				//alert('had wysiwyg')
+				$(this).children('span').remove();
+				$(this).children('textarea').removeAttr('aria-hidden').removeAttr('style');
+			}
+			
+			// get a unique id
+			wysiwyg_count = wysiwyg_count + 1;
+			
+			// add id
+			var id = 'acf_wysiwyg_'+wysiwyg_count;
+			$(this).find('textarea').attr('id',id);
+			
+			// create wysiwyg
+			tinyMCE.execCommand('mceAddControl', false, id);
+			
+			
+			
 		});
+	
+	}
+	
+	
+	/*----------------------------------------------------------------------
+	*
+	*	Datepicker
+	*
+	*---------------------------------------------------------------------*/
+	
+	$.fn.setup_datepicker = function()
+	{
+		$(this).find('.acf_datepicker').each(function(){
 		
-		$('#ui-datepicker-div').wrap('<div class="acf_datepicker" />');
+			var format = $(this).attr('data-date_format') ? $(this).attr('data-date_format') : 'dd/mm/yy';
+			
+			$(this).datepicker({ 
+				dateFormat: format 
+			});
+			
+			$('#ui-datepicker-div').wrap('<div class="acf_datepicker" />');
+		
+		});
 	};
 	
 	
-	/*-------------------------------------------
-		Image Upload
-	-------------------------------------------*/
-	$.fn.make_acf_image = function(){
+	/*----------------------------------------------------------------------
+	*
+	*	Image
+	*
+	*---------------------------------------------------------------------*/
 	
-		var div = $(this);
+	$.fn.setup_image = function(){
 		
-		div.find('input.button').click(function(){
+		var post_id = $('input#post_ID').val();
+		
+		$(this).find('.acf_image_uploader').each(function(){
 			
-			// set global var
-			window.acf_div = div;
+			var div = $(this);
 			
+			div.find('input.button').unbind('click').click(function(){
 			
-			// show the thickbox
-			tb_show('Add Image to field', 'media-upload.php?type=image&acf_type=image&TB_iframe=1');
-			
+				// set global var
+				window.acf_div = div;
 				
-			return false;
+				// show the thickbox
+				tb_show('Add Image to field', 'media-upload.php?post_id='+post_id+'&type=image&acf_type=image&TB_iframe=1');
+				
+				return false;
+			});
+			
+			
+			div.find('a.remove_image').unbind('click').click(function()
+			{
+				div.find('input.value').val('');
+				div.removeClass('active');
+			
+				return false;
+			});
+			
 		});
 		
-		
-		div.find('a.remove_image').unbind('click').click(function()
-		{
-			div.find('input.value').val('');
-			div.removeClass('active');
-		
-			return false;
-		});
 	};
 	
 	
-	/*-------------------------------------------
-		File Upload
-	-------------------------------------------*/
-	$.fn.make_acf_file = function(){
+	/*----------------------------------------------------------------------
+	*
+	*	File
+	*
+	*---------------------------------------------------------------------*/
 	
-		var div = $(this);
-
+	$.fn.setup_file = function(){
+	
+		$(this).find('.acf_file_uploader').each(function(){
 		
-		div.find('p.no_file input.button').click(function(){
+			var div = $(this);
+	
+			div.find('p.no_file input.button').click(function(){
+				
+				// set global var
+				window.acf_div = div;
+				
+				// show the thickbox
+				tb_show('Add File to field', 'media-upload.php?type=file&acf_type=file&TB_iframe=1');
+				
+				return false;
+			});
 			
-			// set global var
-			window.acf_div = div;
 			
+			div.find('p.file input.button').unbind('click').click(function()
+			{
+				div.find('input.value').val('');
+				div.removeClass('active');
 			
-			// show the thickbox
-			tb_show('Add File to field', 'media-upload.php?type=file&acf_type=file&TB_iframe=1');
-			
-			
-			return false;
+				return false;
+			});
+		
 		});
-		
-		
-		
-		div.find('p.file input.button').unbind('click').click(function()
-		{
-			div.find('input.value').val('');
-			div.removeClass('active');
-		
-			return false;
-		});
+	
 	};
 
 	
+	/*----------------------------------------------------------------------
+	*
+	*	Repeater
+	*
+	*---------------------------------------------------------------------*/
 	
-	/*-------------------------------------------
-		Repeaters
-	-------------------------------------------*/
-	$.fn.make_acf_repeater = function(){
+	$.fn.setup_repeater = function(){
 		
-		// vars
-		var div = $(this);
-		var add_field = div.find('a#add_field');
-		var row_limit = parseInt(div.children('input[name="row_limit"]').val());
+		$(this).find('.repeater').each(function(){
 		
-		
-		/*-------------------------------------------
-			Add Field Button
-		-------------------------------------------*/
-		add_field.unbind("click").click(function(){
+			var r = $(this);
+			var row_limit = parseInt(r.attr('data-row_limit'));
+			var row_count = r.find('table > tbody > tr').length;
 			
-			var field_count = div.children('table').children('tbody').children('tr').length;
-			if(field_count >= row_limit)
+			// has limit been reached?
+			if(row_count >= row_limit)
+			{
+				r.find('#add_field').attr('disabled','true');
+				//return false;
+			}
+			
+			// sortable
+			if(row_limit > 1){
+				r.make_sortable();
+			}
+			
+			if(row_count == 1)
+			{
+				r.addClass('hide_remove_buttons');
+			}
+		});
+		
+
+		// add field
+		$('.repeater #add_field').die('click');
+		$('.repeater #add_field').live('click', function(){
+			
+			var r = $(this).closest('.repeater');
+			var row_limit = parseInt(r.attr('data-row_limit'));
+			var row_count = r.find('table > tbody > tr').length;
+			
+			// row limit
+			if(row_count >= row_limit)
 			{
 				// reached row limit!
-				
-				add_field.attr('disabled','true');
+				r.find('#add_field').attr('disabled','true');
 				return false;
 			}
 			
-			// clone last tr
-			var new_field = div.children('table').children('tbody').children('tr').last().clone(false);
-			
-			// append to table
-			div.children('table').children('tbody').append(new_field);
-			
-			// set new field
+			// create and add the new field
+			var new_field = r.find('table > tbody > tr:last-child').clone(false);
+			r.find('table > tbody').append(new_field);
 			new_field.reset_values();
 			
-			// re make special fields
-			new_field.make_all_fields();
-						
-			// update order numbers
-			update_order_numbers();
+			// setup sub fields
+			new_field.setup_wysiwyg();
+			new_field.setup_datepicker();
+			new_field.setup_image();
+			new_field.setup_file();
 			
-			if(div.children('table').children('tbody').children('tr').length > 1)
+			r.update_order_numbers();
+			
+			// there is now 1 more row
+			row_count ++;
+			
+			// hide remove buttons if only 1 field
+			if(row_count > 1)
 			{
-				div.removeClass('hide_remove_buttons');
+				r.removeClass('hide_remove_buttons');
 			}
 			
-			if((field_count+1) >= row_limit)
+			// disable the add field button if row limit is reached
+			if((row_count+1) >= row_limit)
 			{
-				// reached row limit!
-				add_field.attr('disabled','true');
+				r.find('#add_field').attr('disabled','true');
 			}
 			
 			return false;
 			
 		});
 		
-		div.add_remove_buttons();
 		
-		if(row_limit > 1){
-			div.make_sortable();
-		}
+		// remove field
+		$('.repeater a.remove_field').die('click');
+		$('.repeater a.remove_field').live('click', function(){
+			
+			var r = $(this).closest('.repeater');
+			var row_count = r.find('table > tbody > tr').length;
+						
+			// needs at least one
+			if(row_count <= 1)
+			{
+				return false;
+			}
+			else if(row_count == 2)
+			{
+				// total fields will be 1 after the tr is removed
+				r.addClass('hide_remove_buttons');
+			}
+			
+			var tr = $(this).closest('tr');
+			
+			tr.find('td').animate({'opacity':'0', 'height' : '0px'}, 300,function(){
+				tr.remove();
+				r.update_order_numbers();
+			});
+			
+			
+			r.find('#add_field').removeAttr('disabled');
+			
+			return false;
+			
+		});
 		
-		
-		if(div.children('table').children('tbody').children('tr').length == 1)
-		{
-			div.addClass('hide_remove_buttons');
-		}
-		
-		var field_count = div.children('table').children('tbody').children('tr').length;
-		if(field_count >= row_limit)
-		{
-			add_field.attr('disabled','true');
-		}
 		
 	};
 	
 	
-	/*-------------------------------------------
-		Update Order Numbers
-	-------------------------------------------*/
-	function update_order_numbers(){
-		$('.postbox#acf_input .repeater').each(function(){
-			$(this).children('table').children('tbody').children('tr').each(function(i){
-				$(this).children('td.order').html(i+1);
-			});
-	
+	/*----------------------------------------------------------------------
+	*
+	*	Update Order Numbers
+	*
+	*---------------------------------------------------------------------*/
+
+	$.fn.update_order_numbers = function(){
+
+		$(this).find('table > tbody > tr').each(function(i){
+			$(this).children('td.order').html(i+1);
 		});
+	
 	}
 	
-	/*-------------------------------------------
-		Sortable
-	-------------------------------------------*/
+	
+	/*----------------------------------------------------------------------
+	*
+	*	Sortable
+	*
+	*---------------------------------------------------------------------*/
 	$.fn.make_sortable = function(){
 		
 		//alert('make sortable');
-		var div = $(this);
+		var r = $(this);
 		
 		var fixHelper = function(e, ui) {
 			ui.children().each(function() {
@@ -213,35 +300,28 @@
 			return ui;
 		};
 		
-		div.children('table').children('tbody').unbind('sortable').sortable({
+		r.find('table > tbody').unbind('sortable').sortable({
 			update: function(event, ui){
-				update_order_numbers();
-				$(this).make_all_fields();
-				//alert('update');
-				},
+				r.update_order_numbers();
+				r.make_all_fields();
+			},
 			handle: 'td.order',
 			helper: fixHelper,
-			//pre process stuff as soon as the element has been lifted
 		    start: function(event, ui)
 		    {
 				//console.log(ui.item);
 				if(ui.item.find('.acf_wysiwyg').exists())
 				{
-					//console.log('aaaah, i found a wysiwyg')
 					var id = ui.item.find('.acf_wysiwyg textarea').attr('id');
-					//alert(tinyMCE.get(id).getContent());
 					tinyMCE.execCommand("mceRemoveControl", false, id);
 				}
 		    },
-		
-		    //post process stuff as soon as the element has been dropped
 		    stop: function(event, ui)
 		    {
 				if(ui.item.find('.acf_wysiwyg').exists())
 				{
 					var id = ui.item.find('.acf_wysiwyg textarea').attr('id');
 					tinyMCE.execCommand("mceAddControl", false, id);
-					//div.make_sortable();
 				}
 		    }
 		});
@@ -249,9 +329,12 @@
 	
 	
 	
-	/*-------------------------------------------
-		Reset Values
-	-------------------------------------------*/
+	/*----------------------------------------------------------------------
+	*
+	*	reset_values
+	*
+	*---------------------------------------------------------------------*/
+	
 	$.fn.reset_values = function(){
 		
 		var div = $(this);
@@ -331,78 +414,17 @@
 		
 	};
 	
-	$.fn.make_all_fields = function()
+	
+	/*----------------------------------------------------------------------
+	*
+	*	Setup ACF
+	*
+	*---------------------------------------------------------------------*/
+	
+	$.fn.setup_acf = function()
 	{
-		var div = $(this);
 		
-		// wysiwyg
-		div.find('.acf_wysiwyg').each(function(){
-			$(this).make_acf_wysiwyg();	
-		});
-		
-		// datepicker
-		div.find('.acf_datepicker').each(function(){
-			$(this).make_acf_datepicker();
-		});
-		
-		// image
-		div.find('.acf_image_uploader').each(function(){
-			$(this).make_acf_image();
-		});
-		
-		// file
-		div.find('.acf_file_uploader').each(function(){
-			$(this).make_acf_file();
-		});
-	};
-	
-	
-	/*-------------------------------------------
-		Remove Field Button
-	-------------------------------------------*/
-	$.fn.add_remove_buttons = function(){
-		$(this).find('a.remove_field').unbind('click').live('click', function(){
-
-			var total_fields = $(this).closest('.repeater').children('table').children('tbody').children('tr').length;
-			
-			// needs at least one
-			if(total_fields <= 1)
-			{
-				return false;
-			}
-			else if(total_fields == 2)
-			{
-				// total fields will be 1 after the tr is removed
-				$(this).parents('.repeater').addClass('hide_remove_buttons');
-			}
-			
-			var tr = $(this).closest('tr');
-			
-			tr.animate({'opacity':'0'}, 300,function(){
-				tr.remove();
-				update_order_numbers();
-			});
-			
-			
-			$(this).closest('.repeater').find('a#add_field').removeAttr('disabled');
-			
-			
-			return false;
-			
-		});
-	};
-	
-	
-	
-	
-	/*-------------------------------------------
-		Document Ready
-	-------------------------------------------*/
-	$(document).ready(function(){
-		
-		
-		post_id = $('form#post input#post_ID').val();
-		var div = $('#acf_input');
+		var div = $('#acf_fields_ajax');
 		
 		
 		if(typeof(tinyMCE) != "undefined")
@@ -419,13 +441,24 @@
 		}
 
 		
-		div.make_all_fields();
+		div.setup_wysiwyg();
+		div.setup_datepicker();
+		div.setup_image();
+		div.setup_file();
+		div.setup_repeater();
+	}
+
+	
+
+	/*----------------------------------------------------------------------
+	*
+	*	Document Ready
+	*
+	*---------------------------------------------------------------------*/
+	
+	$(document).ready(function(){
 		
-		// repeater
-		div.find('.repeater').each(function(){
-			$(this).make_acf_repeater();
-		});
-		
+		$('body').setup_acf();
 		
 	});
 	

@@ -46,8 +46,6 @@ class W3_Config {
         'objectcache.file.locking' => 'boolean',
         'objectcache.memcached.servers' => 'array',
         'objectcache.memcached.persistant' => 'boolean',
-        'objectcache.reject.admin' => 'boolean',
-        'objectcache.reject.uri' => 'array',
         'objectcache.groups.global' => 'array',
         'objectcache.groups.nonpersistent' => 'array',
         'objectcache.lifetime' => 'integer',
@@ -56,12 +54,15 @@ class W3_Config {
         'pgcache.debug' => 'boolean',
         'pgcache.engine' => 'string',
         'pgcache.file.gc' => 'integer',
+        'pgcache.file.nfs' => 'boolean',
         'pgcache.file.locking' => 'boolean',
         'pgcache.memcached.servers' => 'array',
         'pgcache.memcached.persistant' => 'boolean',
+        'pgcache.check.domain' => 'boolean',
         'pgcache.cache.query' => 'boolean',
         'pgcache.cache.home' => 'boolean',
         'pgcache.cache.feed' => 'boolean',
+        'pgcache.cache.ssl' => 'boolean',
         'pgcache.cache.404' => 'boolean',
         'pgcache.cache.flush' => 'boolean',
         'pgcache.cache.headers' => 'array',
@@ -94,6 +95,7 @@ class W3_Config {
         'minify.debug' => 'boolean',
         'minify.engine' => 'string',
         'minify.file.gc' => 'integer',
+        'minify.file.nfs' => 'boolean',
         'minify.file.locking' => 'boolean',
         'minify.memcached.servers' => 'array',
         'minify.memcached.persistant' => 'boolean',
@@ -158,6 +160,7 @@ class W3_Config {
         'minify.reject.logged' => 'boolean',
         'minify.reject.ua' => 'array',
         'minify.reject.uri' => 'array',
+        'minify.error.last' => 'string',
         'minify.error.notification' => 'string',
         'minify.error.notification.last' => 'integer',
 
@@ -179,17 +182,6 @@ class W3_Config {
         'cdn.force.rewrite' => 'boolean',
         'cdn.autoupload.enabled' => 'boolean',
         'cdn.autoupload.interval' => 'integer',
-        'cdn.mirror.domain' => 'array',
-        'cdn.mirror.ssl' => 'string',
-        'cdn.netdna.apiid' => 'string',
-        'cdn.netdna.apikey' => 'string',
-        'cdn.netdna.domain' => 'array',
-        'cdn.netdna.ssl' => 'string',
-        'cdn.cotendo.username' => 'string',
-        'cdn.cotendo.password' => 'string',
-        'cdn.cotendo.zones' => 'array',
-        'cdn.cotendo.domain' => 'array',
-        'cdn.cotendo.ssl' => 'string',
         'cdn.ftp.host' => 'string',
         'cdn.ftp.port' => 'integer',
         'cdn.ftp.user' => 'string',
@@ -225,6 +217,21 @@ class W3_Config {
         'cdn.azure.container' => 'string',
         'cdn.azure.cname' => 'array',
         'cdn.azure.ssl' => 'string',
+        'cdn.mirror.domain' => 'array',
+        'cdn.mirror.ssl' => 'string',
+        'cdn.netdna.apiid' => 'string',
+        'cdn.netdna.apikey' => 'string',
+        'cdn.netdna.domain' => 'array',
+        'cdn.netdna.ssl' => 'string',
+        'cdn.cotendo.username' => 'string',
+        'cdn.cotendo.password' => 'string',
+        'cdn.cotendo.zones' => 'array',
+        'cdn.cotendo.domain' => 'array',
+        'cdn.cotendo.ssl' => 'string',
+        'cdn.edgecast.account' => 'string',
+        'cdn.edgecast.token' => 'string',
+        'cdn.edgecast.domain' => 'array',
+        'cdn.edgecast.ssl' => 'string',
         'cdn.reject.admins' => 'boolean',
         'cdn.reject.ua' => 'array',
         'cdn.reject.uri' => 'array',
@@ -354,8 +361,6 @@ class W3_Config {
             '127.0.0.1:11211'
         ),
         'objectcache.memcached.persistant' => true,
-        'objectcache.reject.admin' => true,
-        'objectcache.reject.uri' => array(),
         'objectcache.groups.global' => array(
             'users',
             'userlogins',
@@ -380,14 +385,17 @@ class W3_Config {
         'pgcache.debug' => false,
         'pgcache.engine' => 'file_generic',
         'pgcache.file.gc' => 3600,
+        'pgcache.file.nfs' => false,
         'pgcache.file.locking' => false,
         'pgcache.memcached.servers' => array(
             '127.0.0.1:11211'
         ),
         'pgcache.memcached.persistant' => true,
+        'pgcache.check.domain' => true,
         'pgcache.cache.query' => true,
         'pgcache.cache.home' => true,
-        'pgcache.cache.feed' => true,
+        'pgcache.cache.feed' => false,
+        'pgcache.cache.ssl' => true,
         'pgcache.cache.404' => false,
         'pgcache.cache.flush' => false,
         'pgcache.cache.headers' => array(
@@ -397,7 +405,8 @@ class W3_Config {
             'P3P'
         ),
         'pgcache.accept.uri' => array(
-            'sitemap\.xml(\.gz)?'
+            'sitemap(_index)?\.xml(\.gz)?',
+            '[a-z0-9_\-]+-sitemap([0-9]+)?\.xml(\.gz)?'
         ),
         'pgcache.accept.files' => array(
             'wp-comments-popup.php',
@@ -436,6 +445,7 @@ class W3_Config {
         'minify.debug' => false,
         'minify.engine' => 'file',
         'minify.file.gc' => 86400,
+        'minify.file.nfs' => false,
         'minify.file.locking' => false,
         'minify.memcached.servers' => array(
             '127.0.0.1:11211'
@@ -505,6 +515,7 @@ class W3_Config {
         'minify.reject.logged' => false,
         'minify.reject.ua' => array(),
         'minify.reject.uri' => array(),
+        'minify.error.last' => '',
         'minify.error.notification' => '',
         'minify.error.notification.last' => 0,
 
@@ -521,7 +532,8 @@ class W3_Config {
         'cdn.custom.files' => array(
             'favicon.ico',
             'wp-content/gallery/*',
-            'wp-content/uploads/avatars/*'
+            'wp-content/uploads/avatars/*',
+            'wp-content/plugins/wordpress-seo/css/xml-sitemap.xsl'
         ),
         'cdn.import.external' => false,
         'cdn.import.files' => '*.jpg;*.png;*.gif;*.avi;*.wmv;*.mpg;*.wav;*.mp3;*.txt;*.rtf;*.doc;*.xls;*.rar;*.zip;*.tar;*.gz;*.exe',
@@ -530,17 +542,6 @@ class W3_Config {
         'cdn.force.rewrite' => false,
         'cdn.autoupload.enabled' => false,
         'cdn.autoupload.interval' => 3600,
-        'cdn.mirror.domain' => array(),
-        'cdn.mirror.ssl' => 'auto',
-        'cdn.netdna.apiid' => '',
-        'cdn.netdna.apikey' => '',
-        'cdn.netdna.domain' => array(),
-        'cdn.netdna.ssl' => 'auto',
-        'cdn.cotendo.username' => '',
-        'cdn.cotendo.password' => '',
-        'cdn.cotendo.zones' => array(),
-        'cdn.cotendo.domain' => array(),
-        'cdn.cotendo.ssl' => 'auto',
         'cdn.ftp.host' => '',
         'cdn.ftp.port' => 21,
         'cdn.ftp.user' => '',
@@ -576,6 +577,21 @@ class W3_Config {
         'cdn.azure.container' => '',
         'cdn.azure.cname' => array(),
         'cdn.azure.ssl' => 'auto',
+        'cdn.mirror.domain' => array(),
+        'cdn.mirror.ssl' => 'auto',
+        'cdn.netdna.apiid' => '',
+        'cdn.netdna.apikey' => '',
+        'cdn.netdna.domain' => array(),
+        'cdn.netdna.ssl' => 'auto',
+        'cdn.cotendo.username' => '',
+        'cdn.cotendo.password' => '',
+        'cdn.cotendo.zones' => array(),
+        'cdn.cotendo.domain' => array(),
+        'cdn.cotendo.ssl' => 'auto',
+        'cdn.edgecast.account' => '',
+        'cdn.edgecast.token' => '',
+        'cdn.edgecast.domain' => array(),
+        'cdn.edgecast.ssl' => 'auto',
         'cdn.reject.admins' => false,
         'cdn.reject.ua' => array(),
         'cdn.reject.uri' => array(),
@@ -597,7 +613,8 @@ class W3_Config {
         'browsercache.no404wp' => false,
         'browsercache.no404wp.exceptions' => array(
             'robots\.txt',
-            'sitemap(_index|[0-9]+)?\.xml(\.gz)?'
+            'sitemap(_index)?\.xml(\.gz)?',
+            '[a-z0-9_\-]+-sitemap([0-9]+)?\.xml(\.gz)?'
         ),
         'browsercache.cssjs.compression' => true,
         'browsercache.cssjs.expires' => false,
@@ -628,7 +645,7 @@ class W3_Config {
         'mobile.rgroups' => array(
             'high' => array(
                 'theme' => '',
-                'enabled' => true,
+                'enabled' => false,
                 'redirect' => '',
                 'agents' => array(
                     'acer\ s100',
@@ -672,7 +689,7 @@ class W3_Config {
             ),
             'low' => array(
                 'theme' => '',
-                'enabled' => true,
+                'enabled' => false,
                 'redirect' => '',
                 'agents' => array(
                     '2\.0\ mmp',
@@ -785,7 +802,7 @@ class W3_Config {
         'referrer.rgroups' => array(
             'search_engines' => array(
                 'theme' => '',
-                'enabled' => true,
+                'enabled' => false,
                 'redirect' => '',
                 'referrers' => array(
                     'google\.com',
@@ -1266,7 +1283,7 @@ class W3_Config {
         if (is_numeric($key) && (string) (int) $key === (string) $key) {
             @fputs($fp, sprintf("%d => ", $key));
         } else {
-            @fputs($fp, sprintf("'%s' => ", addslashes($key)));
+            @fputs($fp, sprintf("'%s' => ", addcslashes($key, "'\\")));
         }
 
         switch (gettype($value)) {
@@ -1299,7 +1316,7 @@ class W3_Config {
 
             default:
             case 'string':
-                $data = "'" . addslashes((string) $value) . "'";
+                $data = "'" . addcslashes($value, "'\\") . "'";
                 break;
         }
 
@@ -1345,6 +1362,7 @@ class W3_Config {
      */
     function set_defaults() {
         $this->set('pgcache.enabled', true);
+        $this->set('pgcache.cache.ssl', false);
         $this->set('minify.auto', true);
         $this->set('browsercache.enabled', true);
     }
@@ -1365,22 +1383,5 @@ class W3_Config {
         }
 
         return $this->write(W3TC_CONFIG_PATH);
-    }
-
-    /**
-     * Returns config instance
-     *
-     * @param boolean $preview
-     * @return W3_Config
-     */
-    function &instance($preview = null) {
-        static $instances = array();
-
-        if (!isset($instances[0])) {
-            $class = __CLASS__;
-            $instances[0] = & new $class($preview);
-        }
-
-        return $instances[0];
     }
 }

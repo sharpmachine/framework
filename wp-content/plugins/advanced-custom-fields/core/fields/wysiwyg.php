@@ -18,7 +18,7 @@ class acf_Wysiwyg
 		echo '</textarea></div>';
 	}
 	
-	function format_value_for_api($value)
+	function format_value_for_api($value, $options = null)
 	{
 		$value = apply_filters('the_content',$value); 
 		return $value;

@@ -53,8 +53,12 @@ class acf_Page_link
 		else
 		{
 			echo '<select id="'.$field->input_name.'" class="'.$field->input_class.'" name="'.$field->input_name.'" >';	
-			// add top option
-			//echo '<option value="null">- '.__("Select Option",'acf').' -</option>';
+			
+			// add null
+			if(isset($field->options['allow_null']) && $field->options['allow_null'] == '1')
+			{
+				echo '<option value="null"> - Select - </option>';
+			}
 		}
 		
 		
@@ -126,17 +130,14 @@ class acf_Page_link
 	 * @since 1.1
 	 * 
 	 ---------------------------------------------------------------------------------------------*/
-	function options_html($key, $options)
+	function options_html($key, $field)
 	{
-		if(!isset($options['post_type']))
-		{
-			$options['post_type'] = "";
-		}
+		$options = $field->options;
+
+		$options['post_type'] = isset($options['post_type']) ? $options['post_type'] : '';
+		$options['multiple'] = isset($options['multiple']) ? $options['multiple'] : '0';
+		$options['allow_null'] = isset($options['allow_null']) ? $options['allow_null'] : '0';
 		
-		if(!isset($options['multiple']))
-		{
-			$options['multiple'] = '0';
-		}
 		?>
 
 		<tr class="field_option field_option_page_link">
@@ -174,16 +175,31 @@ class acf_Page_link
 		</tr>
 		<tr class="field_option field_option_page_link">
 			<td class="label">
-				<label><?php _e("Select multiple values?",'acf'); ?></label>
+				<label><?php _e("Allow Null?",'acf'); ?></label>
 			</td>
 			<td>
 				<?php 
 					$temp_field = new stdClass();	
 					$temp_field->type = 'true_false';
+					$temp_field->input_name = 'acf[fields]['.$key.'][options][allow_null]';
+					$temp_field->input_class = '';
+					$temp_field->value = $options['allow_null'];
+					$temp_field->options = array('message' => 'Add null value above choices');
+					$this->parent->create_field($temp_field); 
+				?>
+			</td>
+		</tr>
+		<tr class="field_option field_option_page_link">
+			<td class="label">
+				<label><?php _e("Select multiple values?",'acf'); ?></label>
+			</td>
+			<td>
+				<?php 
+					$temp_field->type = 'true_false';
 					$temp_field->input_name = 'acf[fields]['.$key.'][options][multiple]';
 					$temp_field->input_class = '';
 					$temp_field->value = $options['multiple'];
-					$temp_field->options = array('message' => '');
+					$temp_field->options = array('message' => 'Turn this drop-down into a multi-select');
 					$this->parent->create_field($temp_field); 
 				?>
 			</td>
@@ -201,9 +217,14 @@ class acf_Page_link
 	 * @since 1.1.3
 	 * 
 	 ---------------------------------------------------------------------------------------------*/
-	function format_value_for_api($value)
+	function format_value_for_api($value, $options = null)
 	{
 		$value = $this->format_value_for_input($value);
+		
+		if($value == 'null')
+		{
+			return false;
+		}
 		
 		if(is_array($value))
 		{

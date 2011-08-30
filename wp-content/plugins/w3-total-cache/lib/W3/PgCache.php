@@ -93,25 +93,33 @@ class W3_PgCache {
     var $cache_reject_reason = '';
 
     /**
+     * Returns instance. 
+     * For backward compatibility with 0.9.2.3 version of /wp-content files
+     *
+     * @return W3_PgCache
+     */
+    function &instance() {
+        $i = & w3_instance('W3_PgCache');
+        $i->_legacy = true;
+        return $i;
+    }
+
+    /**
      * PHP5 Constructor
      */
     function __construct() {
-        require_once W3TC_LIB_W3_DIR . '/Config.php';
-
-        $this->_config = & W3_Config::instance();
+        $this->_config = & w3_instance('W3_Config');
         $this->_debug = $this->_config->get_boolean('pgcache.debug');
         $this->_request_uri = $_SERVER['REQUEST_URI'];
         $this->_lifetime = $this->_config->get_integer('browsercache.html.lifetime');
         $this->_enhanced_mode = ($this->_config->get_string('pgcache.engine') == 'file_generic');
 
         if ($this->_config->get_boolean('mobile.enabled')) {
-            require_once W3TC_LIB_W3_DIR . '/Mobile.php';
-            $this->_mobile = & W3_Mobile::instance();
+            $this->_mobile = & w3_instance('W3_Mobile');
         }
 
         if ($this->_config->get_boolean('referrer.enabled')) {
-            require_once W3TC_LIB_W3_DIR . '/Referrer.php';
-            $this->_referrer = & W3_Referrer::instance();
+            $this->_referrer = & w3_instance('W3_Referrer');
         }
     }
 
@@ -126,138 +134,129 @@ class W3_PgCache {
      * Do cache logic
      */
     function process() {
-        if ($this->_config->get_boolean('pgcache.enabled')) {
-            /**
-             * Skip caching for some pages
-             */
-            switch (true) {
-                case defined('DONOTCACHEPAGE'):
-                case defined('DOING_AJAX'):
-                case defined('DOING_CRON'):
-                case defined('APP_REQUEST'):
-                case defined('XMLRPC_REQUEST'):
-                case defined('WP_ADMIN'):
-                case (defined('SHORTINIT') && SHORTINIT):
-                    return;
-            }
-
-            /**
-             * Handle mobile or referrer redirects
-             */
-            if ($this->_mobile || $this->_referrer) {
-                $mobile_redirect = $this->_mobile->get_redirect();
-                $referrer_redirect = $this->_referrer->get_redirect();
-
-                $redirect = ($mobile_redirect ? $mobile_redirect : $referrer_redirect);
-
-                if ($redirect) {
-                    w3_redirect($redirect);
-                    exit();
-                }
-            }
-
-            /**
-             * Do page cache logic
-             */
-            if ($this->_debug) {
-                $this->_time_start = w3_microtime();
-            }
-
-            $this->_caching = $this->_can_cache();
-
-            if ($this->_caching && !$this->_enhanced_mode) {
-                $cache = & $this->_get_cache();
-
-                $mobile_group = $this->_get_mobile_group();
-                $referrer_group = $this->_get_referrer_group();
-                $encryption = $this->_get_encryption();
-                $compression = $this->_get_compression();
-                $raw = !$compression;
-                $this->_page_key = $this->_get_page_key($this->_request_uri, $mobile_group, $referrer_group, $encryption, $compression);
-
-                /**
-                 * Check if page is cached
-                 */
-                $data = $cache->get($this->_page_key);
-
-                /**
-                 * Try to get uncompressed version of cache
-                 */
-                if ($compression && !$data) {
-                    $raw = true;
-                    $this->_page_key = $this->_get_page_key($this->_request_uri, $mobile_group, $referrer_group, $encryption, false);
-
-                    $data = $cache->get($this->_page_key);
-                }
-
-                /**
-                 * If cache exists
-                 */
-                if ($data) {
-                    /**
-                     * Do Bad Behavior check
-                     */
-                    $this->_bad_behavior();
-
-                    if ($this->_enhanced_mode) {
-                        $is_404 = false;
-                        $headers = array();
-                        $time = $cache->mtime($this->_page_key);
-                        $content = & $data;
-                    } else {
-                        $is_404 = $data['404'];
-                        $headers = $data['headers'];
-                        $time = $data['time'];
-                        $content = & $data['content'];
-                    }
-
-                    /**
-                     * Calculate content etag
-                     */
-                    $etag = md5($content);
-
-                    /**
-                     * Send headers
-                     */
-                    $this->_send_headers($is_404, $time, $etag, $compression, $headers);
-
-                    /**
-                     * Do manual compression for uncompressed page
-                     */
-                    if ($raw) {
-                        /**
-                         * Append debug info
-                         */
-                        if ($this->_debug) {
-                            $time_total = w3_microtime() - $this->_time_start;
-                            $debug_info = $this->_get_debug_info(true, '', true, $time_total);
-                            $content .= "\r\n\r\n" . $debug_info;
-                        }
-
-                        /**
-                         * Parse dynamic tags
-                         */
-                        $this->_parse_dynamic($content);
-
-                        /**
-                         * Compress content
-                         */
-                        $this->_compress($content, $compression);
-                    }
-
-                    echo $content;
-                    exit();
-                }
-            }
-
-            /**
-             * Start output buffering
-             */
-            ob_start(array(
-                &$this,
-                'ob_callback'
-            ));
+        /**
+         * Skip caching for some pages
+         */
+        switch (true) {
+            case defined('DONOTCACHEPAGE'):
+            case defined('DOING_AJAX'):
+            case defined('DOING_CRON'):
+            case defined('APP_REQUEST'):
+            case defined('XMLRPC_REQUEST'):
+            case defined('WP_ADMIN'):
+            case (defined('SHORTINIT') && SHORTINIT):
+                return;
         }
+
+        /*
+         * Legacy mode with 0.9.2.3 version of /wp-content add-ins
+         */
+        if (isset($this->_legacy)) {
+            $redirect = & w3_instance('W3_Redirect');
+            $redirect->process();
+        }
+
+        /**
+         * Do page cache logic
+         */
+        if ($this->_debug) {
+            $this->_time_start = w3_microtime();
+        }
+
+        $this->_caching = $this->_can_cache();
+
+        if ($this->_caching && !$this->_enhanced_mode) {
+            $cache = & $this->_get_cache();
+
+            $mobile_group = $this->_get_mobile_group();
+            $referrer_group = $this->_get_referrer_group();
+            $encryption = $this->_get_encryption();
+            $compression = $this->_get_compression();
+            $raw = !$compression;
+            $this->_page_key = $this->_get_page_key($this->_request_uri, $mobile_group, $referrer_group, $encryption, $compression);
+
+            /**
+             * Check if page is cached
+             */
+            $data = $cache->get($this->_page_key);
+
+            /**
+             * Try to get uncompressed version of cache
+             */
+            if ($compression && !$data) {
+                $raw = true;
+                $this->_page_key = $this->_get_page_key($this->_request_uri, $mobile_group, $referrer_group, $encryption, false);
+
+                $data = $cache->get($this->_page_key);
+            }
+
+            /**
+             * If cache exists
+             */
+            if ($data) {
+                /**
+                 * Do Bad Behavior check
+                 */
+                $this->_bad_behavior();
+
+                if ($this->_enhanced_mode) {
+                    $is_404 = false;
+                    $headers = array();
+                    $time = $cache->mtime($this->_page_key);
+                    $content = & $data;
+                } else {
+                    $is_404 = $data['404'];
+                    $headers = $data['headers'];
+                    $time = $data['time'];
+                    $content = & $data['content'];
+                }
+
+                /**
+                 * Calculate content etag
+                 */
+                $etag = md5($content);
+
+                /**
+                 * Send headers
+                 */
+                $this->_send_headers($is_404, $time, $etag, $compression, $headers);
+
+                /**
+                 * Do manual compression for uncompressed page
+                 */
+                if ($raw) {
+                    /**
+                     * Append debug info
+                     */
+                    if ($this->_debug) {
+                        $time_total = w3_microtime() - $this->_time_start;
+                        $debug_info = $this->_get_debug_info(true, '', true, $time_total);
+                        $content .= "\r\n\r\n" . $debug_info;
+                    }
+
+                    /**
+                     * Parse dynamic tags
+                     */
+                    $this->_parse_dynamic($content);
+
+                    /**
+                     * Compress content
+                     */
+                    $this->_compress($content, $compression);
+                }
+
+                echo $content;
+                exit();
+            }
+        }
+
+        /**
+         * Start output buffering
+         */
+        ob_start(array(
+            &$this,
+            'ob_callback'
+        ));
     }
 
     /**
@@ -292,12 +291,22 @@ class W3_PgCache {
                     $compressions = $this->_get_compressions();
                 }
 
+                $content_type = '';
+                $cached_headers = $this->_get_cached_headers();
+
                 if ($this->_enhanced_mode) {
                     $is_404 = false;
                     $headers = array();
+                    /*
+                     * If feeds are cached - we can store cache files as .xml
+                     */
+                    if ($this->_config->get_boolean('pgcache.cache.feed') &&
+                            isset($cached_headers['Content-Type'])) {
+                        $content_type = $cached_headers['Content-Type'];
+                    }
                 } else {
                     $is_404 = (function_exists('is_404') ? is_404() : false);
-                    $headers = $this->_get_cached_headers();
+                    $headers = $cached_headers;
                 }
 
                 $time = time();
@@ -309,7 +318,9 @@ class W3_PgCache {
                 $buffers = array();
 
                 foreach ($compressions as $_compression) {
-                    $_page_key = $this->_get_page_key($this->_request_uri, $mobile_group, $referrer_group, $encryption, $_compression);
+                    $_page_key = $this->_get_page_key($this->_request_uri, 
+                        $mobile_group, $referrer_group, $encryption, $_compression,
+                        $content_type);
 
                     /**
                      * Compress content
@@ -357,7 +368,10 @@ class W3_PgCache {
                         /**
                          * Set page key for debug
                          */
-                        $this->_page_key = $this->_get_page_key($this->_request_uri, $mobile_group, $referrer_group, $encryption, $compression);
+                        $this->_page_key = $this->_get_page_key(
+                            $this->_request_uri, $mobile_group, 
+                            $referrer_group, $encryption, $compression,
+                            $content_type);
 
                         /**
                          * Append debug info
@@ -428,296 +442,6 @@ class W3_PgCache {
         $this->_compress($this->_shutdown_buffer, $this->_shutdown_compression);
 
         echo $this->_shutdown_buffer;
-    }
-
-    /**
-     * Flushes all caches
-     *
-     * @return boolean
-     */
-    function flush() {
-        $cache = & $this->_get_cache();
-
-        return $cache->flush();
-    }
-
-    /**
-     * Flushes post cache
-     *
-     * @param integer $post_id
-     * @return boolean
-     */
-    function flush_post($post_id = null) {
-        if (!$post_id) {
-            $post_id = $this->_detect_post_id();
-        }
-
-        if ($post_id) {
-            $uris = array();
-            $domain_url = w3_get_domain_url();
-            $feeds = $this->_config->get_array('pgcache.purge.feed.types');
-
-            if ($this->_config->get_boolean('pgcache.purge.terms') || $this->_config->get_boolean('pgcache.purge.feed.terms')) {
-                $taxonomies = get_post_taxonomies($post_id);
-                $terms = wp_get_post_terms($post_id, $taxonomies);
-            }
-
-            switch (true) {
-                case $this->_config->get_boolean('pgcache.purge.author'):
-                case $this->_config->get_boolean('pgcache.purge.archive.daily'):
-                case $this->_config->get_boolean('pgcache.purge.archive.monthly'):
-                case $this->_config->get_boolean('pgcache.purge.archive.yearly'):
-                case $this->_config->get_boolean('pgcache.purge.feed.author'):
-                    $post = get_post($post_id);
-            }
-
-            /**
-             * Home URL
-             */
-            if ($this->_config->get_boolean('pgcache.purge.home')) {
-                $home_path = w3_get_home_path();
-                $site_path = w3_get_site_path();
-
-                $uris[] = $home_path;
-
-                if ($site_path != $home_path) {
-                    $uris[] = $site_path;
-                }
-            }
-
-            /**
-             * Post URL
-             */
-            if ($this->_config->get_boolean('pgcache.purge.post')) {
-                $post_link = post_permalink($post_id);
-                $post_uri = str_replace($domain_url, '', $post_link);
-
-                $uris[] = $post_uri;
-            }
-
-            /**
-             * Post comments URLs
-             */
-            if ($this->_config->get_boolean('pgcache.purge.comments') && function_exists('get_comments_pagenum_link')) {
-                $comments_number = get_comments_number($post_id);
-                $comments_per_page = get_option('comments_per_page');
-                $comments_pages_number = @ceil($comments_number / $comments_per_page);
-
-                for ($pagenum = 1; $pagenum <= $comments_pages_number; $pagenum++) {
-                    $comments_pagenum_link = $this->_get_comments_pagenum_link($post_id, $pagenum);
-                    $comments_pagenum_uri = str_replace($domain_url, '', $comments_pagenum_link);
-
-                    $uris[] = $comments_pagenum_uri;
-                }
-            }
-
-            /**
-             * Post author URLs
-             */
-            if ($this->_config->get_boolean('pgcache.purge.author') && $post) {
-                $posts_number = count_user_posts($post->post_author);
-                $posts_per_page = get_option('posts_per_page');
-                $posts_pages_number = @ceil($posts_number / $posts_per_page);
-
-                $author_link = get_author_link(false, $post->post_author);
-                $author_uri = str_replace($domain_url, '', $author_link);
-
-                for ($pagenum = 1; $pagenum <= $posts_pages_number; $pagenum++) {
-                    $author_pagenum_link = $this->_get_pagenum_link($author_uri, $pagenum);
-                    $author_pagenum_uri = str_replace($domain_url, '', $author_pagenum_link);
-
-                    $uris[] = $author_pagenum_uri;
-                }
-            }
-
-            /**
-             * Post terms URLs
-             */
-            if ($this->_config->get_boolean('pgcache.purge.terms')) {
-                $posts_per_page = get_option('posts_per_page');
-
-                foreach ($terms as $term) {
-                    $term_link = get_term_link($term, $term->taxonomy);
-                    $term_uri = str_replace($domain_url, '', $term_link);
-                    $posts_pages_number = @ceil($term->count / $posts_per_page);
-
-                    for ($pagenum = 1; $pagenum <= $posts_pages_number; $pagenum++) {
-                        $term_pagenum_link = $this->_get_pagenum_link($term_uri, $pagenum);
-                        $term_pagenum_uri = str_replace($domain_url, '', $term_pagenum_link);
-
-                        $uris[] = $term_pagenum_uri;
-                    }
-                }
-            }
-
-            /**
-             * Daily archive URLs
-             */
-            if ($this->_config->get_boolean('pgcache.purge.archive.daily') && $post) {
-                $post_date = strtotime($post->post_date);
-                $post_year = gmdate('Y', $post_date);
-                $post_month = gmdate('m', $post_date);
-                $post_day = gmdate('d', $post_date);
-
-                $posts_per_page = get_option('posts_per_page');
-                $posts_number = $this->_get_archive_posts_count($post_year, $post_month, $post_day);
-                $posts_pages_number = @ceil($posts_number / $posts_per_page);
-
-                $day_link = get_day_link($post_year, $post_month, $post_day);
-                $day_uri = str_replace($domain_url, '', $day_link);
-
-                for ($pagenum = 1; $pagenum <= $posts_pages_number; $pagenum++) {
-                    $day_pagenum_link = $this->_get_pagenum_link($day_uri, $pagenum);
-                    $day_pagenum_uri = str_replace($domain_url, '', $day_pagenum_link);
-
-                    $uris[] = $day_pagenum_uri;
-                }
-            }
-
-            /**
-             * Monthly archive URLs
-             */
-            if ($this->_config->get_boolean('pgcache.purge.archive.monthly') && $post) {
-                $post_date = strtotime($post->post_date);
-                $post_year = gmdate('Y', $post_date);
-                $post_month = gmdate('m', $post_date);
-
-                $posts_per_page = get_option('posts_per_page');
-                $posts_number = $this->_get_archive_posts_count($post_year, $post_month);
-                $posts_pages_number = @ceil($posts_number / $posts_per_page);
-
-                $month_link = get_month_link($post_year, $post_month);
-                $month_uri = str_replace($domain_url, '', $month_link);
-
-                for ($pagenum = 1; $pagenum <= $posts_pages_number; $pagenum++) {
-                    $month_pagenum_link = $this->_get_pagenum_link($month_uri, $pagenum);
-                    $month_pagenum_uri = str_replace($domain_url, '', $month_pagenum_link);
-
-                    $uris[] = $month_pagenum_uri;
-                }
-            }
-
-            /**
-             * Yearly archive URLs
-             */
-            if ($this->_config->get_boolean('pgcache.purge.archive.yearly') && $post) {
-                $post_date = strtotime($post->post_date);
-                $post_year = gmdate('Y', $post_date);
-
-                $posts_per_page = get_option('posts_per_page');
-                $posts_number = $this->_get_archive_posts_count($post_year);
-                $posts_pages_number = @ceil($posts_number / $posts_per_page);
-
-                $year_link = get_year_link($post_year);
-                $year_uri = str_replace($domain_url, '', $year_link);
-
-                for ($pagenum = 1; $pagenum <= $posts_pages_number; $pagenum++) {
-                    $year_pagenum_link = $this->_get_pagenum_link($year_uri, $pagenum);
-                    $year_pagenum_uri = str_replace($domain_url, '', $year_pagenum_link);
-
-                    $uris[] = $year_pagenum_uri;
-                }
-            }
-
-            /**
-             * Feed URLs
-             */
-            if ($this->_config->get_boolean('pgcache.purge.feed.blog')) {
-                foreach ($feeds as $feed) {
-                    $feed_link = get_feed_link($feed);
-                    $feed_uri = str_replace($domain_url, '', $feed_link);
-
-                    $uris[] = $feed_uri;
-                }
-            }
-
-            if ($this->_config->get_boolean('pgcache.purge.feed.comments')) {
-                foreach ($feeds as $feed) {
-                    $post_comments_feed_link = get_post_comments_feed_link($post_id, $feed);
-                    $post_comments_feed_uri = str_replace($domain_url, '', $post_comments_feed_link);
-
-                    $uris[] = $post_comments_feed_uri;
-                }
-            }
-
-            if ($this->_config->get_boolean('pgcache.purge.feed.author') && $post) {
-                foreach ($feeds as $feed) {
-                    $author_feed_link = get_author_feed_link($post->post_author, $feed);
-                    $author_feed_uri = str_replace($domain_url, '', $author_feed_link);
-
-                    $uris[] = $author_feed_uri;
-                }
-            }
-
-            if ($this->_config->get_boolean('pgcache.purge.feed.terms')) {
-                foreach ($terms as $term) {
-                    foreach ($feeds as $feed) {
-                        $term_feed_link = get_term_feed_link($term->term_id, $term->taxonomy, $feed);
-                        $term_feed_uri = str_replace($domain_url, '', $term_feed_link);
-
-                        $uris[] = $term_feed_uri;
-                    }
-                }
-            }
-
-            /**
-             * Flush cache
-             */
-            if (count($uris)) {
-                $cache = & $this->_get_cache();
-                $mobile_groups = $this->_get_mobile_groups();
-                $referrer_groups = $this->_get_referrer_groups();
-                $encryptions = $this->_get_encryptions();
-                $compressions = $this->_get_compressions();
-
-                foreach ($uris as $uri) {
-                    foreach ($mobile_groups as $mobile_group) {
-                        foreach ($referrer_groups as $referrer_group) {
-                            foreach ($encryptions as $encryption) {
-                                foreach ($compressions as $compression) {
-                                    $page_key = $this->_get_page_key($uri, $mobile_group, $referrer_group, $encryption, $compression);
-
-                                    $cache->delete($page_key);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                /**
-                 * Purge varnish servers
-                 */
-                if ($this->_config->get_boolean('varnish.enabled')) {
-                    require_once W3TC_LIB_W3_DIR . '/Varnish.php';
-
-                    $varnish =& W3_Varnish::instance();
-
-                    foreach ($uris as $uri) {
-                        $varnish->purge($uri);
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns object instance
-     *
-     * @return W3_PgCache
-     */
-    function &instance() {
-        static $instances = array();
-
-        if (!isset($instances[0])) {
-            $class = __CLASS__;
-            $instances[0] = & new $class();
-        }
-
-        return $instances[0];
     }
 
     /**
@@ -816,29 +540,6 @@ class W3_PgCache {
         }
 
         /**
-         * Check for request URI trailing slash
-         */
-        if ($this->_enhanced_mode) {
-            $permalink_structure = get_option('permalink_structure');
-            $permalink_structure_slash = (substr($permalink_structure, -1) == '/');
-            $request_uri_slash = (substr($this->_request_uri, -1) == '/');
-
-            if ($permalink_structure_slash != $request_uri_slash) {
-                if ($permalink_structure_slash) {
-                    if (!$this->_check_accept_uri()) {
-                        $this->cache_reject_reason = 'Requested URI doesn\'t have a trailing slash';
-
-                        return false;
-                    }
-                } else {
-                    $this->cache_reject_reason = 'Requested URI has a trailing slash';
-
-                    return false;
-                }
-            }
-        }
-
-        /**
          * Check for database error
          */
         if (w3_is_database_error($buffer)) {
@@ -852,6 +553,15 @@ class W3_PgCache {
          */
         if (defined('DONOTCACHEPAGE') && DONOTCACHEPAGE) {
             $this->cache_reject_reason = 'DONOTCACHEPAGE constant is defined';
+
+            return false;
+        }
+
+        /**
+         * Check hostname
+         */
+        if ($this->_config->get_boolean('pgcache.check.domain') && w3_get_host() != w3_get_home_domain()) {
+            $this->cache_reject_reason = 'Hostname mismatch';
 
             return false;
         }
@@ -939,7 +649,7 @@ class W3_PgCache {
             }
 
             require_once W3TC_LIB_W3_DIR . '/Cache.php';
-            $cache[0] = & W3_Cache::instance($engine, $engineConfig);
+            @$cache[0] = & W3_Cache::instance($engine, $engineConfig);
         }
 
         return $cache[0];
@@ -976,33 +686,19 @@ class W3_PgCache {
     }
 
     /**
-     * Checks accept URI
-     *
-     * @return boolean
-     */
-    function _check_accept_uri() {
-        $accept_uri = $this->_config->get_array('pgcache.accept.uri');
-        $accept_uri = array_map('w3_parse_path', $accept_uri);
-
-        foreach ($accept_uri as $expr) {
-            $expr = trim($expr);
-            if ($expr != '' && preg_match('~' . $expr . '~i', $this->_request_uri)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * Checks User Agent
      *
      * @return boolean
      */
     function _check_ua() {
-        $uas = array_merge($this->_config->get_array('pgcache.reject.ua'), array(
-            W3TC_POWERED_BY
-        ));
+        require_once W3TC_LIB_W3_DIR . '/Request.php';
+
+        $uas = $this->_config->get_array('pgcache.reject.ua');
+        $preload = W3_Request::get_boolean('w3tc_preload');
+
+        if (! $preload) {
+            $uas = array_merge($uas, array(W3TC_POWERED_BY));
+        }
 
         foreach ($uas as $ua) {
             if (isset($_SERVER['HTTP_USER_AGENT']) && stristr($_SERVER['HTTP_USER_AGENT'], $ua) !== false) {
@@ -1135,45 +831,6 @@ class W3_PgCache {
     }
 
     /**
-     * Returns array of mobile groups
-     *
-     * @return array
-     */
-    function _get_mobile_groups() {
-        $mobile_groups = array('');
-
-        if ($this->_mobile) {
-            $mobile_groups = array_merge($mobile_groups, array_keys($this->_mobile->groups));
-        }
-
-        return $mobile_groups;
-    }
-
-    /**
-     * Returns array of referrer groups
-     *
-     * @return array
-     */
-    function _get_referrer_groups() {
-        $referrer_groups = array('');
-
-        if ($this->_referrer) {
-            $referrer_groups = array_merge($referrer_groups, array_keys($this->_referrer->groups));
-        }
-
-        return $referrer_groups;
-    }
-
-    /**
-     * Returns array of encryptions
-     *
-     * @return array
-     */
-    function _get_encryptions() {
-        return array(false, 'ssl');
-    }
-
-    /**
      * Returns array of compressions
      *
      * @return array
@@ -1261,7 +918,8 @@ class W3_PgCache {
      * @param string $compression
      * @return string
      */
-    function _get_page_key($request_uri, $mobile_group = '', $referrer_group = '', $encryption = false, $compression = false) {
+    function _get_page_key($request_uri, $mobile_group = '', $referrer_group = '', 
+        $encryption = false, $compression = false, $content_type = false) {
         // replace fragment
         $key = preg_replace('~#.*$~', '', $request_uri);
 
@@ -1315,21 +973,17 @@ class W3_PgCache {
             /**
              * Append HTML extension
              */
-            $key .= '.html';
+            if (substr($content_type, 0, 8) == 'text/xml')
+                $key .= '.xml';
+            else
+                $key .= '.html';
+        }
 
-            /**
-             * Append compression extension
-             */
-            if ($compression) {
-                $key .= '.' . $compression;
-            }
-        } else {
-            /**
-             * Append compression
-             */
-            if ($compression) {
-                $key .= '_' . $compression;
-            }
+        /**
+         * Append compression
+         */
+        if ($compression) {
+            $key .= '_' . $compression;
         }
 
         /**
@@ -1338,27 +992,6 @@ class W3_PgCache {
         $key = w3tc_do_action('w3tc_pgcache_cache_key', $key);
 
         return $key;
-    }
-
-    /**
-     * Detects post ID
-     *
-     * @return integer
-     */
-    function _detect_post_id() {
-        global $posts, $comment_post_ID, $post_ID;
-
-        if ($post_ID) {
-            return $post_ID;
-        } elseif ($comment_post_ID) {
-            return $comment_post_ID;
-        } elseif (is_single() || is_page() && count($posts)) {
-            return $posts[0]->ID;
-        } elseif (isset($_REQUEST['p'])) {
-            return (integer) $_REQUEST['p'];
-        }
-
-        return 0;
     }
 
     /**
@@ -1619,49 +1252,6 @@ class W3_PgCache {
     }
 
     /**
-     * Workaround for get_pagenum_link function
-     *
-     * @param string $url
-     * @param int $pagenum
-     * @return string
-     */
-    function _get_pagenum_link($url, $pagenum = 1) {
-        $request_uri = $_SERVER['REQUEST_URI'];
-        $_SERVER['REQUEST_URI'] = $url;
-
-        $link = get_pagenum_link($pagenum);
-
-        $_SERVER['REQUEST_URI'] = $request_uri;
-
-        return $link;
-    }
-
-    /**
-     * Workaround for get_comments_pagenum_link function
-     *
-     * @param integer $post_id
-     * @return string
-     */
-    function _get_comments_pagenum_link($post_id, $pagenum = 1, $max_page = 0) {
-        if (isset($GLOBALS['post']) && is_object($GLOBALS['post'])) {
-            $old_post = &$GLOBALS['post'];
-        } else {
-            $GLOBALS['post'] = & new stdClass();
-            $old_post = null;
-        }
-
-        $GLOBALS['post']->ID = $post_id;
-
-        $link = get_comments_pagenum_link($pagenum, $max_page);
-
-        if ($old_post) {
-            $GLOBALS['post'] = &$old_post;
-        }
-
-        return $link;
-    }
-
-    /**
      * Parses dynamic tags
      * @return string
      */
@@ -1742,42 +1332,5 @@ class W3_PgCache {
      */
     function _has_dynamic(&$buffer) {
         return preg_match('~<!--\s*m(func|clude)(.*)-->(.*)<!--\s*/m(func|clude)\s*-->~Uis', $buffer);
-    }
-
-    /**
-     * Returns number of posts in the archive
-     *
-     * @param int $year
-     * @param int $month
-     * @param int $day
-     * @return int
-     */
-    function _get_archive_posts_count($year = 0, $month = 0, $day = 0) {
-        global $wpdb;
-
-        $filters = array(
-            'post_type = "post"',
-            'post_status = "publish"'
-        );
-
-        if ($year) {
-            $filters[] = sprintf('YEAR(post_date) = %d', $year);
-        }
-
-        if ($month) {
-            $filters[] = sprintf('MONTH(post_date) = %d', $month);
-        }
-
-        if ($day) {
-            $filters[] = sprintf('DAY(post_date) = %d', $day);
-        }
-
-        $where = implode(' AND ', $filters);
-
-        $sql = sprintf('SELECT COUNT(*) FROM %s WHERE %s', $wpdb->posts, $where);
-
-        $count = (int) $wpdb->get_var($sql);
-
-        return $count;
     }
 }

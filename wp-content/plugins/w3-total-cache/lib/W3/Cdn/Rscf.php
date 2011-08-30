@@ -3,6 +3,10 @@
 /**
  * Rackspace Cloud Files CDN engine
  */
+if (!defined('ABSPATH')) {
+    die();
+}
+
 require_once W3TC_LIB_W3_DIR . '/Cdn/Base.php';
 require_once W3TC_LIB_CF_DIR . '/cloudfiles.php';
 
@@ -158,7 +162,7 @@ class W3_Cdn_Rscf extends W3_Cdn_Base {
             }
 
             try {
-                $object = & new CF_Object($this->_container, $remote_path, false, false);
+                @$object = & new CF_Object($this->_container, $remote_path, false, false);
             } catch (Exception $exception) {
                 $results[] = $this->_get_result($local_path, $remote_path, W3TC_CDN_RESULT_ERROR, sprintf('Unable to create object (%s).', $exception->getMessage()));
 

@@ -15,13 +15,14 @@ class acf_Date_picker
 	
 	function html($field)
 	{
-		echo '<input type="hidden" value="'.$field->options['date_format'].'" name="date_format" />';
-		echo '<input type="text" value="'.$field->value.'" id="'.$field->input_id.'" class="acf_datepicker" name="'.$field->input_name.'" />';
+		echo '<input type="text" value="'.$field->value.'" class="acf_datepicker" name="'.$field->input_name.'" data-date_format="'.$field->options['date_format'].'" />';
 
 	}
 	
-	function options_html($key, $options)
+	function options_html($key, $field)
 	{
+		$options = $field->options;
+		
 		if(!isset($options['date_format']))
 		{
 			$options['date_format'] = "";

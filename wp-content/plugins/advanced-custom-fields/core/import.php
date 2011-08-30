@@ -85,12 +85,12 @@ foreach($posts as $post)
 				$i++;
 				
 				$post_field = array(
-					'label'					=>	the_xml_value($field->label),
-					'name'					=>	the_xml_value($field->name),
-					'type'					=>	the_xml_value($field->type),
+					'label'					=>	isset($field->label) ? the_xml_value($field->label) : '',
+					'name'					=>	isset($field->name) ? the_xml_value($field->name) : '',
+					'type'					=>	isset($field->type) ? the_xml_value($field->type) : '',
+					'default_value'			=>	isset($field->default_value) ? the_xml_value($field->default_value) : '',
 					'options'				=>	array(),
-					'instructions'			=>	the_xml_value($field->instructions),
-					'save_as_cf'			=>	the_xml_value($field->save_as_cf),
+					'instructions'			=>	isset($field->instructions) ? the_xml_value($field->instructions) : '',
 				);
 				
 				if($field->options[0]->children())
@@ -107,9 +107,10 @@ foreach($posts as $post)
 								$j++;
 								
 								$post_sub_field = array(
-									'label'					=>	the_xml_value($sub_field->label),
-			 						'name'					=>	the_xml_value($sub_field->name),
-			 						'type'					=>	the_xml_value($sub_field->type),
+									'label'					=>	isset($sub_field->label) ? the_xml_value($sub_field->label) : '',
+			 						'name'					=>	isset($sub_field->name) ? the_xml_value($sub_field->name) : '',
+			 						'type'					=>	isset($sub_field->type) ? the_xml_value($sub_field->type) : '',
+			 						'default_value'			=>	isset($sub_field->default_value) ? the_xml_value($sub_field->default_value) : '',
 			 						'options'				=>	array(),
 								);
 								

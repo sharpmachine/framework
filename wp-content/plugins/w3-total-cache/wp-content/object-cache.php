@@ -3,6 +3,10 @@
 /**
  * W3 Total Cache Object Cache
  */
+if (!defined('ABSPATH')) {
+    die();
+}
+
 if (!defined('W3TC_DIR')) {
     define('W3TC_DIR', WP_CONTENT_DIR . '/plugins/w3-total-cache');
 }
@@ -16,7 +20,6 @@ if (!@is_dir(W3TC_DIR) || !file_exists(W3TC_DIR . '/inc/define.php')) {
     }
 } else {
     require_once W3TC_DIR . '/inc/define.php';
-    require_once W3TC_LIB_W3_DIR . '/ObjectCache.php';
 
     /**
      * Init cache
@@ -24,16 +27,7 @@ if (!@is_dir(W3TC_DIR) || !file_exists(W3TC_DIR . '/inc/define.php')) {
      * @return void
      */
     function wp_cache_init() {
-        $GLOBALS['wp_object_cache'] = & W3_ObjectCache::instance();
-    }
-
-    /**
-     * Reset cache
-     *
-     * @return boolean
-     */
-    function wp_cache_reset() {
-        return true;
+        $GLOBALS['wp_object_cache'] = & w3_instance('W3_ObjectCache');
     }
 
     /**
@@ -114,6 +108,17 @@ if (!@is_dir(W3TC_DIR) || !file_exists(W3TC_DIR . '/inc/define.php')) {
         global $wp_object_cache;
 
         return $wp_object_cache->replace($id, $data, $group, $expire);
+    }
+
+    /**
+     * Reset cache
+     *
+     * @return boolean
+     */
+    function wp_cache_reset() {
+        global $wp_object_cache;
+
+        return $wp_object_cache->reset();
     }
 
     /**

@@ -3,6 +3,10 @@
 /**
  * W3 Database object
  */
+if (!defined('ABSPATH')) {
+    die();
+}
+
 if (!class_exists('W3_Db_Driver')) {
     require_once ABSPATH . 'wp-includes/wp-db.php';
 
@@ -72,16 +76,14 @@ class W3_Db extends W3_Db_Driver {
      * @param string $dbhost
      */
     function __construct($dbuser, $dbpassword, $dbname, $dbhost) {
-        require_once W3TC_LIB_W3_DIR . '/Config.php';
-
-        $this->_config = & W3_Config::instance();
+        $this->_config = & w3_instance('W3_Config');
         $this->_lifetime = $this->_config->get_integer('dbcache.lifetime');
 
         if ($this->_can_ob()) {
             ob_start(array(
-                    &$this,
-                    'ob_callback'
-                ));
+                &$this,
+                'ob_callback'
+            ));
         }
 
         parent::__construct($dbuser, $dbpassword, $dbname, $dbhost);
@@ -177,6 +179,55 @@ class W3_Db extends W3_Db_Driver {
     }
 
     /**
+    * Insert a row into a table.
+    *
+    * @param string $table
+    * @param array $data
+    * @param array|string $format
+    * @return int|false
+    */
+    function insert($table, $data, $format = null) {
+        return $this->_nocache_instance()->insert($table, $data, $format);
+    }
+
+    /**
+    * Replace a row into a table.
+    *
+    * @param string $table
+    * @param array $data
+    * @param array|string $format
+    * @return int|false
+    */
+    function replace($table, $data, $format = null) {
+        return $this->_nocache_instance()->replace($table, $data, $format);
+    }
+
+    /**
+    * Update a row in the table
+    *
+    * @param string $table
+    * @param array $data
+    * @param array $where
+    * @param array|string $format
+    * @param array|string $format_where
+    * @return int|false
+    */
+    function update($table, $data, $where, $format = null, $where_format = null) {
+        return $this->_nocache_instance()->update($table, $data, $where, $format, $where_format);
+    }
+
+    /**
+     * Executes query without caching, completely ignored by cache
+     *
+     * @param string $query
+     * @return integer
+     */
+    function query_nocache($query) {
+        $return_val = parent::query($query);
+        return $return_val;
+    }
+
+    /**
      * Flushes cache
      *
      * @return boolean
@@ -188,7 +239,7 @@ class W3_Db extends W3_Db_Driver {
     }
 
     /**
-     * Returns onject instance
+     * Returns onject instance. Called by WP engine
      *
      * @return W3_Db
      */
@@ -197,10 +248,19 @@ class W3_Db extends W3_Db_Driver {
 
         if (!isset($instances[0])) {
             $class = __CLASS__;
-            $instances[0] = & new $class(DB_USER, DB_PASSWORD, DB_NAME, DB_HOST);
+            @$instances[0] = & new $class(DB_USER, DB_PASSWORD, DB_NAME, DB_HOST);
         }
 
         return $instances[0];
+    }
+
+    function _nocache_instance()
+    {
+        if (!isset($this->_nocache_instance)) {
+            $this->_nocache_instance = new W3_Db_Nocache($this);
+        }
+
+        return $this->_nocache_instance;
     }
 
     /**
@@ -249,7 +309,7 @@ class W3_Db extends W3_Db_Driver {
             }
 
             require_once W3TC_LIB_W3_DIR . '/Cache.php';
-            $cache[0] = & W3_Cache::instance($engine, $engineConfig);
+            @$cache[0] = & W3_Cache::instance($engine, $engineConfig);
         }
 
         return $cache[0];
@@ -602,7 +662,7 @@ class W3_Db extends W3_Db_Driver {
                     str_pad($index + 1, 5, ' ', STR_PAD_LEFT),
                     str_pad(round($query['time_total'], 4), 8, ' ', STR_PAD_LEFT),
                     str_pad(($query['caching'] ? 'enabled'
-                                : sprintf('disabled (%s)', $query['reason'])), 30, ' ', STR_PAD_BOTH),
+                            : sprintf('disabled (%s)', $query['reason'])), 30, ' ', STR_PAD_BOTH),
                     str_pad(($query['cached'] ? 'cached' : 'not cached'), 10, ' ', STR_PAD_BOTH),
                     str_pad($query['data_size'], 13, ' ', STR_PAD_LEFT),
                     w3_escape_comment(trim($query['query'])));
@@ -612,5 +672,43 @@ class W3_Db extends W3_Db_Driver {
         $debug_info .= '-->';
 
         return $debug_info;
+    }
+}
+
+/**
+ * Class W3_Db
+ */
+class W3_Db_Nocache extends W3_Db_Driver {
+    function __construct($object_doing_query) {
+        $this->_object_doing_query = $object_doing_query;
+
+        # _real_escape is called on that object, 
+        # which requires those inst. vars
+        if (isset($object_doing_query->real_escape)) {
+            $this->real_escape = $object_doing_query->real_escape;
+        }
+        if (isset($object_doing_query->dbh)) {
+            $this->dbh = $object_doing_query->dbh;
+        }
+
+    }
+
+    /**
+     * PHP4 constructor
+     *
+     * @param string $dbhost
+     */
+    function W3_Db_Nocache($object_doing_query) {
+        $this->__construct($object_doing_query);
+    }
+
+    /**
+     * Executes query
+     *
+     * @param string $query
+     * @return integer
+     */
+    function query($query) {
+        return $this->_object_doing_query->query_nocache($query);
     }
 }

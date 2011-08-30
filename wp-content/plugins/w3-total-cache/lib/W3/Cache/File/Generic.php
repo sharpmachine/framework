@@ -3,6 +3,11 @@
 /**
  * Generic file cache
  */
+if (!defined('ABSPATH')) {
+    die();
+}
+
+require_once W3TC_INC_DIR . '/functions/file.php';
 require_once W3TC_LIB_W3_DIR . '/Cache/File.php';
 
 /**

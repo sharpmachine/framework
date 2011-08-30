@@ -31,12 +31,8 @@ class acf_Repeater
 			$layout = $field->options['layout'];
 		}
 		
-		
-		
-		
 		?>
-		<div class="repeater">
-			<input type="hidden" name="row_limit" value="<?php echo $row_limit; ?>" />
+		<div class="repeater" data-row_limit="<?php echo $row_limit; ?>">
 			<table class="widefat <?php if($layout == 'row'): ?>row_layout<?php endif; ?>">
 			<?php if($layout == 'table'): ?>
 			<thead>
@@ -77,7 +73,9 @@ class acf_Repeater
 					<label><?php echo $sub_fields[$j]->label; ?></label>
 					<?php endif; ?>	
 					
-						<input type="hidden" name="<?php echo $field->input_name.'['.$i.']['.$j.'][row_id]'; ?>" value="<?php echo $field->value[$i][$j]->id; ?>" />
+						<input type="hidden" name="<?php echo $field->input_name.'['.$i.']['.$j.'][meta_id]'; ?>" value="<?php echo $field->value[$i][$j]->meta_id; ?>" />
+						<input type="hidden" name="<?php echo $field->input_name.'['.$i.']['.$j.'][value_id]'; ?>" value="<?php echo $field->value[$i][$j]->value_id; ?>" />
+
 						<input type="hidden" name="<?php echo $field->input_name.'['.$i.']['.$j.'][field_id]'; ?>" value="<?php echo $sub_field->id; ?>" />
 						<input type="hidden" name="<?php echo $field->input_name.'['.$i.']['.$j.'][field_type]' ?>" value="<?php echo $sub_field->type; ?>" />
 						
@@ -128,8 +126,10 @@ class acf_Repeater
 	 * @since 1.1
 	 * 
 	 ---------------------------------------------------------------------------------------------*/
-	function options_html($key, $options)
+	function options_html($key, $field)
 	{
+		$options = $field->options;
+		
 		if(isset($options['sub_fields']))
 		{
 			$fields = $options['sub_fields'];
@@ -138,9 +138,7 @@ class acf_Repeater
 		{
 			$fields = array();
 		}
-		
 
-		
 
 		// add clone
 		$field = new stdClass();
@@ -166,20 +164,22 @@ class acf_Repeater
 </td>
 <td>
 <div class="repeater">
-	<table class="acf widefat">
-		<thead>
-			<tr>
-				<th class="field_order"><?php _e('Field Order','acf'); ?></th>
-				<th class="field_label"><?php _e('Field Label','acf'); ?></th>
-				<th class="field_name"><?php _e('Field Name','acf'); ?></th>
-				<th class="field_type"><?php _e('Field Type','acf'); ?></th>
-			</tr>
-		</thead>
-	</table>
+	<div class="fields_header">
+		<table class="acf widefat">
+			<thead>
+				<tr>
+					<th class="field_order"><?php _e('Field Order','acf'); ?></th>
+					<th class="field_label"><?php _e('Field Label','acf'); ?></th>
+					<th class="field_name"><?php _e('Field Name','acf'); ?></th>
+					<th class="field_type"><?php _e('Field Type','acf'); ?></th>
+				</tr>
+			</thead>
+		</table>
+	</div>
 	<div class="fields">
 	
 		<div class="no_fields_message" <?php if(sizeof($fields) > 1){ echo 'style="display:none;"'; } ?>>
-			No fields. Click the "Add Field" button to create your first field.
+			<?php _e("No fields. Click the \"+ Add Field button\" to create your first field.",'acf'); ?>
 		</div>
 
 		
@@ -187,9 +187,11 @@ class acf_Repeater
 			<div class="<?php if($key2 == 999){echo "field_clone";}else{echo "field";} ?> sub_field">
 				
 				<input type="hidden" name="acf[fields][<?php echo $key; ?>][sub_fields][<?php echo $key2; ?>][id]'" value="<?php echo $field->id; ?>" />
+				
+				<div class="field_meta">
 				<table class="acf widefat">
 					<tr>
-						<td class="field_order"><?php echo ($key2+1); ?></td>
+						<td class="field_order"><span class="circle"><?php echo ($key2+1); ?></span></td>
 						<td class="field_label">
 							<strong>
 								<a class="acf_edit_field" title="Edit this Field" href="javascript:;"><?php echo $field->label; ?></a>
@@ -203,6 +205,7 @@ class acf_Repeater
 						<td class="field_type"><?php echo $field->type; ?></td>
 					</tr>
 				</table>
+				</div>
 				
 				<div class="field_form_mask">
 				<div class="field_form">
@@ -267,7 +270,7 @@ class acf_Repeater
 							<?php foreach($fields_names as $field_name => $field_title): ?>
 								<?php if(method_exists($this->parent->fields[$field_name], 'options_html')): ?>
 			
-									<?php $this->parent->fields[$field_name]->options_html($key.'][sub_fields]['.$key2, $field->options); ?>
+									<?php $this->parent->fields[$field_name]->options_html($key.'][sub_fields]['.$key2, $field); ?>
 			
 								<?php endif; ?>
 							<?php endforeach; ?>
@@ -349,10 +352,7 @@ class acf_Repeater
 		global $wpdb;
 		$table_name = $wpdb->prefix.'acf_fields';
 		
-		//echo '<pre>';
-		//print_r($field);
-		//echo '</pre>';
-		//die;
+
 		if($field['sub_fields'])
 		{
 		foreach($field['sub_fields'] as $key => $field)
@@ -362,11 +362,18 @@ class acf_Repeater
 				continue;
 			}
 			
+			
 			// defaults
 			if(!isset($field['label'])) { $field['label'] = ""; }
 			if(!isset($field['name'])) { $field['label'] = ""; }
 			if(!isset($field['type'])) { $field['label'] = "text"; }
 			if(!isset($field['options'])) { $field['options'] = array(); }
+			if(!isset($field['instructions'])) { $field['instructions'] = ""; }
+			if(!isset($field['default_value'])) { $field['default_value'] = ""; }
+			
+			
+			// clean field
+			$field = stripslashes_deep($field);
 			
 			
 			// format options if needed
@@ -384,6 +391,7 @@ class acf_Repeater
 				'label'		=>	$field['label'],
 				'name'		=>	$field['name'],
 				'type'		=>	$field['type'],
+				'default_value'	=>	$field['default_value'],
 				'options'	=>	serialize($field['options']),
 				
 			);
@@ -396,7 +404,7 @@ class acf_Repeater
 			// if there is an id, this field already exists, so save it in the same ID spot
 			if($field['id'])
 			{
-				$data['id']	= $field['id'];
+				$data['id']	= (int) $field['id'];
 			}
 			
 			
@@ -422,12 +430,11 @@ class acf_Repeater
 	 ---------------------------------------------------------------------------------------------*/
 	function save_input($post_id, $field)
 	{
-		//print_r($field);
-		//die;
 		
 		// set table name
 		global $wpdb;
-		$table_name = $wpdb->prefix.'acf_values';
+		$acf_values = $wpdb->prefix.'acf_values';
+		$wp_postmeta = $wpdb->prefix.'postmeta';
 		
 		
 		$field = stripslashes_deep( $field );
@@ -442,6 +449,7 @@ class acf_Repeater
 				foreach($row as $j => $cell)
 				{
 					
+					
 					// if select is a multiple (multiple select value), you need to save it as an array!
 					if(isset($cell['value']) && $cell['value'] != "")
 					{
@@ -452,29 +460,58 @@ class acf_Repeater
 					}
 					else
 					{
-						//$cell['value'] = "";
-						continue;
+						$cell['value'] = "";
+						//continue;
 					}
-
 					
-					// $j = cell number
-					$data = array(
-						'post_id'	=>	$post_id,
-						'field_id'	=>	$cell['field_id'],
-						'value'		=>	$cell['value'],
-						'order_no'	=>	$i
+					
+					// create data: wp_postmeta
+					$data1 = array(
+						'post_id'		=>	(int) $post_id,
+						//'meta_key'		=>	$field['field_name'] . '_' . $i . '_' . $j,
+						'meta_key'		=>	$field['field_name'],
+						'meta_value'	=>	$cell['value']
 					);
-					
-					
-					// if there is an id, this value already exists, so save it in the same ID spot
-					if($cell['row_id'])
+					if(isset($cell['meta_id']) && $cell['meta_id'] != "")
 					{
-						$data['id']	= $cell['row_id'];
+						$data1['meta_id'] = (int) $cell['meta_id'];
 					}
 					
 					
-					// insert new data
-					$new_id = $wpdb->insert($table_name, $data);
+					
+					// get the new id
+					$wpdb->insert($wp_postmeta, $data1);
+					if(isset($cell['meta_id']) && $cell['meta_id'] != "")
+					{
+						$new_id = $cell['meta_id'];
+					}
+					else
+					{
+						$new_id = $wpdb->insert_id;
+					}
+					
+					
+					
+					// create data: acf_values
+					if($new_id && $new_id != 0)
+					{
+		
+						$data2 = array(
+							'field_id'		=>	$field['field_id'],
+							'sub_field_id'	=>	(int) $cell['field_id'],
+							'value'			=>	$new_id,
+							'order_no'		=>	$i,
+						);
+						if(isset($cell['value_id']) && $cell['value_id'] != "")
+						{
+							$data2['id'] = (int) $cell['value_id'];
+						}
+						
+						
+						$wpdb->insert($acf_values, $data2);
+						
+					}
+		
 					
 				}
 				//foreach($row as $j => $cell)
@@ -484,6 +521,7 @@ class acf_Repeater
 			//foreach($field['value'] as $i => $row)
 		}
 		//if($field['value'])
+		
 	}
 	
 	/*---------------------------------------------------------------------------------------------
@@ -496,19 +534,23 @@ class acf_Repeater
 	 ---------------------------------------------------------------------------------------------*/
 	function load_value_for_input($post_id, $field)
 	{
+
 		$sub_fields = $field->options['sub_fields'];
 		$values = array();
 		
 		
 		// set table name
 		global $wpdb;
-		$table_name = $wpdb->prefix.'acf_values';
+		$acf_values = $wpdb->prefix.'acf_values';
+		$wp_postmeta = $wpdb->prefix.'postmeta';
 		
-	 	
+
 	 	foreach($sub_fields as $sub_field)
 	 	{
 	 		// get var
-		 	$db_values = $wpdb->get_results("SELECT * FROM $table_name WHERE field_id = '$sub_field->id' AND post_id = '$post_id' ORDER BY order_no ASC");
+	 		$db_values = $wpdb->get_results("SELECT m.meta_id, m.meta_value as value, v.order_no, v.id as value_id FROM $wp_postmeta m LEFT JOIN $acf_values v ON m.meta_id = v.value WHERE v.sub_field_id = '$sub_field->id' AND m.post_id = '$post_id' ORDER BY v.order_no ASC");
+	 			 		
+		 	//$db_values = $wpdb->get_results("SELECT * FROM $table_name WHERE field_id = '$sub_field->id' AND post_id = '$post_id' ORDER BY order_no ASC");
 		 	
 		 	if($db_values)
 		 	{
@@ -527,16 +569,31 @@ class acf_Repeater
 		 	}
 		 	else
 		 	{
-		 		// $values[0][$sub_field->name] = "";
 		 		$value = new stdClass();
-		 		$value->value = "";
-		 		$values[0][$sub_field->order_no] = $value;
+		 		$value->value = false;
+		 		
+		 		
+		 		// override with default value
+				if($post_id != 0)
+				{
+					$post_meta = get_post_custom($post_id);
+					if(empty($post_meta) && isset($sub_field->default_value) && !empty($sub_field->default_value))
+					{
+						$value->value = $sub_field->default_value;
+					}
+		
+				}
+				
+				$values[0][$sub_field->order_no] = $value;
+		 		
 		 	}
 		 			 	
 	 	}
+	 
 	 	
 	 	//print_r($values);
 	 	return $values;
+	 	
 		
 	}
 	
@@ -551,10 +608,7 @@ class acf_Repeater
 	 ---------------------------------------------------------------------------------------------*/
 	function load_value_for_api($post_id, $field)
 	{
-		//echo '<pre>';
-		//print_r($field);
-		//echo '</pre>';
-		//die;
+		// get sub fields
 		
 		
 		$sub_fields = $field->options['sub_fields'];
@@ -565,7 +619,7 @@ class acf_Repeater
 		global $wpdb;
 		$table_name = $wpdb->prefix.'acf_values';
 		
-	 	if($sub_fields)
+	 	if(is_array($sub_fields) && count($sub_fields) > 0)
 	 	{
 		 	foreach($sub_fields as $sub_field)
 		 	{
@@ -581,7 +635,7 @@ class acf_Repeater
 				 		// format if needed
 						if(method_exists($this->parent->fields[$sub_field->type], 'format_value_for_api'))
 						{
-							 $value = $this->parent->fields[$sub_field->type]->format_value_for_api($value);
+							 $value = $this->parent->fields[$sub_field->type]->format_value_for_api($value, $sub_field->options);
 						}
 						
 						//echo 'db order no = '.$db_value->order_no;

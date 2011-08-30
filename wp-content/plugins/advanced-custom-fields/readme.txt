@@ -81,6 +81,23 @@ http://support.plugins.elliotcondon.com/categories/advanced-custom-fields/
 
 == Changelog ==
 
+= 2.1.0 =
+* Integrate acf_values and wp_postmeta! Values are now saved as custom fields!
+* Ajax load in fields + update fields when the page / post is modified
+* API has been completely re written for better performance
+* Default Value - text / textarea
+* New upgrade database message / system
+* Separate upgrade / activate scripts
+* Select / page link / post object add Null option
+* Integrate with Duplicate Posts plugin
+* New location rule: post format
+* Repeater field attach image to post
+* Location: add children to drop down menu for page parent
+* Update script replaces image urls with their id's
+* All images / Files save as id's now, api formats the value back into a url
+* Simple CSS + JS improvements
+* New Field: Radio Buttons (please note Firefox has a current bug with jquery and radio buttons with the checked attribute)
+
 = 2.0.5 =
 * New Feature: Import / Export
 * Bug Fixed: Wysiwyg javascript conflicts
