@@ -115,56 +115,53 @@
 		// post off and find new fields
 		$.post(ajaxurl, data, function(data) {
 			
-			//setTimeout(function(){
+			var new_divs = [];
+			var old_divs = [];
 			
-				var new_divs = [];
-				var old_divs = [];
+			/*$('#acf_input').removeClass('loading');
+			$('#acf_fields_ajax').animate({
+				opacity	: 1
+			}, 500);*/
+			
+			$('#acf_fields_ajax .acf_ajax_fields').each(function(){
 				
-				/*$('#acf_input').removeClass('loading');
-				$('#acf_fields_ajax').animate({
-					opacity	: 1
-				}, 500);*/
+				old_divs[$(this).attr('data-acf_id')] = $(this);
 				
-				$('#acf_fields_ajax .acf_ajax_fields').each(function(){
-					
-					old_divs[$(this).attr('data-acf_id')] = $(this);
-					
-					$(this).remove();
-				});
+				$(this).remove();
+			});
+			
+			var divs = $(data).filter(function(){ return $(this).is('.acf_ajax_fields') });
+			divs.each(function(){
 				
-				var divs = $(data).filter(function(){ return $(this).is('.acf_ajax_fields') });
-				divs.each(function(){
-					
-					if(old_divs[$(this).attr('data-acf_id')])
-					{
-						$('#acf_fields_ajax').append(old_divs[$(this).attr('data-acf_id')]);
-					}
-					else
-					{
-						$('#acf_fields_ajax').append($(this));
-					}
-
-				});
-				
-				
-				// new dynamic style
-				$('#acf_fields_ajax #acf_dynamic_style').remove();
-				var style = $(data).filter(function(){ return $(this).is('style')});
-				style.each(function(){
+				if(old_divs[$(this).attr('data-acf_id')])
+				{
+					$('#acf_fields_ajax').append(old_divs[$(this).attr('data-acf_id')]);
+				}
+				else
+				{
 					$('#acf_fields_ajax').append($(this));
-				});
-				
-				
-				$('body').setup_acf();
-				
-				
-			//}, 500);
+				}
+
+			});
 			
+			
+			// new dynamic style
+			$('#acf_fields_ajax #acf_dynamic_style').remove();
+			var style = $(data).filter(function(){ return $(this).is('style')});
+			style.each(function(){
+				$('#acf_fields_ajax').append($(this));
+			});
+			
+			
+			$('body').setup_acf();
+				
 			
 		});
 	}
 	
-	update_fields();
+	$(document).ready(function(){
+		update_fields();
+	});
 	
 
 })(jQuery);

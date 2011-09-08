@@ -68,7 +68,6 @@
 }
 
 .acf_wysiwyg {
-	border: #DFDFDF solid 1px;
 	overflow: hidden;
 	background: #fff;
 }
@@ -196,7 +195,7 @@
 }
 
 .repeater > table > tbody > tr:nth-child(even) {
-	background: transparent;
+	background: #F9F9F9;
 }
 
 .repeater > table > tbody > tr:nth-child(odd) {

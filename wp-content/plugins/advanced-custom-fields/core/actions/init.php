@@ -6,23 +6,35 @@
 *
 *---------------------------------------------------------------------*/
 
+$version = get_option('acf_version','1.0.5');
+
 if(isset($_POST['acf_upgrade']))
 {
 	$this->upgrade();
 }
-elseif(get_option('acf_version') != $this->version)
+else
 {
-	global $acf_temp_mesage;
-	$acf_temp_mesage = '<form method="post"><p>Advanced Custom Fields v' . $this->version . ' requires a database upgrade. Please <a href="http://codex.wordpress.org/Backing_Up_Your_Database">backup your database</a> then click <input type="submit" class="button" name="acf_upgrade" value="Upgrade Database" /></p></form>';
-	
-	function my_temp_notice()
+	// if current version is less than the latest upgrade version, show the upgrade message
+	if(version_compare($version,$this->upgrade_version) < 0)
 	{
 		global $acf_temp_mesage;
-	    echo '<div class="updated" id="message">'.$acf_temp_mesage.'</div>';
+		$acf_temp_mesage = '<form method="post"><p>Advanced Custom Fields v' . $this->version . ' requires a database upgrade. Please <a href="http://codex.wordpress.org/Backing_Up_Your_Database">backup your database</a> then click <input type="submit" class="button" name="acf_upgrade" value="Upgrade Database" /></p></form>';
+		
+		function my_temp_notice()
+		{
+			global $acf_temp_mesage;
+		    echo '<div class="updated" id="message">'.$acf_temp_mesage.'</div>';
+		}
+		add_action('admin_notices', 'my_temp_notice');
 	}
-	add_action('admin_notices', 'my_temp_notice');
-	
+	elseif($version != $this->version)
+	{
+		update_option('acf_version',$this->version);
+	}
 }
+
+
+
 		
 
 

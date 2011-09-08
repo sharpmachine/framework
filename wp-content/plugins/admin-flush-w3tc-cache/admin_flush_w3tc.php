@@ -1,14 +1,14 @@
 <?php
 /**
  * @package admin_flush_w3tc
- * @version 1.1
+ * @version 1.2
  */
 /*
 Plugin Name: Admin Flush W3TC Cache
 Plugin URI: 
 Description: Admin Flush W3TC Cache works with the W3 Total Cache plugin.  It simply adds an "Empty All Caches" option to every Admin page.
 Author: Dan Horne
-Version: 1.1
+Version: 1.2
 Author URI: 
 */
 
@@ -27,7 +27,8 @@ if ( in_array( $required_plugin , $plugins ) ) {
 
 //Output the link HTML
 function admin_flush_w3tc() {
-	$link = "<a onclick=\"document.location.href='admin.php?page=w3tc_general&flush_all';\">Empty All Caches</a>";
+    $url = wp_nonce_url(admin_url('admin.php?page=w3tc_general&w3tc_flush_all'), 'w3tc');
+	$link = "<a onclick=\"document.location.href='" . $url . "';\">Empty All Caches</a>";
 	echo "<p id='admin_flush_w3tc'>$link</p>";
 }
 

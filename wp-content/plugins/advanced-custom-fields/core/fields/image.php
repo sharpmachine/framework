@@ -150,6 +150,10 @@ class acf_Image
 			<?php
 			exit;
 		} 
+		else 
+		{
+			return $html;
+		}
 
 	}
 	

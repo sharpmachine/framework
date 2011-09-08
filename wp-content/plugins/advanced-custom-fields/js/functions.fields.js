@@ -130,7 +130,7 @@
 			var type = $(this).val();
 			
 			// does it have repeater?
-			if(!$(this).find('option[value="repeater"]').exists())
+			if(!$(this).find('option[value="repeater"]').exists() && !$(this).find('option[value="null"]').exists())
 			{
 				if($(this).closest('.repeater').length == 0)
 				{

@@ -164,7 +164,7 @@ class acf_Checkbox
 	 * @since 1.1
 	 * 
 	 ---------------------------------------------------------------------------------------------*/
-	function format_value_for_api($value, $options)
+	function format_value_for_api($value, $options = null)
 	{
 		if(is_array(unserialize($value)))
 		{

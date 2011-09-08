@@ -27,12 +27,29 @@ window.acf_div = null;
 		
 		$(this).find('.acf_wysiwyg').each(function(){
 			
+			var tiny_1_old = '';
+			var tiny_2_old = '';
+			
+			// setup extra tinymce buttons
+			if(tinyMCE.settings.theme_advanced_buttons1)
+			{
+				tiny_1_old = tinyMCE.settings.theme_advanced_buttons1;
+				tinyMCE.settings.theme_advanced_buttons1 += ",|,add_image,add_video,add_audio,add_media";
+			}
+			
+			if(tinyMCE.settings.theme_advanced_buttons2)
+			{
+				tiny_2_old = tinyMCE.settings.theme_advanced_buttons2;
+				tinyMCE.settings.theme_advanced_buttons2 += ",code";
+			}
+			
+			
 			
 			if($(this).find('table').exists())
 			{
 				//alert('had wysiwyg')
-				$(this).children('span').remove();
-				$(this).children('textarea').removeAttr('aria-hidden').removeAttr('style');
+				$(this).children('#editorcontainer').children('span').remove();
+				$(this).children('#editorcontainer').children('textarea').removeAttr('aria-hidden').removeAttr('style');
 			}
 			
 			// get a unique id
@@ -46,10 +63,20 @@ window.acf_div = null;
 			tinyMCE.execCommand('mceAddControl', false, id);
 			
 			
+			// restore old tinymce buttons
+			if(tinyMCE.settings.theme_advanced_buttons1)
+			{
+				tinyMCE.settings.theme_advanced_buttons1 = tiny_1_old;
+			}
+			
+			if(tinyMCE.settings.theme_advanced_buttons2)
+			{
+				tinyMCE.settings.theme_advanced_buttons2 = tiny_2_old;
+			}
 			
 		});
 	
-	}
+	};
 	
 	
 	/*----------------------------------------------------------------------
@@ -120,9 +147,12 @@ window.acf_div = null;
 	*---------------------------------------------------------------------*/
 	
 	$.fn.setup_file = function(){
-	
-		$(this).find('.acf_file_uploader').each(function(){
 		
+		var post_id = $('input#post_ID').val();
+		
+		$(this).find('.acf_file_uploader').each(function(){
+			
+			console.log('file setup');
 			var div = $(this);
 	
 			div.find('p.no_file input.button').click(function(){
@@ -131,7 +161,7 @@ window.acf_div = null;
 				window.acf_div = div;
 				
 				// show the thickbox
-				tb_show('Add File to field', 'media-upload.php?type=file&acf_type=file&TB_iframe=1');
+				tb_show('Add File to field', 'media-upload.php?post_id='+post_id+'&type=file&acf_type=file&TB_iframe=1');
 				
 				return false;
 			});
@@ -162,7 +192,7 @@ window.acf_div = null;
 		
 			var r = $(this);
 			var row_limit = parseInt(r.attr('data-row_limit'));
-			var row_count = r.find('table > tbody > tr').length;
+			var row_count = r.children('table').children('tbody').children('tr').length;
 			
 			// has limit been reached?
 			if(row_count >= row_limit)
@@ -188,8 +218,8 @@ window.acf_div = null;
 		$('.repeater #add_field').live('click', function(){
 			
 			var r = $(this).closest('.repeater');
-			var row_limit = parseInt(r.attr('data-row_limit'));
-			var row_count = r.find('table > tbody > tr').length;
+			var row_limit = parseInt(r.attr('data-row_limit'));			
+			var row_count = r.children('table').children('tbody').children('tr').length;
 			
 			// row limit
 			if(row_count >= row_limit)
@@ -200,8 +230,9 @@ window.acf_div = null;
 			}
 			
 			// create and add the new field
-			var new_field = r.find('table > tbody > tr:last-child').clone(false);
-			r.find('table > tbody').append(new_field);
+			var new_field = r.children('table').children('tbody').children('tr:last-child').clone(false);
+			r.children('table').children('tbody').append(new_field); 
+
 			new_field.reset_values();
 			
 			// setup sub fields
@@ -237,7 +268,7 @@ window.acf_div = null;
 		$('.repeater a.remove_field').live('click', function(){
 			
 			var r = $(this).closest('.repeater');
-			var row_count = r.find('table > tbody > tr').length;
+			var row_count = r.children('table').children('tbody').children('tr').length;
 						
 			// needs at least one
 			if(row_count <= 1)
@@ -275,12 +306,12 @@ window.acf_div = null;
 	*---------------------------------------------------------------------*/
 
 	$.fn.update_order_numbers = function(){
-
-		$(this).find('table > tbody > tr').each(function(i){
+		
+		$(this).children('table').children('tbody').children('tr').each(function(i){
 			$(this).children('td.order').html(i+1);
 		});
 	
-	}
+	};
 	
 	
 	/*----------------------------------------------------------------------
@@ -290,7 +321,6 @@ window.acf_div = null;
 	*---------------------------------------------------------------------*/
 	$.fn.make_sortable = function(){
 		
-		//alert('make sortable');
 		var r = $(this);
 		
 		var fixHelper = function(e, ui) {
@@ -300,33 +330,28 @@ window.acf_div = null;
 			return ui;
 		};
 		
-		r.find('table > tbody').unbind('sortable').sortable({
+		r.children('table').children('tbody').unbind('sortable').sortable({
 			update: function(event, ui){
 				r.update_order_numbers();
-				r.make_all_fields();
+				r.setup_wysiwyg();
+				r.setup_datepicker();
+				r.setup_image();
+				r.setup_file();
 			},
 			handle: 'td.order',
 			helper: fixHelper,
 		    start: function(event, ui)
 		    {
-				//console.log(ui.item);
-				if(ui.item.find('.acf_wysiwyg').exists())
-				{
-					var id = ui.item.find('.acf_wysiwyg textarea').attr('id');
-					tinyMCE.execCommand("mceRemoveControl", false, id);
-				}
+
 		    },
 		    stop: function(event, ui)
 		    {
-				if(ui.item.find('.acf_wysiwyg').exists())
-				{
-					var id = ui.item.find('.acf_wysiwyg textarea').attr('id');
-					tinyMCE.execCommand("mceAddControl", false, id);
-				}
+		    	ui.item.setup_wysiwyg();
 		    }
 		});
-	}
+	};
 	
+
 	
 	
 	/*----------------------------------------------------------------------
@@ -346,7 +371,7 @@ window.acf_div = null;
 			
 			var name = wysiwyg.find('textarea').first().attr('name');
 			
-			wysiwyg.html('<textarea name="'+name+'"></textarea>');
+			wysiwyg.html('<div id="editorcontainer"><textarea name="'+name+'"></textarea></div>');
 		}
 		
 		
@@ -423,30 +448,16 @@ window.acf_div = null;
 	
 	$.fn.setup_acf = function()
 	{
-		
+
 		var div = $('#acf_fields_ajax');
 		
-		
-		if(typeof(tinyMCE) != "undefined")
-		{
-			if(tinyMCE.settings.theme_advanced_buttons1)
-			{
-				tinyMCE.settings.theme_advanced_buttons1 += ",|,add_image,add_video,add_audio,add_media";
-			}
-			
-			if(tinyMCE.settings.theme_advanced_buttons2)
-			{
-				tinyMCE.settings.theme_advanced_buttons2 += ",code";
-			}
-		}
-
 		
 		div.setup_wysiwyg();
 		div.setup_datepicker();
 		div.setup_image();
 		div.setup_file();
 		div.setup_repeater();
-	}
+	};
 
 	
 
@@ -458,7 +469,7 @@ window.acf_div = null;
 	
 	$(document).ready(function(){
 		
-		$('body').setup_acf();
+
 		
 	});
 	

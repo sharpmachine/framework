@@ -12,7 +12,7 @@ class acf_File
 		$this->title = __('File','acf');
 		$this->parent = $parent;
 		
-		add_action("admin_head-media-upload-popup", array($this, 'popup_head'));
+		add_action('admin_head-media-upload-popup', array($this, 'popup_head'));
 		add_filter('media_send_to_editor', array($this, 'media_send_to_editor'), 15, 2 );
 		//add_action('admin_init', array($this, 'admin_init'));
 		
@@ -150,7 +150,11 @@ class acf_File
 			</script>
 			<?php
 			exit;
-		} 
+		}
+		else 
+		{
+			return $html;
+		}
 	}
 		
 	

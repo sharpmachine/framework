@@ -73,6 +73,7 @@ class Acf_options_page
 		
 		// Add admin head
 		add_action('admin_head-'.$options_page, array($this,'admin_head'));
+		add_action('admin_footer-'.$options_page, array($this,'admin_footer'));
 
 	}
 	
@@ -113,6 +114,20 @@ class Acf_options_page
 	}
 	
 	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	admin_footer
+	*
+	*	@author Elliot Condon
+	*	@since 2.0.4
+	* 
+	*-------------------------------------------------------------------------------------*/
+	function admin_footer()
+	{
+		wp_preload_dialogs( array( 'plugins' => 'safari,inlinepopups,spellchecker,paste,wordpress,media,fullscreen,wpeditimage,wpgallery,tabfocus' ) );
+	}
+	
+	
 	/*---------------------------------------------------------------------------------------------
 	 * admin_print_scripts / admin_print_styles
 	 *
@@ -122,20 +137,22 @@ class Acf_options_page
 	 ---------------------------------------------------------------------------------------------*/
 	function admin_print_scripts() {
 		
-		wp_enqueue_script('jquery');
-		wp_enqueue_script('jquery-ui-core');
-		
-		
-		// wysiwyg
-		wp_enqueue_script('media-upload');
-		wp_enqueue_script('thickbox');
-		wp_enqueue_script('word-count');
-		wp_enqueue_script('post');
-		wp_enqueue_script('editor');
-		
-		
-		// repeater
-		wp_enqueue_script('jquery-ui-sortable');
+		wp_enqueue_script(array(
+			'jquery',
+			'jquery-ui-core',
+			
+			// wysiwyg
+			'editor',
+			'thickbox',
+			'media-upload',
+			'word-count',
+			'post',
+			'editor-functions',
+			
+			// repeater
+			'jquery-ui-sortable'
+			
+		));
 		
 	}
 	
@@ -185,7 +202,7 @@ class Acf_options_page
 						foreach($location->rules as $rule)
 						{
 							// if any rules dont return true, dont add this acf
-							if(!$this->parent->match_location_rule($post, $rule))
+							if(!$this->parent->match_location_rule(false, $rule))
 							{
 								$add_box = false;
 							}
@@ -204,7 +221,7 @@ class Acf_options_page
 						foreach($location->rules as $rule)
 						{
 							// if any rules return true, add this acf
-							if($this->parent->match_location_rule($post, $rule))
+							if($this->parent->match_location_rule(false, $rule))
 							{
 								$add_box = true;
 							}
@@ -289,7 +306,7 @@ class Acf_options_page
 						
 						
 						// set value, id and name for field
-						$field->value = $this->parent->load_value_for_input($post->ID, $field);
+						$field->value = $this->parent->load_value_for_input(0, $field);
 						$field->input_name = isset($field->input_name) ? $field->input_name : '';
 						
 						$temp_field = new stdClass();
@@ -374,6 +391,13 @@ class Acf_options_page
 				</div>
 			</form>
 		</div>
+		<script type="text/javascript">
+		(function($){
+			$(document).ready(function(){
+				$('body').setup_acf();
+			});
+		})(jQuery);
+		</script>
 		<?php
 	}
 	
@@ -413,11 +437,11 @@ class Acf_options_page
 				}
 			}
 	    	
+	    	//var_dump($field);
 	    	
-	    	
-	    	if(method_exists($this->fields[$field['field_type']], 'save_input'))
+	    	if(method_exists($this->parent->fields[$field['field_type']], 'save_input'))
 			{
-				$this->fields[$field['field_type']]->save_input($post_id, $field);
+				$this->parent->fields[$field['field_type']]->save_input($post_id, $field);
 			}
 			else
 			{
@@ -464,7 +488,7 @@ class Acf_options_page
 			
 	    }
 	    //foreach($_POST['acf'] as $field)
-    
+    	//die;
 	}
 	
 

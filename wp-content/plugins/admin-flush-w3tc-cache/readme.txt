@@ -41,11 +41,19 @@ There are no settings, just enable the plugin and the link appears.
 
 Admin Flush W3TC Cache requires that the W3 Total Cache plugin be installed and active.  If either of these conditions is not true, the link will not appear.  Please ensure that you have installed the W3 Total Cache plugin and that it has been activated.
 
+= The "Empty All Caches" link redirects me to the W3TC General Options page and doesn't clear the cache. =
+
+Update to Admin Flush W3TC Cache version 1.2 or greater.  Version 1.2 fixes compatibility with W3TC 0.9.2.4 and above.
+
 == Screenshots ==
 1. WordPress Dashboard with "Empty All Caches" link top right.
 2. WordPress Edit Page screen after clearing caches with confirmation message.
 
 == Changelog ==
+
+= 1.2 =
+* Compatibility with W3TC 0.9.2.4
+* FIX - Redirects to W3TC General Options without clearing caches in W3TC 0.9.2.4 (added nonces).
 
 = 1.1 =
 * Updated Documentation, code comments.

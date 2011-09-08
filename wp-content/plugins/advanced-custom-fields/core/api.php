@@ -7,7 +7,71 @@ $acf_global = array(
 	'post_id'	=>	0,
 	'order_no'	=>	-1,
 );
+
+	
+/*--------------------------------------------------------------------------------------
+*
+*	get_fields
+*
+*	@author Elliot Condon
+*	@since 1.0.3
+* 
+*-------------------------------------------------------------------------------------*/
+
+function get_fields($post_id = false)
+{
+	global $post;
+	global $wpdb;
+	global $acf;
+	
+	
+	$values = array();
+	
+	
+	// tables
+	$acf_values = $wpdb->prefix.'acf_values';
+	$acf_fields = $wpdb->prefix.'acf_fields';
+	$wp_postmeta = $wpdb->prefix.'postmeta';
+	
+	
+	if(!$post_id)
+	{
+		$post_id = $post->ID;
+	}
+	elseif($post_id == "options")
+	{
+		$post_id = 0;
+	}
+	
+	
+	$sql = "SELECT f.name 
+		FROM $wp_postmeta m 
+		LEFT JOIN $acf_values v ON m.meta_id = v.value
+		LEFT JOIN $acf_fields f ON v.field_id = f.id 
+		WHERE m.post_id = '$post_id' AND f.name != 'NULL'";
 		
+	$results = $wpdb->get_results($sql);
+
+
+	// no value
+	if(!$results)
+	{
+		return false;
+	}
+	
+	
+	// repeater field
+	foreach($results as $field)
+	{
+		$values[$field->name] = get_field($field->name, $post_id);
+	}
+
+
+	return $values;
+	
+}
+
+
 /*--------------------------------------------------------------------------------------
 *
 *	get_field
@@ -57,15 +121,26 @@ function get_field($field_name, $post_id = false)
 	}
 	
 	
-	// repeater field
-	if(count($results) > 1)
-	{
-		return true;
-	}
-	
 	
 	// normal field
 	$field = $results[0];
+	
+	
+	// repeater field
+	if($field->type == 'repeater')
+	{
+		$has_values = false;
+		foreach($results as $result)
+		{
+			if($result->value)
+			{
+				$has_values = true;
+			}
+		}
+		return $has_values;
+	}
+	
+	
 	$value = $field->value;
 	
 	

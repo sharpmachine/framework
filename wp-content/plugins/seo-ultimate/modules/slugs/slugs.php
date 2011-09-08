@@ -42,8 +42,9 @@ class SU_Slugs extends SU_Module {
 		if (empty($slug)) $slug = $_POST['post_title'];
 		
 		//Prepare the title and the words for comparison
-		$slug = mb_strtolower(stripslashes($slug));
-		$words = mb_strtolower(stripslashes($this->get_setting('words_to_remove')));
+		$strtolower = function_exists('mb_strtolower') ? 'mb_strtolower' : 'strtolower';
+		$slug = $strtolower(stripslashes($slug));
+		$words = $strtolower(stripslashes($this->get_setting('words_to_remove')));
 		
 		//Remove the stopwords from the slug
 		$newslug = implode("-", array_diff(explode(" ", $slug), suarr::explode_lines($words)));
