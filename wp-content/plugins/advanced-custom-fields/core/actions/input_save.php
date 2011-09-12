@@ -18,25 +18,23 @@ if(isset($_POST['input_meta_box']) && $_POST['input_meta_box'] == 'true')
 	$wp_postmeta = $wpdb->prefix.'postmeta';
 	
 	
-	
+	// delete old data
+	$values = $wpdb->get_results("SELECT v.id, m.meta_id FROM $acf_values v LEFT JOIN $wp_postmeta m ON v.value = m.meta_id WHERE v.post_id = '$post_id'");		
+	if($values)
+	{
+		foreach($values as $value)
+		{	
+			$wpdb->query("DELETE FROM $acf_values WHERE id = '$value->id'");
+			$wpdb->query("DELETE FROM $wp_postmeta WHERE meta_id = '$value->meta_id'");
+		}
+	}
+		
 	// add the new values to the database
     foreach($_POST['acf'] as $field)
     {	
     	
     	// remove all old values from the database
     	$field_id = $field['field_id'];
-		$values = $wpdb->get_results("SELECT v.id, m.meta_id FROM $acf_values v LEFT JOIN $wp_postmeta m ON v.value = m.meta_id WHERE v.field_id = '$field_id' AND m.post_id = '$post_id'");
-		
-		
-		if($values)
-		{
-			foreach($values as $value)
-			{	
-				$wpdb->query("DELETE FROM $acf_values WHERE id = '$value->id'");
-				$wpdb->query("DELETE FROM $wp_postmeta WHERE meta_id = '$value->meta_id'");
-			}
-		}
-    	
     	
     	
     	if(method_exists($this->fields[$field['field_type']], 'save_input'))
@@ -58,11 +56,15 @@ if(isset($_POST['input_meta_box']) && $_POST['input_meta_box'] == 'true')
 
 			// create data: wp_postmeta
 			$data1 = array(
-				'meta_id'		=>	isset($field['meta_id']) ? $field['meta_id'] : null,
+				'meta_id'		=>	null,
 				'post_id'		=>	$post_id,
 				'meta_key'		=>	$field['field_name'],
 				'meta_value'	=>	$field['value']
 			);
+			if(isset($field['meta_id']) && !empty($field['meta_id']))
+			{
+				$data1['meta_id'] = $field['meta_id'];
+			}
 			
 			$wpdb->insert($wp_postmeta, $data1);
 			
@@ -73,11 +75,15 @@ if(isset($_POST['input_meta_box']) && $_POST['input_meta_box'] == 'true')
 			{
 
 				$data2 = array(
-					'id'		=>	isset($field['value_id']) ? $field['value_id'] : null,
+					'id'		=>	null,
+					'post_id'	=>	$post_id,
 					'field_id'	=>	$field['field_id'],
 					'value'		=>	$new_id,
-					'post_id'	=>	$post_id,
 				);
+				if(isset($field['value_id']) && !empty($field['value_id']))
+				{
+					$data2['id'] = $field['value_id'];
+				}
 				
 				$wpdb->insert($acf_values, $data2);
 				

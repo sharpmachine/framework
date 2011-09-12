@@ -13,7 +13,7 @@ Completely Customise your edit pages with an assortment of field types: Wysiwyg,
 Advanced Custom Fields is the perfect solution for any wordpress website which needs more flexible data like other Content Management Systems. 
 
 * Visually create your Fields
-* Select from multiple input types (text, textarea, wysiwyg, image upload, page link, select, checkbox, more to come)
+* Select from multiple input types (text, textarea, wysiwyg, image, file, page link, post object, relationship, select, checkbox, radio buttons, repeater, more to come)
 * Assign your fields to multiple edit pages (specific ID's, post types, post slugs, parent ID's, template names)
 * Add, Edit and reorder infinite rows to your fields
 * Easily load data through a simple and friendly API
@@ -41,8 +41,11 @@ Advanced Custom Fields is the perfect solution for any wordpress website which n
 * PC Firefox	:)
 * PC ie7	:S
 
-= Video Tutorials =
-http://plugins.elliotcondon.com/advanced-custom-fields/user-guide/
+= Demonstration =
+http://plugins.elliotcondon.com/advanced-custom-fields/demonstration/
+
+= Documentation =
+http://plugins.elliotcondon.com/advanced-custom-fields/documentation/
 
 = Field Type Info =
 http://plugins.elliotcondon.com/advanced-custom-fields/field-types/
@@ -61,11 +64,22 @@ Your votes really make a difference! Thanks.
 
 1. Upload 'advanced-custom-fields' to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Click on Settings -> Adv Custom Fields and create your first matrix!
+3. You may be prompted for a Database Upgrade. This is necessary for ACF to function. Please backup your database and click the Upgrade button
+3. Click on Settings -> Adv Custom Fields and create your first Custom Field Group!
+4. Your ACF field group will now appear on the page / post / template you specified in the field group's location rules!
+5. Read the documentation to display your data: 
 
 
 == Frequently Asked Questions ==
-Please View the forum
+
+= Q. I can't see the "Select Image" button for my image field! =
+A. For Image uploads to work, your post type must support "editor"
+
+= Q. ACF uses custom database tables, can I still query posts based on meta_key / value? =
+A. Yes, meta_key and meta_value act as usual. All field data is stored as a normal custom field, but is attached to a row in the acf_values table for extra functionality!
+
+= Q. I have a question =
+A. Chances are, someone else has asked it. Check out the support forum at: 
 http://support.plugins.elliotcondon.com/categories/advanced-custom-fields/
 
 
@@ -76,16 +90,29 @@ http://support.plugins.elliotcondon.com/categories/advanced-custom-fields/
 
 3. The Page edit screen after creating the Advanced Custom Fields
 
-4. Simple and intuitive API. Read the documentation at: http://plugins.elliotcondon.com/advanced-custom-fields/code-examples/
+4. Simple and intuitive API. Read the documentation at: http://plugins.elliotcondon.com/advanced-custom-fields/documentation/
 
 
 == Changelog ==
+
+= 2.1.4 =
+* Fixed add image tinymce error for options Page WYSIWYG
+* API: added new function: update_the_field($field_name, $value, $post_id)
+* New field: Relationship field
+* New Option for Relationship + Post Object: filter posts via meta_key and meta_value
+* Added new option: Image preview size (thumb, medium, large, full)
+* Fixed duplicate posts double value problem
+* API update: get_field($repeater) will return an array of values in order, or false (like it used to!)
+* Radio Button: added labels around values
+* Post object + Page Link: select drop down is now hierarchal
+* Input save errors fixed
+* Add 'return_id' option to get_field / get_sub_field
+* Many bug fixes
 
 = 2.1.3 =
 * Fixed API returning true for repeater fields with no data
 * Added get_fields back into the api!
 * Fixed field type select from showing multiple repeater activation messages 
-
 
 = 2.1.2 =
 * Fixed repeater sortable bug on options page
@@ -233,3 +260,9 @@ http://support.plugins.elliotcondon.com/categories/advanced-custom-fields/
 
 = 1.0.0 =
 * Advanced Custom Fields.
+
+
+== Upgrade Notice ==
+
+= 2.1.4 =
+* Adds post_id column back into acf_values

@@ -564,6 +564,7 @@ function help_dashboard_widget_function() {
 			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-8-media-library/ target=_blank>Part 8: Media Library</a></li>
 			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-9-managing-comments/ target=_blank>Part 9: Managing Comments</a></li> 
 			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-10-creating-links/ target=_blank>Part 10: Creating Links</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-12-widgets/ target=_blank>Part 12: Widgets</a></li>
 		</ul>
 		
 		<ul style=width:40%;float:left;min-width:153px;>

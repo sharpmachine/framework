@@ -169,6 +169,7 @@ register_post_type('acf', array(
 	'rewrite' => array("slug" => "acf"),
 	'query_var' => "acf",
 	'supports' => $supports,
+	'show_in_menu'	=>false,
 ));
 
 

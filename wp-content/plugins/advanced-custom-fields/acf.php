@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://plugins.elliotcondon.com/advanced-custom-fields/
 Description: Customise your edit pages with an assortment of field types: Wysiwyg, Repeater, text, textarea, image, file, select, checkbox post type, page link and more! Hide unwanted metaboxes and assign to any edit page!
-Version: 2.1.3
+Version: 2.1.4
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -51,8 +51,8 @@ class Acf
 		$this->dir = plugins_url('',__FILE__);
 		$this->siteurl = get_bloginfo('url');
 		$this->wpadminurl = admin_url();
-		$this->version = '2.1.3';
-		$this->upgrade_version = '2.1.0'; // this is the latest version which requires an upgrade
+		$this->version = '2.1.4';
+		$this->upgrade_version = '2.1.4'; // this is the latest version which requires an upgrade
 		$this->activated_fields = $this->get_activated_fields();
 		$this->options_page = new Acf_options_page($this);
 		
@@ -73,7 +73,8 @@ class Acf
 		add_action('admin_head', array($this,'admin_head'));
 		add_action('admin_menu', array($this,'admin_menu'));
 		add_action('save_post', array($this, 'save_post'));
-		add_action('admin_footer', array($this, '_admin_footer'));
+		add_action('delete_post', array($this, 'delete_post'), 10);
+		add_action('admin_footer', array($this, 'admin_footer'));
 		add_action('wp_ajax_input_meta_box_html', array($this, 'input_meta_box_html'));
 		
 		
@@ -184,7 +185,8 @@ class Acf
 		
 		
 		// verify this with nonce because save_post can be triggered at other times
-		if (!wp_verify_nonce($_POST['ei_noncename'], 'ei-n')) return $post_id;
+		if(!isset($_POST['ei_noncename'])) return $post_id;
+		if(!wp_verify_nonce($_POST['ei_noncename'], 'ei-n')) return $post_id;
 		
 		
 		// only save once! WordPress save's twice for some strange reason.
@@ -207,6 +209,46 @@ class Acf
 		include('core/actions/input_save.php');
 	}
 
+	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	delete_post
+	*
+	*	@author Elliot Condon
+	*	@since 2.1.4
+	* 
+	*-------------------------------------------------------------------------------------*/
+	
+	function delete_post($post_id)
+	{
+		//echo 'delete_posts';
+		
+		// global
+		global $wpdb;
+		
+		// tables
+		$acf_fields = $wpdb->prefix.'acf_fields';
+		$acf_values = $wpdb->prefix.'acf_values';
+		$acf_rules = $wpdb->prefix.'acf_rules';
+		$wp_postmeta = $wpdb->prefix.'postmeta';
+		
+		if(get_post_type($post_id) == 'acf')
+		{
+			// delete fields
+			$wpdb->query("DELETE FROM $acf_fields WHERE post_id = '$post_id'");
+			
+			// delete rules
+			$wpdb->query("DELETE FROM $acf_rules WHERE acf_id = '$post_id'");
+		}
+		else
+		{
+			// delete values
+			$wpdb->query("DELETE FROM $acf_values WHERE post_id = '$post_id'");
+		}
+		
+		return true;
+		
+	}
 	
 	
 	/*--------------------------------------------------------------------------------------
@@ -265,6 +307,7 @@ class Acf
 		include_once('core/fields/true_false.php');
 		include_once('core/fields/page_link.php');
 		include_once('core/fields/post_object.php');
+		include_once('core/fields/relationship.php');
 		include_once('core/fields/date_picker/date_picker.php');
 		include_once('core/fields/repeater.php');
 		
@@ -279,6 +322,7 @@ class Acf
 		$array['true_false'] = new acf_True_false();
 		$array['page_link'] = new acf_Page_link($this);
 		$array['post_object'] = new acf_Post_object($this);
+		$array['relationship'] = new acf_Relationship($this);
 		$array['date_picker'] = new acf_Date_picker($this->dir);
 		
 		if(array_key_exists('repeater', $this->activated_fields))
@@ -592,14 +636,14 @@ class Acf
 	 
 	/*--------------------------------------------------------------------------------------
 	*
-	*	_admin_footer
+	*	admin_footer
 	*
 	*	@author Elliot Condon
 	*	@since 1.0.0
 	* 
 	*-------------------------------------------------------------------------------------*/
 	
-	function _admin_footer()
+	function admin_footer()
 	{
 	
 		if($GLOBALS['pagenow'] == 'edit.php' && $GLOBALS['post_type'] == 'acf')
@@ -682,7 +726,7 @@ class Acf
 				if($post_id != 0)
 				{
 					$post_meta = get_post_custom($post_id);
-					if(empty($post_meta) && isset($field->default_value) && !empty($field->default_value))
+					if(empty($post_meta) && isset($field->default_value))
 					{
 						$value->value = $field->default_value;
 					}
@@ -1178,7 +1222,7 @@ class Acf
 		// display document in browser as plain text
 		//header("Content-Type: text/plain");
 		echo '<?xml version="1.0"?> ';
-		?>
+?>
 
 <?php if($acfs): ?>
 <posts>
@@ -1188,7 +1232,6 @@ class Acf
 	$fields = $this->get_fields($post->ID);
 	$location = $this->get_acf_location($post->ID);
 	$options = $this->get_acf_options($post->ID);	
-	
 ?>
 	<post>
 		<title><?php echo apply_filters( 'the_title_rss', $post->post_title ); ?></title>
@@ -1536,10 +1579,12 @@ class Acf
 							
 							if($field->type != 'repeater')
 							{
-								echo '<input type="hidden" name="acf['.$field->id.'][value_id]" value="'.$field->value->value_id.'" />';
-								echo '<input type="hidden" name="acf['.$field->id.'][meta_id]" value="'.$field->value->meta_id.'" />';
-								
+								$value_id = isset($field->value->value_id) ? $field->value->value_id : '';
+								$meta_id = isset($field->value->meta_id) ? $field->value->meta_id : '';
 								$temp_field->value = $field->value->value;
+								
+								echo '<input type="hidden" name="acf['.$field->id.'][value_id]" value="' . $value_id . '" />';
+								echo '<input type="hidden" name="acf['.$field->id.'][meta_id]" value="' . $meta_id . '" />';
 							}
 							else
 							{

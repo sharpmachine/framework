@@ -50,7 +50,7 @@ class acf_Radio
 				$selected = 'checked="checked"';
 			}
 			
-			echo '<li><input type="radio" class="'.$field->input_class.'" name="'.$field->input_name.'" value="'.$key.'" '.$selected.' />'.$value.'</li>';
+			echo '<li><label><input type="radio" class="'.$field->input_class.'" name="'.$field->input_name.'" value="'.$key.'" '.$selected.' />'.$value.'</label></li>';
 		}
 		
 		echo '</ul>';

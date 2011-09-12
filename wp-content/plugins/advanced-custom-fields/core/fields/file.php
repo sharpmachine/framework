@@ -30,7 +30,10 @@ class acf_File
 	 ---------------------------------------------------------------------------------------------*/
 	function options_html($key, $field)
 	{
+		// vars
 		$options = $field->options;
+		$options['save_format'] = isset($options['save_format']) ? $options['save_format'] : 'url';
+		
 		?>
 		<tr class="field_option field_option_file">
 			<td class="label">

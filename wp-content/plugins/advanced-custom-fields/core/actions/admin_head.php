@@ -53,8 +53,3 @@ if(in_array($GLOBALS['pagenow'], array('post.php', 'post-new.php')))
 
 
 ?>
-<style type="text/css">
-	#menu-posts-acf {
-		display: none;
-	}
-</style>

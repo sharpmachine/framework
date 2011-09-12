@@ -66,12 +66,32 @@ class acf_Page_link
 		foreach($post_types as $post_type)
 		{
 			// get posts
-			$posts = get_posts(array(
-				'numberposts' 	=> 	-1,
-				'post_type'		=>	$post_type,
-				'orderby'		=>	'title',
-				'order'			=>	'ASC'
-			));
+			$posts = false;
+			
+			if(is_post_type_hierarchical($post_type))
+			{
+				// get pages
+				$posts = get_pages(array(
+					'numberposts' => -1,
+					'post_type' => $post_type,
+					'sort_column' => 'menu_order',
+					'order' => 'ASC',
+					'meta_key' => $options['meta_key'],
+					'meta_value' => $options['meta_value'],
+				));
+			}
+			else
+			{
+				// get posts
+				$posts = get_posts(array(
+					'numberposts' => -1,
+					'post_type' => $post_type,
+					'orderby' => 'title',
+					'order' => 'ASC',
+					'meta_key' => $options['meta_key'],
+					'meta_value' => $options['meta_value'],
+				));
+			}
 			
 			
 			// if posts, make a group for them
@@ -82,7 +102,17 @@ class acf_Page_link
 				foreach($posts as $post)
 				{
 					$key = $post->ID;
-					$value = get_the_title($post->ID);
+					
+					$value = '';
+					$ancestors = get_ancestors($post->ID, $post_type);
+					if($ancestors)
+					{
+						foreach($ancestors as $a)
+						{
+							$value .= '– ';
+						}
+					}
+					$value .= get_the_title($post->ID);
 					$selected = '';
 					
 					

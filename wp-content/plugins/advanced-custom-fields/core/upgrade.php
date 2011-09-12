@@ -54,10 +54,11 @@ if(version_compare($version,'1.1.0') < 0)
 	// create acf_values table
 	$sql = "CREATE TABLE " . $acf_values . " (
 		id bigint(20) NOT NULL AUTO_INCREMENT,
+		post_id bigint(20) NOT NULL DEFAULT '0',
 		order_no int(9) NOT NULL DEFAULT '0',
 		field_id bigint(20) NOT NULL DEFAULT '0',
-		value text NOT NULL,
-		post_id bigint(20) NOT NULL DEFAULT '0',
+		sub_field_id bigint(20) NOT NULL DEFAULT '0',
+		value bigint(20) NOT NULL DEFAULT '0',
 		UNIQUE KEY id (id)
 	) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
 	dbDelta($sql);
@@ -166,6 +167,7 @@ if(version_compare($version,'2.1.0') < 0)
 	// value is now an int
 	$sql = "CREATE TABLE " . $acf_values . " (
 		id bigint(20) NOT NULL AUTO_INCREMENT,
+		post_id bigint(20) NOT NULL DEFAULT '0',
 		order_no int(9) NOT NULL DEFAULT '0',
 		field_id bigint(20) NOT NULL DEFAULT '0',
 		sub_field_id bigint(20) NOT NULL DEFAULT '0',
@@ -193,7 +195,46 @@ if(version_compare($version,'2.1.0') < 0)
 }
 
 
+/*--------------------------------------------------------------------------------------
+*
+*	2.1.4
+* 
+*-------------------------------------------------------------------------------------*/
 
+if(version_compare($version,'2.1.4') < 0)
+{
+	
+	// add back in post_id to values table (useful for duplicate posts / third party stuff)
+	$sql = "CREATE TABLE " . $acf_values . " (
+		id bigint(20) NOT NULL AUTO_INCREMENT,
+		post_id bigint(20) NOT NULL DEFAULT '0',
+		order_no int(9) NOT NULL DEFAULT '0',
+		field_id bigint(20) NOT NULL DEFAULT '0',
+		sub_field_id bigint(20) NOT NULL DEFAULT '0',
+		value bigint(20) NOT NULL DEFAULT '0',
+		UNIQUE KEY id (id)
+	) ENGINE=MyISAM DEFAULT CHARSET=utf8;";
+	dbDelta($sql);
+	
+	
+	// copy across post_id
+	$sql2 = "SELECT m.post_id, v.id 
+		FROM $wp_postmeta m 
+		LEFT JOIN $acf_values v ON m.meta_id = v.value";
+		
+	$values = $wpdb->get_results($sql2);
+	if($values)
+	{
+		foreach($values as $value)
+		{
+			$wpdb->query("UPDATE $acf_values SET post_id = '$value->post_id' WHERE id = '$value->id'");
+		}
+	}
+
+	// set version
+	update_option('acf_version','2.1.4');
+	$version = '2.1.4';
+}
 /*--------------------------------------------------------------------------------------
 *
 *	Finish

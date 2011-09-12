@@ -1,6 +1,9 @@
 /*---------------------------------------------------------------------------------------------
 	Postbox
 ---------------------------------------------------------------------------------------------*/
+#icon-edit {
+	background: url(../images/acf-icon-32.png) 0 0 no-repeat !important;
+}
 
 .postbox#acf_fields {
 	border: 0 none;
@@ -342,5 +345,3 @@ table.acf_input tr td .acf tr td {
 .field_form .field_option {
 	display: none;
 }
-
-

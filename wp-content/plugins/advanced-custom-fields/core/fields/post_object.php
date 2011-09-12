@@ -15,15 +15,15 @@ class acf_Post_object
 	
 	function html($field)
 	{
+		// options
+		$options = $field->options;
+		$options['meta_key'] = isset($options['meta_key']) ? $options['meta_key'] : '';
+		$options['meta_value'] = isset($options['meta_value']) ? $options['meta_value'] : '';
+		
 		// get post types
-		if(is_array($field->options['post_type']) && $field->options['post_type'][0] != "")
+		$post_types = isset($options['post_type']) ? $options['post_type'] : false;
+		if(!$post_types || $post_types[0] == "")
 		{
-			// 1. If select has selected post types, just use them
-			$post_types = $field->options['post_type'];
-		}
-		else
-		{
-			//2. If not post types have been selected, load all the public ones
 			$post_types = get_post_types(array('public' => true));
 			foreach($post_types as $key => $value)
 			{
@@ -33,7 +33,6 @@ class acf_Post_object
 				}
 			}
 		}
-		
 		
 		// start select
 		if(isset($field->options['multiple']) && $field->options['multiple'] == '1')
@@ -52,16 +51,36 @@ class acf_Post_object
 			}
 		}
 		
-		
+		// loop through post types
 		foreach($post_types as $post_type)
 		{
 			// get posts
-			$posts = get_posts(array(
-				'numberposts' 	=> 	-1,
-				'post_type'		=>	$post_type,
-				'orderby'		=>	'title',
-				'order'			=>	'ASC'
-			));
+			$posts = false;
+			
+			if(is_post_type_hierarchical($post_type))
+			{
+				// get pages
+				$posts = get_pages(array(
+					'numberposts' => -1,
+					'post_type' => $post_type,
+					'sort_column' => 'menu_order',
+					'order' => 'ASC',
+					'meta_key' => $options['meta_key'],
+					'meta_value' => $options['meta_value'],
+				));
+			}
+			else
+			{
+				// get posts
+				$posts = get_posts(array(
+					'numberposts' => -1,
+					'post_type' => $post_type,
+					'orderby' => 'title',
+					'order' => 'ASC',
+					'meta_key' => $options['meta_key'],
+					'meta_value' => $options['meta_value'],
+				));
+			} 
 			
 			
 			// if posts, make a group for them
@@ -72,7 +91,18 @@ class acf_Post_object
 				foreach($posts as $post)
 				{
 					$key = $post->ID;
-					$value = get_the_title($post->ID);
+					
+					$value = '';
+					$ancestors = get_ancestors($post->ID, $post_type);
+					if($ancestors)
+					{
+						foreach($ancestors as $a)
+						{
+							$value .= '– ';
+						}
+					}
+					$value .= get_the_title($post->ID);
+
 					$selected = '';
 					
 					
@@ -125,6 +155,8 @@ class acf_Post_object
 		$options['post_type'] = isset($options['post_type']) ? $options['post_type'] : '';
 		$options['multiple'] = isset($options['multiple']) ? $options['multiple'] : '0';
 		$options['allow_null'] = isset($options['allow_null']) ? $options['allow_null'] : '0';
+		$options['meta_key'] = isset($options['meta_key']) ? $options['meta_key'] : '';
+		$options['meta_value'] = isset($options['meta_value']) ? $options['meta_value'] : '';
 		
 		?>
 		
@@ -158,6 +190,33 @@ class acf_Post_object
 				
 				?>
 				
+			</td>
+		</tr>
+		<tr class="field_option field_option_post_object">
+			<td class="label">
+				<label><?php _e("Filter Posts",'acf'); ?></label>
+				<p class="description"><?php _e("Where meta_key == meta_value",'acf'); ?></p>
+			</td>
+			<td>
+				<div style="width:45%; float:left">
+				<?php 
+					$temp_field->type = 'text';
+					$temp_field->input_name = 'acf[fields]['.$key.'][options][meta_key]';
+					$temp_field->input_class = '';
+					$temp_field->value = $options['meta_key'];
+					$this->parent->create_field($temp_field); 
+				?>
+				</div>
+				<div style="width:10%; float:left; text-align:center; padding:5px 0 0;">is equal to</div>
+				<div style="width:45%; float:left">
+				<?php 
+					$temp_field->type = 'text';
+					$temp_field->input_name = 'acf[fields]['.$key.'][options][meta_value]';
+					$temp_field->input_class = '';
+					$temp_field->value = $options['meta_value'];
+					$this->parent->create_field($temp_field); 
+				?>
+				</div>
 			</td>
 		</tr>
 		<tr class="field_option field_option_post_object">

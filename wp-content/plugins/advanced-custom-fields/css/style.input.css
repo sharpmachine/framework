@@ -72,6 +72,10 @@
 	background: #fff;
 }
 
+.acf_wysiwyg textarea{ 
+	height: 320px; 
+}
+
 #post-body .acf_wysiwyg .wp_themeSkin .mceStatusbar a.mceResize {
 	top: -2px !important;
 }
@@ -118,9 +122,6 @@
 }
 
 .acf_image_uploader img {
-	max-height: 100px;
-	width: auto;
-	height: auto;
 	display: none;
 	-moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
@@ -355,4 +356,136 @@ ul.checkbox_list {
 
 .no_move .postbox .hndle {
 	cursor: default !important;
+}
+
+/*---------------------------------------------------------------------------------------------
+	relationship
+---------------------------------------------------------------------------------------------*/
+
+.acf_relationship {
+	position: relative;
+	overflow: hidden;
+}
+
+.acf_relationship .relationship_left {
+	width: 50%;
+	float: left;
+}
+
+.acf_relationship .relationship_right {
+	width: 50%;
+	float: left;
+}
+
+.acf_relationship .relationship_label {
+	font-size: 12px;
+	font-family: sans-serif;
+	color: #999;
+	position: absolute;
+	margin-top: 4px;
+	margin-left: 7px;
+}
+
+.acf_relationship .widefat {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.acf_relationship .widefat th {
+	border-bottom: 0 none;
+}
+
+
+.acf_relationship .relationship_search {
+	margin: 0;
+	font-size: 12px;
+	line-height: 13px;
+	padding: 5px;
+	border-radius: 13px
+}
+
+.acf_relationship .relationship_list {
+	background: #fff;
+	position: relative;
+	overflow: auto;
+	height: 150px;
+	border: #DFDFDF solid 1px;
+	border-top-width: 0;
+}
+
+.acf_relationship .relationship_list a.hide {
+	display: none;
+}
+
+.acf_relationship .relationship_list a.filter_hide {
+	display: none;
+}
+
+.acf_relationship .relationship_list a {
+	display: block;
+	position: relative;
+	padding: 7px 9px;
+	text-decoration: none;
+	border-bottom: #f8f8f8 solid 1px;
+}
+
+
+.acf_relationship .relationship_list a:hover {
+	background: #eaf2fa;
+	border-bottom-color: #eaf2fa;
+	color: #000;
+}
+
+.acf_relationship .relationship_right .relationship_list {
+	margin-left: 10px;
+	height: 193px;
+	border-top-width:1px; 
+}
+
+.acf_relationship .relationship_list a .add {
+	width: 16px;
+	height: 16px;
+	background: url(../images/button_add.png) 0 0 no-repeat;
+	position: absolute;
+	top:0;
+	right: 0;
+	cursor: pointer;
+	margin: 5px 9px 0 0;
+	display: none;
+}
+
+.acf_relationship .relationship_list a.sortable_active {
+	background: #eaf2fa;
+}
+
+.acf_relationship .relationship_list a:hover .add {
+	display: block;
+}
+
+.acf_relationship .relationship_list a .add:hover {
+	background-position: 0 100%;
+}
+
+.acf_relationship .relationship_list a .remove {
+	width: 16px;
+	height: 16px;
+	background: url(../images/button_remove.png) 0 0 no-repeat;
+	position: absolute;
+	top:0;
+	right: 0;
+	cursor: pointer;
+	margin: 5px 9px 0 0;
+	display: none;
+}
+
+.acf_relationship .relationship_list a:hover .remove {
+	display: block;
+}
+
+.acf_relationship .relationship_list a .remove:hover {
+	background-position: 0 100%;
+}
+
+.acf_relationship .relationship_right .relationship_list a {
+	cursor: move;
 }

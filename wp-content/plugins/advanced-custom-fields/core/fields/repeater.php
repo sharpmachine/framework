@@ -430,6 +430,7 @@ class acf_Repeater
 	 ---------------------------------------------------------------------------------------------*/
 	function save_input($post_id, $field)
 	{
+		//echo 'saving repeater';
 		
 		// set table name
 		global $wpdb;
@@ -442,6 +443,7 @@ class acf_Repeater
 		
 		if($field['value'])
 		{
+			
 			$i = 0;
 			foreach($field['value'] as $row)
 			{
@@ -468,7 +470,6 @@ class acf_Repeater
 					// create data: wp_postmeta
 					$data1 = array(
 						'post_id'		=>	(int) $post_id,
-						//'meta_key'		=>	$field['field_name'] . '_' . $i . '_' . $j,
 						'meta_key'		=>	$field['field_name'],
 						'meta_value'	=>	$cell['value']
 					);
@@ -498,6 +499,7 @@ class acf_Repeater
 		
 						$data2 = array(
 							'field_id'		=>	$field['field_id'],
+							'post_id'		=>	(int) $post_id,
 							'sub_field_id'	=>	(int) $cell['field_id'],
 							'value'			=>	$new_id,
 							'order_no'		=>	$i,

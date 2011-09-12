@@ -1,6 +1,10 @@
 /*--------------------------------------------------------------------------------------------
 	Screen Extra
 --------------------------------------------------------------------------------------------*/
+#icon-options-general {
+	background: url(../images/acf-icon-32.png) 0 0 no-repeat !important;
+}
+
 .acf_cols {position: relative; overflow: hidden; clear: both;}
 .acf_col_left {margin-right: 300px;}
 .acf_col_left .tablenav {display: none;}

@@ -182,7 +182,7 @@ foreach($posts as $post)
 			
 		}
 			
-		$this->_save_post($post_id);		
+		$this->save_post($post_id);		
 	}
 	// if($post_id != 0)
 	

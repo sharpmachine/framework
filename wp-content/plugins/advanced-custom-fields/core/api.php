@@ -3,8 +3,7 @@
 global $acf_global;
 
 $acf_global = array(
-	'field_id'	=>	0,
-	'post_id'	=>	0,
+	'field'	=>	0,
 	'order_no'	=>	-1,
 );
 
@@ -81,13 +80,14 @@ function get_fields($post_id = false)
 * 
 *-------------------------------------------------------------------------------------*/
 
-function get_field($field_name, $post_id = false)
+function get_field($field_name, $post_id = false, $options = array())
 {
 
 	global $post;
 	global $wpdb;
 	global $acf;
 	
+	$return_id = isset($options['return_id']) ? $options['return_id'] : false;
 	
 	// tables
 	$acf_values = $wpdb->prefix.'acf_values';
@@ -105,11 +105,11 @@ function get_field($field_name, $post_id = false)
 	}
 	
 	
-	$sql = "SELECT m.meta_value as value, f.type, f.options 
+	$sql = "SELECT m.meta_value as value, v.id, f.type, f.options, v.sub_field_id, v.order_no  
 		FROM $wp_postmeta m 
 		LEFT JOIN $acf_values v ON m.meta_id = v.value
 		LEFT JOIN $acf_fields f ON v.field_id = f.id 
-		WHERE f.name = '$field_name' AND m.post_id = '$post_id'";
+		WHERE f.name = '$field_name' AND m.post_id = '$post_id' ORDER BY v.order_no ASC";
 		
 	$results = $wpdb->get_results($sql);
 	
@@ -129,15 +129,59 @@ function get_field($field_name, $post_id = false)
 	// repeater field
 	if($field->type == 'repeater')
 	{
-		$has_values = false;
+		$return_array = array();
+		
 		foreach($results as $result)
 		{
-			if($result->value)
+			$sql2 = "SELECT type, name, options 
+			FROM $acf_fields 
+			WHERE id = '$result->sub_field_id'";
+			
+			$sub_field = $wpdb->get_row($sql2);
+			
+			
+			// format the sub field value
+			if($acf->field_method_exists($sub_field->type, 'format_value_for_api'))
 			{
-				$has_values = true;
+				if(@unserialize($sub_field->options))
+				{
+					$sub_field->options = unserialize($sub_field->options);
+				}
+				else
+				{
+					$sub_field->options = array();
+				}
+				
+				$result->value = $acf->fields[$sub_field->type]->format_value_for_api($result->value, $sub_field->options);
 			}
+			
+			
+			// only add the value if it is not null or false
+			if($result->value != '' || $result->value != false)
+			{
+				if($return_id)
+				{
+					$return_array[$result->order_no][$sub_field->name]['id'] = (int) $result->id;
+					$return_array[$result->order_no][$sub_field->name]['value'] = $result->value;
+				}
+				else
+				{
+					$return_array[$result->order_no][$sub_field->name] = $result->value;
+				}
+				
+			}
+			
 		}
-		return $has_values;
+		
+		
+		// if empty, just return false
+		if(empty($return_array))
+		{
+			$return_array = false;
+		}
+		
+		return $return_array;
+		
 	}
 	
 	
@@ -160,6 +204,17 @@ function get_field($field_name, $post_id = false)
 		$value = $acf->fields[$field->type]->format_value_for_api($value, $field->options);
 	}
 	
+	
+	if($return_id)
+	{
+		$return_array = array(
+			'id'	=>	(int) $field->id,
+			'value'	=>	$value,
+		);
+		return $return_array;
+	}
+				
+				
 	return $value;
 	
 }
@@ -200,61 +255,35 @@ function the_field($field_name, $post_id = false)
 
 function the_repeater_field($field_name, $post_id = false)
 {
-
 	global $acf_global;
-	global $post;
-	global $wpdb;
-	global $acf;
 	
 	
-	// tables
-	$acf_values = $wpdb->prefix.'acf_values';
-	$acf_fields = $wpdb->prefix.'acf_fields';
-	$wp_postmeta = $wpdb->prefix.'postmeta';
-	
-	
-	if(!$post_id)
+	// if no field, create field + reset count
+	if(!$acf_global['field'])
 	{
-		$post_id = $post->ID;
+		$acf_global['order_no'] = -1;
+		$acf_global['field'] = get_field($field_name, $post_id);
 	}
-	elseif($post_id == "options")
-	{
-		$post_id = 0;
-	}
+	
+	
+	// increase order_no
+	$acf_global['order_no']++;
 	
 	
 	// vars
-	$acf_global['order_no']++;
-	$order_no = $acf_global['order_no'];
+	$field = $acf_global['field'];
+	$i = $acf_global['order_no'];
 	
-	
-	$sql = "SELECT v.field_id 
-		FROM $wp_postmeta m 
-		LEFT JOIN $acf_values v ON m.meta_id = v.value
-		LEFT JOIN $acf_fields f ON v.field_id = f.id 
-		WHERE f.name = '$field_name' AND v.order_no = '$order_no' AND m.post_id = '$post_id'";
-		
-	$results = $wpdb->get_results($sql);
-	
-	
-	// no value
-	if($results)
+	if(isset($field[$i]))
 	{
-		
-		$acf_global['field_id'] = $results[0]->field_id;
-		$acf_global['post_id'] = $post_id;	
 		return true;
 	}
-	else
-	{
-		$acf_global['field_id'] = 0;
-		$acf_global['post_id'] = 0;
-		$acf_global['order_no'] = -1;
-		return false;
-	}
 	
+	// no row, reset the global values
+	$acf_global['order_no'] = -1;
+	$acf_global['field'] = false;
+	return false;
 	
-		
 }
 
 
@@ -269,60 +298,19 @@ function the_repeater_field($field_name, $post_id = false)
 
 function get_sub_field($field_name)
 {
+	// global
 	global $acf_global;
-	global $wpdb;
-	global $acf;
-	
-	
-	// tables
-	$acf_values = $wpdb->prefix.'acf_values';
-	$acf_fields = $wpdb->prefix.'acf_fields';
-	$wp_postmeta = $wpdb->prefix.'postmeta';
-	
 	
 	// vars
-	$field_id = $acf_global['field_id'];
-	$post_id = $acf_global['post_id'];
-	$order_no = $acf_global['order_no'];
-		
-		
-	$sql = "SELECT m.meta_value as value, f.type, f.options 
-		FROM $wp_postmeta m 
-		LEFT JOIN $acf_values v ON m.meta_id = v.value
-		LEFT JOIN $acf_fields f ON v.sub_field_id = f.id 
-		WHERE f.name = '$field_name' AND v.field_id = '$field_id' AND v.order_no = '$order_no' AND m.post_id = '$post_id'";
-		
-	$field = $wpdb->get_row($sql);
-	
+	$field = $acf_global['field'];
+	$i = $acf_global['order_no'];
 	
 	// no value
-	if(!$field)
-	{
-		return false;
-	}
+	if(!$field) return false;
 
-
-	// normal field
-	$value = $field->value;
+	if(!isset($field[$i][$field_name])) return false;
 	
-	
-	// format if needed
- 	if($acf->field_method_exists($field->type, 'format_value_for_api'))
-	{
-		
-		if(@unserialize($field->options))
-		{
-			$field->options = unserialize($field->options);
-		}
-		else
-		{
-			$field->options = array();
-		}
-		
-		$value = $acf->fields[$field->type]->format_value_for_api($value, $field->options);
-	}
-	
-	return $value;
+	return $field[$i][$field_name];
 }
 
 
@@ -345,6 +333,54 @@ function the_sub_field($field_name, $field = false)
 	}
 	
 	echo $value;
+}
+
+
+/*--------------------------------------------------------------------------------------
+*
+*	update_the_field
+*
+*	@author Elliot Condon
+*	@since 2.1.4
+* 
+*-------------------------------------------------------------------------------------*/
+
+function update_the_field($field_name = false, $value = false, $post_id = false)
+{
+	// checkpoint
+	if(!$field_name || !$value || !$post_id) return false;
+	
+	// global
+	global $wpdb;
+	
+	// tables
+	$acf_values = $wpdb->prefix.'acf_values';
+	$acf_fields = $wpdb->prefix.'acf_fields';
+	$wp_postmeta = $wpdb->prefix.'postmeta';
+	
+	// sql
+	$sql = "SELECT m.meta_id  
+		FROM $wp_postmeta m 
+		LEFT JOIN $acf_values v ON m.meta_id = v.value
+		LEFT JOIN $acf_fields f ON v.field_id = f.id 
+		WHERE f.name = '$field_name' AND m.post_id = '$post_id'";
+		
+	$meta_id = $wpdb->get_var($sql);
+	
+	// no meta_value
+	if(!$meta_id)
+	{
+		return false;
+	}
+	
+	// update
+	$save = $wpdb->update($wp_postmeta, array('meta_value' => $value), array('meta_id' => $meta_id));
+	
+	// return
+	if($save) return true;
+	
+	return false;
+	
 }
 
 ?>
