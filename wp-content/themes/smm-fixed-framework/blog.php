@@ -7,7 +7,7 @@ get_header(); ?>
 		<div id="content-container" class="span-20">
 			<section id="content" role="main">
 
-			<?php get_template_part( 'loop', 'index' ); ?>
+			<?php get_template_part( 'loop', 'blog' ); ?>
 			<?php rewind_posts(); ?>
 			
 			<?php
