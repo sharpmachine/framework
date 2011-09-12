@@ -126,9 +126,7 @@
 <?php /* How to display all other posts. */ ?>
 
 	<?php else : ?>
-		<div class="page-links position-top">
 			<h1><?php the_title(); ?></h1>
-		</div>
 	<?php if ( is_archive() || is_search() ) : // Only display excerpts for archives and search. ?>
 			<div class="entry-summary">
 				<?php the_excerpt(); ?>
@@ -136,13 +134,9 @@
 	<?php else : ?>
 			<div class="entry-content">
 				<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
-				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>
-				
+				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>		
 			</div><!-- .entry-content -->
-			
 	<?php endif; ?>
-
-		
 
 	<?php endif; // This was the if statement that broke the loop into three parts based on categories. ?>
 
