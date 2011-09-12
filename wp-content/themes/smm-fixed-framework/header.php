@@ -37,9 +37,7 @@
 		echo ' | ' . sprintf( __( 'Page %s', 'twentyten' ), max( $paged, $page ) );
 
 	?></title>
-	<meta name="description" content="">
-	<meta name="keywords" content="">
-	<meta name="author" content="">
+	<meta name="author" content="Jesse Kade of Sharp Machine Media">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
