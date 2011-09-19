@@ -554,17 +554,19 @@ function help_dashboard_widget_function() {
 	echo "
 		<ul style=width:40%;float:left;margin-right:55px;min-width:153px;>
 			<li style=color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;>WordPress 101 Videos:</li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target=_blank>Part 1: The Dashboard</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/ target=_blank>Part 2: Creating A New Post</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/ target=_blank>Part 3: Edit Existing Post</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/ target=_blank>Part 4: Using Categories and Tag</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-5-creating-and-editing-pages/ target=_blank>Part 5: Creating and Editing Pages</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-6-adding-images/ target=_blank>Part 6: Adding Images &amp; Photos</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-7-embedding-video/ target=_blank>Part 7: Embedding Video</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-8-media-library/ target=_blank>Part 8: Media Library</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-9-managing-comments/ target=_blank>Part 9: Managing Comments</a></li> 
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-10-creating-links/ target=_blank>Part 10: Creating Links</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-12-widgets/ target=_blank>Part 12: Widgets</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target=_blank>The Dashboard</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/ target=_blank>Creating A New Post</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/ target=_blank>Edit Existing Post</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/ target=_blank>Using Categories and Tag</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-5-creating-and-editing-pages/ target=_blank>Creating and Editing Pages</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-6-adding-images/ target=_blank>Adding Images &amp; Photos</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-7-embedding-video/ target=_blank>How to Embed Video</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-8-media-library/ target=_blank>Using the Media Library</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-9-managing-comments/ target=_blank>Managing Comments</a></li> 
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-10-creating-links/ target=_blank>Creating Links</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-12-widgets/ target=_blank>Adding Widgets</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-13-custom-menus/ target=_blank>Building Custom Menus</a></li>
+			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-15-users/ target=_blank>Adding New Users</a></li>
 		</ul>
 		
 		<ul style=width:40%;float:left;min-width:153px;>
