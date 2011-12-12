@@ -196,6 +196,7 @@ table.widefat.acf td {
 .fields .field {
 	position: relative;
 	overflow: hidden;
+	background: #F5F5F5;
 }
 
 .fields .field:nth-child(even) {

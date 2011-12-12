@@ -3,8 +3,8 @@ Contributors: whiteshadow
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=A6P9S6CE3SRSW
 Tags: links, broken, maintenance, blogroll, custom fields, admin, comments, posts
 Requires at least: 3.2
-Tested up to: 3.2.1
-Stable tag: 1.3.1
+Tested up to: 3.3
+Stable tag: 1.4
 
 This plugin will check your posts, comments and other content for broken links and missing images, and notify you if any are found. 
 
@@ -43,6 +43,7 @@ You can also click on the contents of the "Status" or "Link Text" columns to get
 **Translations**
 
 * Belorussian - [M. Comfi](http://www.comfi.com/)
+* Bulgarian - [Ajoft Technologes](http://www.ajoft.com/)
 * Chinese Simplified - [Hank Yang](http://wenzhu.org/)
 * Chinese Traditional - [YILIN](http://sh2153.com)
 * Czech - [Lelkoun](http://lelkoun.cz/)
@@ -87,6 +88,17 @@ To upgrade your installation
 1. Reactivate the plugin. Your settings will be retained from the previous version.
 
 == Changelog ==
+
+= 1.4 =
+* Added an option to send post authors notifications about broken links in their posts.
+* Added the ability to sort links by URL (click the column header).
+* Added YouTube API throttling to avoid going over the request quota, which could result in false positives on blogs with lots of YouTube videos.
+* Added a Bulgarian translation.
+* Updated Italian, German and Persian translations.
+* Fixed a bug where the "Feedback" and other screen meta links wouldn't show up in WP 3.3.
+* Fixed the tab CSS for the plugin settings page. Now they should be the right size and look the same in all modern browsers (tested in IE, Firefox, Chrome and Opera).
+* Fixed drop-down arrows showing up on meta links that don't actually have dropdowns.
+* Tested on WP 3.3 (RC2).
 
 = 1.3.1 =
 * Added support for the new YouTube embed code style. It needs to be explicitly enabled in options.
@@ -546,6 +558,9 @@ To upgrade your installation
 * *There are no release notes for this version*
 
 == Upgrade Notice ==
+
+= 1.4 =
+Adds an option to send post authors notifications about broken links in their posts and the the ability to sort links by URL, as well as a number of other updates and fixes.
 
 = 0.9.4.2 =
 Fixes a major PHP4 compatibility problem introduced in version 0.9.4 and adds a notification bubble with the current broken link count to the "Broken Links" menu.

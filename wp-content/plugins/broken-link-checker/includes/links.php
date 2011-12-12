@@ -117,7 +117,7 @@ class blcLink {
 			'redirect_count' => '%d',
 			'log' => '%s',
 			'http_code' => '%d',
-			'request_duration' => '%f',
+			'request_duration' => '%F',
 			'timeout' => 'bool',
 			'result_hash' => '%s',
 			'broken' => 'bool',
@@ -128,7 +128,7 @@ class blcLink {
 		 	'status_code' => '%s',
 		);
 		
-		if (is_int($arg)){
+		if (is_numeric($arg)){
 			//Load a link with ID = $arg from the DB.
 			$q = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}blc_links WHERE link_id=%d LIMIT 1", $arg);
 			$arr = $wpdb->get_row( $q, ARRAY_A );
@@ -901,7 +901,7 @@ class blcLink {
  * @return bool
  */
 function blc_cleanup_links( $link_id = null ){
-	global $wpdb;
+	global $wpdb; /* @var wpdb $wpdb */
 	global $blclog;
 	
 	$q = "DELETE FROM {$wpdb->prefix}blc_links 

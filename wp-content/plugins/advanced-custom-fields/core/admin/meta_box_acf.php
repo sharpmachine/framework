@@ -41,6 +41,26 @@
 						</form>
 					</td>
 				</tr>
+				<!-- Flexible Field -->
+				<?php /*<tr>
+					<td><?php _e("Flexible Content Field",'acf'); ?></td>
+					<td><?php echo $this->is_field_unlocked('flexible_content') ? __("Active",'acf') : __("Inactive",'acf'); ?></td>
+					<td>
+						<form action="" method="post">
+							<?php if($this->is_field_unlocked('flexible_content')){
+								echo '<span class="activation_code">XXXX-XXXX-XXXX-'.substr($this->get_license_key('flexible_content'),-4) .'</span>';
+								echo '<input type="hidden" name="acf_field_deactivate" value="flexible_content" />';
+								echo '<input type="submit" class="button" value="Deactivate" />';
+							}
+							else
+							{
+								echo '<input type="text" name="key" value="" />';
+								echo '<input type="hidden" name="acf_field_activate" value="flexible_content" />';
+								echo '<input type="submit" class="button" value="Activate" />';
+							} ?>
+						</form>
+					</td>
+				</tr>*/ ?>
 				<!-- Options Page -->
 				<tr>
 					<td><?php _e("Options Page",'acf'); ?></td>

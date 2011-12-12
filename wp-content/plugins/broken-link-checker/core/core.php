@@ -71,7 +71,7 @@ class wsBrokenLinkChecker {
         $this->setup_cron_events();
         
         //Set hooks that listen for our Cron actions
-    	add_action('blc_cron_email_notifications', array( &$this, 'send_email_notifications' ));
+    	add_action('blc_cron_email_notifications', array( &$this, 'maybe_send_email_notifications' ));
 		add_action('blc_cron_check_links', array(&$this, 'cron_check_links'));
 		add_action('blc_cron_database_maintenance', array(&$this, 'database_maintenance'));
 		add_action('blc_cron_check_news', array(&$this, 'check_news'));
@@ -217,38 +217,6 @@ class wsBrokenLinkChecker {
 	}
 	
   /**
-   * Load the UserVoice script for use with the "Feedback" widget
-   *
-   * @return void
-   */
-	function uservoice_widget(){
-		?>
-		<script type="text/javascript">
-			jQuery('#blc-feedback-widget').click(function(){
-				//Launch UserVoice
-				UserVoice.Popin.show(uservoiceOptions); 
-				return false;
-			});
-		
-		  var uservoiceOptions = {
-		    key: 'whiteshadow',
-		    host: 'feedback.w-shadow.com', 
-		    forum: '58400',
-		    lang: 'en',
-		    showTab: false
-		  };
-		  function _loadUserVoice() {
-		    var s = document.createElement('script');
-		    s.src = ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js";
-		    document.getElementsByTagName('head')[0].appendChild(s);
-		  }
-		  _loadSuper = window.onload;
-		  window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
-		</script>
-		<?php
-	}
-	
-  /**
    * Initiate a full recheck - reparse everything and check all links anew. 
    *
    * @return void
@@ -352,19 +320,15 @@ class wsBrokenLinkChecker {
         add_screen_meta_link(
         	'blc-feedback-widget',
         	__('Feedback', 'broken-link-checker'),
-        	'#',
+        	'http://whiteshadow.uservoice.com/forums/58400-broken-link-checker',
         	array($options_page_hook, $links_page_hook)
 		);
 		
-		//Add the supporting UserVoice-invocation code
-        add_action( 'admin_footer-' . $options_page_hook, array(&$this, 'uservoice_widget') );
-        add_action( 'admin_footer-' . $links_page_hook, array(&$this, 'uservoice_widget') );
-        
         //Make the Settings page link to the link list, and vice versa
         add_screen_meta_link(
         	'blc-settings-link',
-			__('Go to Settings', 'broken-link-checker'),
-			admin_url('options-general.php?page=link-checker-settings'),
+			__('More plugins by Janis Elsts', 'broken-link-checker'),
+			'http://w-shadow.com/MoreWpPlugins/',
 			$links_page_hook,
 			array('style' => 'font-weight: bold;')
 		);
@@ -405,7 +369,7 @@ class wsBrokenLinkChecker {
 
     function options_page(){
     	global $blclog;
-    	
+
     	$moduleManager = blcModuleManager::getInstance();
     	
     	//Sanity check : make sure the DB is all set up 
@@ -512,17 +476,23 @@ class wsBrokenLinkChecker {
             
             //Email notifications on/off
             $email_notifications = !empty($_POST['send_email_notifications']);
-            if ( $email_notifications && ! $this->conf->options['send_email_notifications']){
+	        $send_authors_email_notifications = !empty($_POST['send_authors_email_notifications']);
+
+            if (
+	              ($email_notifications && !$this->conf->options['send_email_notifications'])
+	           || ($send_authors_email_notifications && !$this->conf->options['send_authors_email_notifications'])
+            ){
             	/*
             	The plugin should only send notifications about links that have become broken
 				since the time when email notifications were turned on. If we don't do this,
 				the first email notification will be sent nigh-immediately and list *all* broken
 				links that the plugin currently knows about.
 				*/
-				$this->options['last_notification_sent'] = time();
+				$this->conf->options['last_notification_sent'] = time();
 			}
             $this->conf->options['send_email_notifications'] = $email_notifications;
-            
+	        $this->conf->options['send_authors_email_notifications'] = $send_authors_email_notifications;
+
 			//Make settings that affect our Cron events take effect immediately
 			$this->setup_cron_events();
 			
@@ -703,6 +673,14 @@ class wsBrokenLinkChecker {
         		<input type="checkbox" name="send_email_notifications" id="send_email_notifications"
             	<?php if ($this->conf->options['send_email_notifications']) echo ' checked="checked"'; ?>/>
             	<?php _e('Send me e-mail notifications about newly detected broken links', 'broken-link-checker'); ?>
+			</label><br />
+			</p>
+	        
+	        <p>
+        	<label for='send_authors_email_notifications'>
+        		<input type="checkbox" name="send_authors_email_notifications" id="send_authors_email_notifications"
+            	<?php if ($this->conf->options['send_authors_email_notifications']) echo ' checked="checked"'; ?>/>
+            	<?php _e('Send authors e-mail notifications about broken links in their posts', 'broken-link-checker'); ?>
 			</label><br />
 			</p>
         </td>
@@ -1161,7 +1139,7 @@ class wsBrokenLinkChecker {
      * @return void
      */
     function options_page_css(){
-    	wp_enqueue_style('blc-options-page', plugins_url('css/options-page.css', BLC_PLUGIN_FILE), array(), '0.9.6' );
+    	wp_enqueue_style('blc-options-page', plugins_url('css/options-page.css', BLC_PLUGIN_FILE), array(), '0.9.7' );
     	wp_enqueue_style('dashboard');
 	}
 	
@@ -1172,7 +1150,7 @@ class wsBrokenLinkChecker {
      * @return void
      */
     function links_page(){
-        global $wpdb, $blclog;
+        global $wpdb, $blclog; /* @var wpdb $wpdb */
         
         $blc_link_query = blcLinkQuery::getInstance();
         
@@ -1272,12 +1250,14 @@ class wsBrokenLinkChecker {
 			$selected_filter_id,
 			isset($_GET['paged']) ? intval($_GET['paged']) : 1,
 			$this->conf->options['table_links_per_page'], 
-			'broken'
+			'broken',
+			isset($_GET['orderby']) ? $_GET['orderby'] : '',
+			isset($_GET['order']) ? $_GET['order'] : ''
 		);
 		
 		//exec_filter() returns an array with filter data, including the actual filter ID that was used.
 		$filter_id = $current_filter['filter_id'];
-		
+
 		//Error?		
 		if ( empty($current_filter['links']) && !empty($wpdb->last_error) ){
 			printf( __('Database error : %s', 'broken-link-checker'), $wpdb->last_error);
@@ -1664,9 +1644,9 @@ class wsBrokenLinkChecker {
 			//Make a list of all containers associated with these links, with each container
 			//listed only once.
 			$containers = array();
-			foreach($links as $link){
+			foreach($links as $link){ /* @var blcLink $link */
 				$instances = $link->get_instances();
-				foreach($instances as $instance){
+				foreach($instances as $instance){ /* @var blcLinkInstance $instance */
 					$key = $instance->container_type . '|' . $instance->container_id;
 					$containers[$key] = array($instance->container_type, $instance->container_id);
 				}
@@ -1678,7 +1658,7 @@ class wsBrokenLinkChecker {
 			//Delete/trash their associated entities
 			$deleted = array();
 			$skipped = array();
-			foreach($containers as $container){
+			foreach($containers as $container){ /* @var blcContainer $container */
 				if ( !$container->current_user_can_delete() ){
 					continue;
 				}
@@ -1694,7 +1674,7 @@ class wsBrokenLinkChecker {
 					}
 				}
 				
-				if ( is_wp_error($rez) ){
+				if ( is_wp_error($rez) ){ /* @var WP_Error $rez */
 					//Record error messages for later display
 					$messages[] = $rez->get_error_message();
 					$msg_class = 'error';
@@ -1733,7 +1713,7 @@ class wsBrokenLinkChecker {
 				foreach($skipped as $container){
 					$message .= sprintf(
 						'<li>%s</li>',
-						$container->ui_get_source()
+						$container->ui_get_source('')
 					);
 				}
 				$message .= '</ul>';
@@ -1759,6 +1739,7 @@ class wsBrokenLinkChecker {
    * @return array Confirmation nessage and the CSS class to use with that message.
    */
 	function do_bulk_recheck($selected_links){
+		/** @var wpdb $wpdb */
 		global $wpdb;
 		
 		$message = '';
@@ -2176,7 +2157,7 @@ class wsBrokenLinkChecker {
    * @return int|array
    */
 	function get_links_to_check($max_results = 0, $count_only = false){
-		global $wpdb;
+		global $wpdb; /* @var wpdb $wpdb */
 		
 		$check_threshold = date('Y-m-d H:i:s', strtotime('-'.$this->conf->options['check_threshold'].' hours'));
 		$recheck_threshold = date('Y-m-d H:i:s', time() - $this->conf->options['recheck_threshold']);
@@ -2532,7 +2513,7 @@ class wsBrokenLinkChecker {
 					'cnt_error' => $rez['cnt_error'],
 					'errors' => array(),
 				);
-				foreach($rez['errors'] as $error){
+				foreach($rez['errors'] as $error){ /** @var WP_Error $error */
 					array_push( $response['errors'], implode(', ', $error->get_error_messages()) );
 				}
 				
@@ -2547,7 +2528,7 @@ class wsBrokenLinkChecker {
 	}
 	
 	function ajax_link_details(){
-		global $wpdb;
+		global $wpdb; /* @var wpdb $wpdb */
 		
 		if (!current_user_can('edit_others_posts')){
 			die( __("You don't have sufficient privileges to access this information!", 'broken-link-checker') );
@@ -2643,8 +2624,9 @@ class wsBrokenLinkChecker {
    * @return array
    */
 	function get_debug_info(){
+		/** @var wpdb $wpdb */
 		global $wpdb;
-		
+
 		//Collect some information that's useful for debugging 
 		$debug = array();
 		
@@ -2657,7 +2639,7 @@ class wsBrokenLinkChecker {
 		//MySQL version
 		$debug[ __('MySQL version', 'broken-link-checker') ] = array(
 			'state' => 'ok',
-			'value' => @mysql_get_server_info( $wpdb->dbh ), 
+			'value' => $wpdb->db_version(),
 		);
 		
 		//CURL presence and version
@@ -2805,48 +2787,76 @@ class wsBrokenLinkChecker {
 		
 		return $debug;
 	}
-	
-	function send_email_notifications(){
-		global $wpdb;
-		
+
+	function maybe_send_email_notifications() {
+		global $wpdb; /** @var wpdb $wpdb */
+
+		if ( !($this->conf->options['send_email_notifications'] || $this->conf->options['send_authors_email_notifications']) ){
+			return;
+		}
+
 		//Find links that have been detected as broken since the last sent notification.
 		$last_notification = date('Y-m-d H:i:s', $this->conf->options['last_notification_sent']);
 		$where = $wpdb->prepare('( first_failure >= %s )', $last_notification);
-		
+
 		$links = blc_get_links(array(
 			's_filter' => 'broken',
 			'where_expr' => $where,
 			'load_instances' => true,
+			'load_containers' => true,
+			'load_wrapped_objects' => $this->conf->options['send_authors_email_notifications'],
 			'max_results' => 0,
 		));
-		
+
 		if ( empty($links) ){
 			return;
 		}
-		
-		$cnt = count($links);
-		
+
+		//Send the admin notification
+		$admin_email = get_option('admin_email');
+		if ( $this->conf->options['send_email_notifications'] && !empty($admin_email) ) {
+			$this->send_admin_notification($links, $admin_email);
+		}
+
+		//Send notifications to post authors
+		if ( $this->conf->options['send_authors_email_notifications'] ) {
+			$this->send_authors_notifications($links);
+		}
+
+		$this->conf->options['last_notification_sent'] = time();
+		$this->conf->save_options();
+	}
+
+	function send_admin_notification($links, $email) {
 		//Prepare email message
 		$subject = sprintf(
 			__("[%s] Broken links detected", 'broken-link-checker'),
 			html_entity_decode(get_option('blogname'), ENT_QUOTES)
 		);
-		
+
 		$body = sprintf(
 			_n(
 				"Broken Link Checker has detected %d new broken link on your site.",
 				"Broken Link Checker has detected %d new broken links on your site.",
-				$cnt,
+				count($links),
 				'broken-link-checker'
 			),
-			$cnt
+			count($links)
 		);
-		
 		$body .= "<br>";
-		
-		$max_displayed_links = 5;
-		
-		if ( $cnt > $max_displayed_links ){
+
+		$instances = array();
+		foreach($links as $link) { /* @var blcLink $link */
+			$instances = array_merge($instances, $link->get_instances());
+		}
+		$body .= $this->build_instance_list_for_email($instances);
+
+		$this->send_html_email($email, $subject, $body);
+	}
+
+	function build_instance_list_for_email($instances, $max_displayed_links = 5){
+		$result = '';
+		if ( count($instances) > $max_displayed_links ){
 			$line = sprintf(
 				_n(
 					"Here's a list of the first %d broken links:",
@@ -2859,54 +2869,85 @@ class wsBrokenLinkChecker {
 		} else {
 			$line = __("Here's a list of the new broken links: ", 'broken-link-checker');
 		}
-		
-		$body .= "<p>$line</p>";
-		
+
+		$result .= "<p>$line</p>";
+
 		//Show up to $max_displayed_links broken link instances right in the email.
 		$displayed = 0;
-		foreach($links as $link){
-			
-			$instances = $link->get_instances();
-			foreach($instances as $instance){
-				$pieces = array(
-					sprintf( __('Link text : %s', 'broken-link-checker'), $instance->ui_get_link_text('email') ),
-					sprintf( __('Link URL : <a href="%s">%s</a>', 'broken-link-checker'), htmlentities($link->url), blcUtility::truncate($link->url, 70, '') ),
-					sprintf( __('Source : %s', 'broken-link-checker'), $instance->ui_get_source('email') ),
-				);
-				
-				$link_entry = implode("<br>", $pieces);
-				$body .= "$link_entry<br><br>";
-				
-				$displayed++;
-				if ( $displayed >= $max_displayed_links ){
-					break 2; //Exit both foreach loops
-				}
+		foreach($instances as $instance){ /* @var blcLinkInstance $instance */
+			$pieces = array(
+				sprintf( __('Link text : %s', 'broken-link-checker'), $instance->ui_get_link_text('email') ),
+				sprintf( __('Link URL : <a href="%s">%s</a>', 'broken-link-checker'), htmlentities($instance->get_url()), blcUtility::truncate($instance->get_url(), 70, '') ),
+				sprintf( __('Source : %s', 'broken-link-checker'), $instance->ui_get_source('email') ),
+			);
+
+			$link_entry = implode("<br>", $pieces);
+			$result .= "$link_entry<br><br>";
+
+			$displayed++;
+			if ( $displayed >= $max_displayed_links ){
+				break;
 			}
 		}
-		
+
 		//Add a link to the "Broken Links" tab.
-		$body .= __("You can see all broken links here:", 'broken-link-checker') . "<br>";
-		$link_page = admin_url('tools.php?page=view-broken-links'); 
-		$body .= sprintf('<a href="%1$s">%1$s</a>', $link_page);
-		
+		$result .= __("You can see all broken links here:", 'broken-link-checker') . "<br>";
+		$result .= sprintf('<a href="%1$s">%1$s</a>', admin_url('tools.php?page=view-broken-links'));
+
+		return $result;
+	}
+
+	function send_html_email($email_address, $subject, $body) {
 		//Need to override the default 'text/plain' content type to send a HTML email.
 		add_filter('wp_mail_content_type', array(&$this, 'override_mail_content_type'));
-		
-		//Send the notification
-		$rez = wp_mail(
-			get_option('admin_email'),
-			$subject,
-			$body
-		);
-		if ( $rez ){
-			$this->conf->options['last_notification_sent'] = time();
-			$this->conf->save_options();
-		}
-		
-		//Remove the override so that it doesn't interfere with other plugins that might
-		//want to send normal plaintext emails. 
-		remove_filter('wp_mail_content_type', array(&$this, 'override_mail_content_type'));
 
+		$success = wp_mail($email_address, $subject, $body);
+
+		//Remove the override so that it doesn't interfere with other plugins that might
+		//want to send normal plaintext emails.
+		remove_filter('wp_mail_content_type', array(&$this, 'override_mail_content_type'));
+		
+		return $success;
+	}
+
+	function send_authors_notifications($links) {
+		$authorInstances = array();
+		foreach($links as $link){ /* @var blcLink $link */
+			foreach($link->get_instances() as $instance){ /* @var blcLinkInstance $instance */
+				$container = $instance->get_container(); /** @var blcContainer $container */
+				if ( empty($container) || !($container instanceof blcAnyPostContainer) ) {
+					continue;
+				}
+				$post = $container->get_wrapped_object(); /** @var StdClass $post */
+				if ( !array_key_exists($post->post_author, $authorInstances) ) {
+					$authorInstances[$post->post_author] = array();
+				}
+				$authorInstances[$post->post_author][] = $instance;
+			}
+		}
+
+		foreach($authorInstances as $author_id => $instances) {
+			$subject = sprintf(
+				__("[%s] Broken links detected", 'broken-link-checker'),
+				html_entity_decode(get_option('blogname'), ENT_QUOTES)
+			);
+
+			$body = sprintf(
+				_n(
+					"Broken Link Checker has detected %d new broken link in your posts.",
+					"Broken Link Checker has detected %d new broken links in your posts.",
+					count($instances),
+					'broken-link-checker'
+				),
+				count($instances)
+			);
+			$body .= "<br>";
+
+			$body .= $this->build_instance_list_for_email($instances);
+
+			$author = get_user_by('id', $author_id); /** @var WP_User $author */
+			$this->send_html_email($author->user_email, $subject, $body);
+		}
 	}
 	
 	function override_mail_content_type($content_type){
@@ -2931,8 +2972,7 @@ class wsBrokenLinkChecker {
 		}
 		
 		//Email notifications about broken links
-		$notification_email = get_option('admin_email');
-		if ( $this->conf->options['send_email_notifications'] && !empty($notification_email) ){
+		if ( $this->conf->options['send_email_notifications'] || $this->conf->options['send_authors_email_notifications'] ){
 			if ( !wp_next_scheduled('blc_cron_email_notifications') ){
 				wp_schedule_event(time(), $this->conf->options['notification_schedule'], 'blc_cron_email_notifications');
 			}

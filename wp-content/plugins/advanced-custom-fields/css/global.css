@@ -58,6 +58,10 @@ table.acf_input select{
 	outline: none;
 }
 
+table.acf_input select {
+	padding: 2px;
+}
+
 table.acf_input input[type=text]:focus,
 table.acf_input textarea:focus,
 table.acf_input select:focus {

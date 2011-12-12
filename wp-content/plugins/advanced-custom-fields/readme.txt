@@ -3,8 +3,8 @@ Contributors: Elliot Condon
 Donate link: https://www.paypal.com/au/cgi-bin/webscr?cmd=_flow&SESSION=-B2MHZ-ioHQb-z1o22AMmhjSI08rxFqQdljyfqVa1R-4QrbQWPNcfL37jYi&dispatch=5885d80a13c0db1f8e263663d3faee8d5fa8ff279e37c3d9d4e38bdbee0ede69
 Tags: custom, field, custom field, advanced, simple fields, magic fields, more fields, repeater, matrix, post, type, text, textarea, file, image, edit, admin
 Requires at least: 3.0
-Tested up to: 3.2
-Stable tag: 3.2
+Tested up to: 3.3
+Stable tag: 3.3
 
 Completely Customise your edit pages with an assortment of field types: Wysiwyg, Repeater, text, image, select, checkbox, page link, post object and more! Hide unwanted metaboxes and assign to any edit page!
 
@@ -93,6 +93,12 @@ http://support.plugins.elliotcondon.com/categories/advanced-custom-fields/
 
 
 == Changelog ==
+
+= 3.0.3 =
+* New translation: French (thanks to Netactions)
+* Support: added support for new wp3.3 editor
+* Bug fix: fixed WYSIWYG editor localised errors
+* Bug fix: removed trailing commas for ie7
 
 = 3.0.2 =
 * New Feature: Added Export tab to export a WP native .xml file

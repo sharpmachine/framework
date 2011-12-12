@@ -72,6 +72,8 @@ if ( ! function_exists( 'twentyten_setup' ) ):
  *
  * @since Twenty Ten 1.0
  */
+remove_action('wp_head', 'wp_generator');  
+
 function twentyten_setup() {
 
 	// This theme styles the visual editor with editor-style.css to match the theme style.
