@@ -32,7 +32,7 @@
 <body>
 	
 	<div id="logo">
-		<img src="http://www.domain.com/wp-content/themes/domain/images/logo.png" width="335" height="52" alt="Logo">
+		<img src="http://www.domain.com/wp-content/themes/project_theme/images/logo.png" width="335" height="52" alt="Logo">
 		<p>We are currently undergoing routine maintenance.  Please check back soon.</p>
 	</div>
 	

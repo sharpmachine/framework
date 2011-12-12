@@ -1,2 +1,8 @@
 wp-config.php
 /misc
+/wp-content/themes/project-theme/js/hashgrid.js
+/wp-content/themes/project-theme/css/hashgrid.css
+# /wp-content/themes/project-theme/included
+.htaccess
+sitemap.xml
+sitemap.xml.gz
