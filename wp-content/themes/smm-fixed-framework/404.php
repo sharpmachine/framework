@@ -8,6 +8,9 @@
 				<div class="entry-content">
 					<p><?php _e( 'Apologies, but the page you requested could not be found. Perhaps searching will help.', 'twentyten' ); ?></p>
 					<?php get_search_form(); ?>
+					<h3>Try these links too!</h3>
+					<?php wp_list_pages(); ?>
+					<?php wp_list_categories(); ?>
 				</div><!-- .entry-content -->
 			</div><!-- #post-0 -->
 
