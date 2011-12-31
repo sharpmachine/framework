@@ -153,6 +153,33 @@ STR;
 		
 		$this->admin_form_end(null, false);
 	}
+	
+	function add_help_tabs($screen) {
+		
+		$screen->add_help_tab(array(
+			  'id' => 'su-modules-options'
+			, 'title' => __('Options Help', 'seo-ultimate')
+			, 'content' => __("
+<p>The Module Manager lets you customize the visibility and accessibility of each module; here are the options available:</p>
+<ul>
+	<li><strong>Enabled</strong> &mdash; The default option. The module will be fully enabled and accessible.</li>
+	<li><strong>Silenced</strong> &mdash; The module will be enabled and accessible, but it won't be allowed to display numeric bubble alerts on the menu.</li>
+	<li><strong>Hidden</strong> &mdash; The module's functionality will be enabled, but the module won't be visible on the SEO menu. You will still be able to access the module's admin page by clicking on its title in the Module Manager table.</li>
+	<li><strong>Disabled</strong> &mdash; The module will be completely disabled and inaccessible.</li>
+</ul>
+", 'seo-ultimate')));
+		
+		$screen->add_help_tab(array(
+			  'id' => 'su-modules-faq'
+			, 'title' => __('FAQ', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><strong>What are modules?</strong><br />SEO Ultimate&#8217;s features are divided into groups called &#8220;modules.&#8221; SEO Ultimate&#8217;s &#8220;Module Manager&#8221; lets you enable or disable each of these groups of features. This way, you can pick-and-choose which SEO Ultimate features you want.</li>
+	<li><strong>Can I access a module again after I&#8217;ve hidden it?</strong><br />Yes. Just go to the Module Manager and click the module&#8217;s title to open its admin page. If you&#8217;d like to put the module back in the &#8220;SEO&#8221; menu, just re-enable the module in the Module Manager and click &#8220;Save Changes.&#8221;</li>
+	<li><strong>How do I disable the number bubbles on the &#8220;SEO&#8221; menu?</strong><br />Just go to the Module Manager and select the &#8220;Silenced&#8221; option for any modules generating number bubbles. Then click &#8220;Save Changes.&#8221;</li>
+</ul>
+", 'seo-ultimate')));
+	}
 }
 
 }

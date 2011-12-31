@@ -72,6 +72,10 @@ class SU_RichSnippets extends SU_Module {
 							  'mf' => array('item', 'fn')
 							, 'md' => 'itemreviewed'
 							, 'rdfa' => 'itemreviewed'
+						),'hidden_tags' => array(
+							  'mf' => '<span class="item"><span class="fn"><span class="value-title" title="%s"></span></span></span>'
+							, 'md' => 'itemreviewed'
+							, 'rdfa' => 'itemreviewed'
 						)
 					)
 					, 'rating' => array(
@@ -245,6 +249,39 @@ class SU_RichSnippets extends SU_Module {
 		);
 		
 		return $fields;
+	}
+
+	function add_help_tabs($screen) {
+		
+		$screen->add_help_tab(array(
+			  'id' => 'su-rich-snippets-overview'
+			, 'title' => __('Overview', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><strong>What it does:</strong> Rich Snippet Creator adds special code to your posts that asks Google to display special pertinent information (known as <a href='http://www.google.com/support/webmasters/bin/topic.py?hl=en&topic=219' target='_blank'>Rich Snippets</a>) in search results for certain types of content. For example, if you&#8217;ve written a product review, you can use Rich Snippet Creator to ask Google to display the star rating that you gave the product in your review next to your review webpage when it appears in search results.</li>
+	<li><strong>Why it helps:</strong> Rich Snippet Creator enhances the search engine results for your content by asking Google to add extra, eye-catching info that could help draw in more search engine visitors.</li>
+	<li><p><strong>How it works:</strong> When editing one of your posts or pages, see if your content fits one of the available rich snippet types (for example, a review). If so, select that type from the &#8220;Rich Snippet Type&#8221; dropdown box. Once you select the applicable type, additional options will appear that vary based on the type selected. For example, a &#8220;Star Rating&#8221; field will appear if you select the &#8220;Review&#8221; type.</p><p>Once you save the post/page, Rich Snippet Creator will add the special code to it. You can remove this code at any time by selecting &#8220;None&#8221; from the &#8220;Rich Snippet Type&#8221; dropdown and resaving the post/page.</p></li>
+</ul>
+", 'seo-ultimate')));
+		
+		$screen->add_help_tab(array(
+			  'id' => 'su-rich-snippets-settings'
+			, 'title' => __('Settings Help', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><strong>Data Format</strong> &mdash; This lets you select the &#8220;language&#8221; that Rich Snippet Creator uses to communicate the rich snippet data to Google. Google supports all three options. We recommend &#8220;Microformats&#8221; because it&#8217;s compatible with the greatest number of HTML/XHTML variants. This option will likely be of interest only to advanced users.</li>
+	<li><strong>Categories/Tags That Indicate Reviews</strong> &mdash; If you haven&#8217;t set the &#8220;Rich Snippet Type&#8221; setting for an old post or page, then Rich Snippet Creator will automatically set its default type to &#8220;Review&#8221; (instead of &#8220;None&#8221;) if it has a category or tag whose name is in this list (the default list is &#8220;Reviews&#8221; and &#8220;Review&#8221;). Put one category/tag name per line.</li>
+</ul>
+", 'seo-ultimate')));
+
+	$screen->add_help_tab(array(
+			  'id' => 'su-rich-snippets-troubleshooting'
+			, 'title' => __('Troubleshooting', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><p><strong>Why aren&#8217;t rich snippets showing up in Google search results for my site?</strong><br />Enter the URL of your post/page into <a href='http://www.google.com/webmasters/tools/richsnippets' target='_blank'>Google&#8217;s testing tool</a> to make sure Google can find the rich snippet code on your site. If no code is found, check and make sure you've enabled rich snippets for that particular post/page.</p><p>Note that having the code on a post/page doesn&#8217;t guarantee that Google will actually use it to create a rich snippet. If Google is able to read your code but isn&#8217;t using it to generate rich snippets, you can ask Google to do so using <a href='http://www.google.com/support/webmasters/bin/request.py?contact_type=rich_snippets_feedback' target='_blank'>this form</a>.</p></li>
+</ul>
+", 'seo-ultimate')));
 	}
 }
 

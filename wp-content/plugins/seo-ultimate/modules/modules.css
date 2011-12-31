@@ -24,7 +24,6 @@ div.su-module table.fullwidth input.regular-text {
 	width: 100%;
 } 
 
-div.su-module table.widefat th,
 div.su-module table.widefat td {
 	padding-right: 2em;
 }
@@ -45,6 +44,14 @@ div.su-module .form-table td div.field {
 
 div.su-module .form-table label.su-indent {
 	padding-left: 3em;
+}
+
+div.su-module .form-table tr.su-admin-form-group > td {
+	padding: 0;
+}
+
+div.su-module .form-table tr.su-admin-form-group > td > fieldset > table {
+	width: 100%;
 }
 
 div.su-module table.report {
@@ -75,6 +82,35 @@ div.su-module table.form-table table.su-indent th {
 }
 
 div.su-module table.su-indent th:after { content: ":"; }
+
+div.su-module table tr.su-indent-level-1 .su-field-label { padding-left: 1em; }
+div.su-module table tr.su-indent-level-2 .su-field-label { padding-left: 3em; }
+div.su-module table tr.su-indent-level-3 .su-field-label { padding-left: 5em; }
+div.su-module table tr.su-indent-level-4 .su-field-label { padding-left: 7em; }
+
+div.su-module table tr.su-indent .su-field-label {
+	line-height: 1em;
+}
+
+div.su-module table tr.su-indent .su-child-fields-toggle,
+div.su-module table tr.su-indent .su-child-fields-toggle-filler {
+	display: block;
+	float: left;
+	width: 1em;
+}
+
+div.su-module table tr.su-indent .su-child-fields-toggle {
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #666;
+	border-radius: 2px;
+	background-color: #eee;
+}
+
+div.su-module table tr.su-indent .su-field-label-text {
+	display: block;
+	padding-left: 2em;
+}
 
 div.su-importmodule div.su-status {
 	padding-top: 0.5em;
@@ -129,7 +165,7 @@ div.su-module .su-tabs ul.ui-tabs-nav li.ui-tabs-selected a {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 	border: 1px solid #dfdfdf;
-	border-bottom-color: #f9f9f9;
+	border-bottom-color: #ffffff;
 	color: #333333;
 	font-weight: normal;
 	padding: 0 9px;

@@ -1,9 +1,9 @@
 === SEO Ultimate ===
 Contributors: SEO Design Solutions, JohnLamansky
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate
-Requires at least: 3.2
-Tested up to: 3.2
-Stable tag: 6.9.8
+Requires at least: 3.3
+Tested up to: 3.3
+Stable tag: 7.2.1
 
 This all-in-one SEO plugin gives you control over title tags, noindex, meta tags, slugs, canonical, autolinks, 404 errors, rich snippets, and more.
 
@@ -11,11 +11,11 @@ This all-in-one SEO plugin gives you control over title tags, noindex, meta tags
 
 = Recent Releases =
 
+* Version 7.2 updates Permalink Tweaker
+* Version 7.1 adds new Link Mask Generator features
+* Version 7.0 adds meta description pagination and WP 3.3 compatibility
 * Version 6.9 adds the Settings Monitor module
 * Version 6.8 adds rewrite method selection for Title Tag Rewriter
-* Version 6.7 adds 3 more features to Deeplink Juggernaut
-* Version 6.6 adds the SEO Ultimate Widgets module
-* Version 6.5 features Deeplink Juggernaut 3.0
 
 = Features =
 
@@ -28,7 +28,7 @@ SEO Ultimate is an all-in-one [SEO](http://www.seodesignsolutions.com/) plugin w
 	* Format the `<title>` tags of posts, pages, categories, tags, archives, search results, and more!
 	* Choose between two rewrite methods: "output buffering" or "filtering"
 
-* **Meta Description Editor**
+* **Meta Description Editor** -- UPDATED in Version 7.0
 	* Edit the `<meta>` description tags for posts, pages, attachments, categories, tags, post format archives, and the homepage.
 	* Increase SERP clickthrough rates by influencing search engine result snippets.
 	* Mass-editor makes it a cinch to go back and add descriptions to old posts.
@@ -46,7 +46,7 @@ SEO Ultimate is an all-in-one [SEO](http://www.seodesignsolutions.com/) plugin w
 	* Avoid duplicate content SEO issues with the recommended noindex settings (see built-in module documentation for details).
 	* Give instructions to search engine spiders if desired (`noodp`, `noydir`, and `noarchive`).
 
-* **Deeplink Juggernaut** -- UPDATED in Version 6.7
+* **Deeplink Juggernaut**
 	* Use the power of anchor text to boost your internal ranking SEO paradigm.
 	* Searches your site's content for anchor texts you specify and automatically links them to a destination of your choosing. Lets you easily build internal links to URLs, posts, pages, attachments, custom post type items, categories, terms, post format archives, and custom taxonomy term archives.
 	* Customize footer links for your entire site and/or on a page-by-page basis.
@@ -84,22 +84,10 @@ SEO Ultimate is an all-in-one [SEO](http://www.seodesignsolutions.com/) plugin w
 	* Increase in-URL keyword potency by removing "filler words" (like "the," "with," "and," etc.) from post/page URLs.
 	* Lets you customize the "filler words" list as desired.
 
-* **Competition Researcher**
-	* Investigate multiple keywords or URLs with quick access to search engine tools. Competition Researcher does this without illicit scraping/automation methods.
-	* Find out how many webpages are competing for the keywords you specify.
-	* Choose to analyze the keyword relevance in competing webpages' titles, body content, URLs, or anchor text.
-	* Find out how many pages of a competing website are in Google's index.
-	* Access competitors' incoming links profile.
-	* Find out what external websites your competitors are linking to.
-
 * **More Link Customizer**
 	* SEO your posts' "read more" links by including the posts' keyword-rich titles in the anchor text.
 	* Override the "read more" link on a per-post basis.
 	* Include `<strong>` or `<em>` tags in the anchor text if so desired.
-
-* **Internal Relevance Researcher**
-	* Determine which of your webpages Google most strongly associates with the keywords you specify.
-	* Use the information to determine ideal targets for incoming links or ideal sources of outgoing links.
 
 * **Code Inserter**
 	* Easily insert custom HTML into your site's `<head>` tag, footer, or item content.
@@ -109,7 +97,7 @@ SEO Ultimate is an all-in-one [SEO](http://www.seodesignsolutions.com/) plugin w
 * **Rich Snippet Creator**
 	* Easily add rich snippet code to your review posts.
 	* Attract more search traffic with eye-catching supplementary SERP data.
-	* Can add code to old review posts automatically.
+	* Add code to old review posts automatically.
 
 * **Sharing Facilitator**
 	* Adds buttons that make it easy for visitors to share your content on social networking sites (thus building links to your site).
@@ -119,20 +107,23 @@ SEO Ultimate is an all-in-one [SEO](http://www.seodesignsolutions.com/) plugin w
 * **Webmaster Verification Assistant**
 	* Enter verification codes in the provided fields to access search engine webmaster tools.
 
-* **Link Mask Generator**
-	* Lets you generate robots.txt-blocked "link masks" (e.g. `www.example.com/go/google/`) that pass-through to an external URL.
-	* Lets you mask links on a per-link, per-post basis so you can exert fine-tuned control over your posts' linkflow.
-	* Lets you change `/go/` to a directory of your choosing.
+* **Link Mask Generator** -- UPDATED in Version 7.1
+	* Generate robots.txt-blocked "link masks" (e.g. `www.example.com/go/google/`) that pass-through to an external URL.
+	* Mask links on a per-link, per-post basis so you can exert fine-tuned control over your posts' linkflow.
+	* Create global link masks that apply across your entire site.
+	* Change `/go/` to a directory of your choosing.
 	* Link masks provide a modern replacement for the deprecated, nofollow-based "PageRank Sculpting" technique.
 	* Perfect for affiliate marketers and SEO-savvy bloggers.
 
 * **Nofollow Manager**
 	* Lets you maintain `rel="nofollow"` settings when migrating from other SEO plugins
 
-* **Permalink Tweaker**
-	* Lets you remove the permalink base for categories, tags, and/or custom taxonomies. For example, enable category base removal to convert `http://example.com/category/example` into `http://example.com/example`, and then pair that with a `/%category%/%postname%/` permalink to enable some serious SEO siloing action.
+* **Permalink Tweaker** -- UPDATED in Version 7.2
+	* Lets you remove the permalink base for categories, tags, and/or custom taxonomies.
+	* For example, enable category base removal to convert `http://example.com/category/example` into `http://example.com/example`, and then pair that with a `/%category%/%postname%/` permalink to enable some serious SEO siloing action.
+	* The "URL Conflict Resolution" setting lets you arbitrate between pages/terms when taxonomy base removal causes their URLs to conflict
 
-* **SEO Ultimate Widgets** -- NEW in Version 6.6
+* **SEO Ultimate Widgets**
 	* Lets you output your Deeplink Juggernaut Footer Links in a widget
 	* The Siloed Categories widget makes it drag-and-drop-easy to construct siloed navigation on your site
 
@@ -190,6 +181,11 @@ To install the plugin manually:
 
 * **I upgraded SEO Ultimate and something broke. What do I do?**
 	If a new version of SEO Ultimate introduces a bug, you can easily revert back to the previous version you were using. Just go to the `Settings > SEO Ultimate` page and click on the "Downgrade" tab. (Downgrading is available most of the time, but if the new version upgraded the plugin's settings infrastructure, SEO Ultimate won't let you downgrade, since doing so would cause you to lose your settings. There may be other cases in which downgrading isn't available or causes problems; it's an unsupported feature, but should work in most cases.)
+
+= Compatibility =
+
+* **What's the minimum version of WordPress required to run SEO Ultimate?**
+	In order for all the features to work, you need to be using WordPress 3.3 or above. SEO Ultimate will run on WordPress 3.1.3 or above, but a few features might not work. If you're using a WordPress version older than 3.1.3, SEO Ultimate will refuse to activate.
 
 = General FAQ =
 
@@ -265,6 +261,36 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 
 == Changelog ==
 
+= Version 7.2.1 (December 30, 2011) =
+* Bugfix: Fixed malformed HTML that broke multiple module admin pages (bug introduced in 7.2)
+* Bugfix: Deeplink Juggernaut's "Tag Restrictions" setting now takes effect even when the excluded tag has a `<br />` or other nested tag in it
+* Bugfix: Link masks with empty alias URLs no longer appear in Deeplink Juggernaut destination dropdowns
+* Bugfix: Deeplink Juggernaut and Link Mask Generator now handle cases in which a post, term, user, or link mask is specified in the "Destination," "Link Location," or "Only on This Post" boxes and then is later deleted
+* Bugfix: Deeplink Juggernaut now handles cases when a link mask is specified in the "Destination" box and then the Link Mask Generator module is later disabled
+* Bugfix: Link masks no longer show up in the "Link Location" autocomplete dropdowns of Deeplink Juggernaut's Footer Links editor (bug introduced in 7.1)
+* Improvement: Made Deeplink Juggernaut's Footer Links editor look better on smaller screen resolutions
+
+= Version 7.2 (December 22, 2011) =
+* Feature: Added "URL Conflict Resolution" setting to Permalink Tweaker that lets you arbitrate between pages/terms when taxonomy base removal causes their URLs to conflict
+* Improvement: Cleaned up the Permalink Tweaker config interface
+* Bugfix: Fixed stray `">` that appeared on some posts due to malformed HTML that Rich Snippet Creator generated when set on Microformats mode
+
+= Version 7.1 (December 21, 2011) =
+* Feature: Link Mask Generator now lets you edit all your link masks from a new interface on its admin page
+* Feature: You can now create link masks that apply across your entire site instead of just to one post
+* Feature: You can now use link masks as autolink destinations in Deeplink Juggernaut
+* Security Fix: Link Mask Generator now properly escapes link mask URLs
+* Bugfix: The "SEO Settings" box's "Link Masks" section no longer lists a URL more than once if it's in the post more than once
+* Change: Link mask creation now requires the manage_options user capability
+
+= Version 7.0 (December 19, 2011) =
+* Compatibility: SEO Ultimate now supports and requires WordPress 3.3
+* Improvement: SEO Ultimate now uses the new help tabs system of WordPress 3.3
+* Feature: Meta Description Editor now supports page and pagination formats
+* Bugfix: Title Tag Rewriter's mass-editors no longer add backslashes before special characters in custom titles
+* Removed the Competition Researcher and Internal Relevance Researcher modules (due to Google website changes that make these tools unusable)
+* New Translation: Italian (partial) by [gidibao](http://gidibao.net)
+
 = Version 6.9.8 (December 1, 2011) =
 * Bugfix: Title Tag Rewriter now applies the Pagination Title Format to custom category/tag/taxonomy title tags
 
@@ -278,10 +304,10 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 * Bugfix: Deeplink Juggernaut now applies changes to sitewide link caps gradually instead of all at once, in order to alleviate out-of-memory errors and large processing overhead on sites with many posts
 
 = Version 6.9.4 (August 31, 2011) =
-* Bugfix: Fixed mb_strtolower errors that appeared on some PHP setups (introduced in 6.9.2)
+* Bugfix: Fixed mb_strtolower errors that appeared on some PHP setups (bug introduced in 6.9.2)
 
 = Version 6.9.3 (August 22, 2011) =
-* Bugfix: Fixed bug in Rich Snippet Creator that caused raw HTML to be outputted in posts (introduced in 6.9.2)
+* Bugfix: Fixed bug in Rich Snippet Creator that caused raw HTML to be outputted in posts (bug introduced in 6.9.2)
 * Bugfix: Added missing textdomains to some strings
 
 = Version 6.9.2 (August 20, 2011) =

@@ -3,7 +3,7 @@
 Plugin Name: Advanced Custom Fields
 Plugin URI: http://plugins.elliotcondon.com/advanced-custom-fields/
 Description: Customise your edit pages with an assortment of field types: Wysiwyg, Repeater, text, textarea, image, file, select, checkbox post type, page link and more! Hide unwanted metaboxes and assign to any edit page!
-Version: 3.0.3
+Version: 3.0.6
 Author: Elliot Condon
 Author URI: http://www.elliotcondon.com/
 License: GPL
@@ -45,7 +45,7 @@ class Acf
 		$this->dir = plugins_url('',__FILE__);
 		$this->siteurl = get_bloginfo('url');
 		$this->wpadminurl = admin_url();
-		$this->version = '3.0.3';
+		$this->version = '3.0.6';
 		$this->upgrade_version = '3.0.0'; // this is the latest version which requires an upgrade
 		
 		
@@ -60,6 +60,7 @@ class Acf
 		add_action('init', array($this, 'init'));
 		add_action('admin_menu', array($this,'admin_menu'));
 		add_action('admin_head', array($this,'admin_head'));
+		add_filter('name_save_pre', array($this, 'save_name'));
 		add_action('save_post', array($this, 'save_post'));
 		add_action('wp_ajax_get_input_metabox_ids', array($this, 'get_input_metabox_ids'));
 		add_action('wp_ajax_get_input_style', array($this, 'the_input_style'));
@@ -182,8 +183,9 @@ class Acf
 	function admin_menu() {
 	
 		// add acf page to options menu
-		add_options_page(__("Adv Custom Fields",'acf'), __("Adv Custom Fields",'acf'), 'manage_options', 'edit.php?post_type=acf');
-		add_options_page(__("ACF Upgrade",'acf'), __("Adv Upgrade",'acf'), 'manage_options', 'acf-upgrade', array($this, 'upgrade'));
+		add_menu_page(__("Custom Fields",'acf'), __("Custom Fields",'acf'), 'manage_options', 'edit.php?post_type=acf');
+		add_submenu_page('edit.php?post_type=acf', __('Settings','wp3i'), __('Settings','wp3i'), 'manage_options','acf-settings',array($this,'admin_page_settings'));
+		add_submenu_page('edit.php?post_type=acf', __('Upgrade','wp3i'), __('Upgrade','wp3i'), 'manage_options','acf-upgrade',array($this,'admin_page_upgrade'));
 		
 	}
 	
@@ -205,16 +207,30 @@ class Acf
 	
 	/*--------------------------------------------------------------------------------------
 	*
-	*	upgrade
+	*	admin_page_upgrade
 	*
 	*	@author Elliot Condon
 	*	@since 1.0.0
 	* 
 	*-------------------------------------------------------------------------------------*/
 	
-	function upgrade()
+	function admin_page_upgrade()
 	{
 		include('core/admin/upgrade.php');
+	}
+	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	admin_page_settings
+	*
+	*	@author Elliot Condon
+	*	@since 3.0.5
+	* 
+	*-------------------------------------------------------------------------------------*/
+	
+	function admin_page_settings()
+	{
+		include('core/admin/page_settings.php');
 	}
 	
 	
@@ -244,7 +260,14 @@ class Acf
 	*-------------------------------------------------------------------------------------*/
 	
 	function admin_print_scripts() {
-
+		
+		// thickbox
+		if($GLOBALS['pagenow'] == 'edit.php' && isset($GLOBALS['post_type']) && $GLOBALS['post_type'] == 'acf')
+		{
+			wp_enqueue_script( 'jquery' );
+    		wp_enqueue_script( 'thickbox' );
+		}
+		
 		if(in_array($GLOBALS['pagenow'], array('post.php', 'post-new.php')))
 		{
 			if($GLOBALS['post_type'] == 'acf')
@@ -264,6 +287,12 @@ class Acf
 	}
 	
 	function admin_print_styles() {
+		
+		// thickbox
+		if($GLOBALS['pagenow'] == 'edit.php' && isset($GLOBALS['post_type']) && $GLOBALS['post_type'] == 'acf')
+		{
+			wp_enqueue_style( 'thickbox' );
+		}
 		
 		if(in_array($GLOBALS['pagenow'], array('post.php', 'post-new.php')))
 		{
@@ -299,13 +328,17 @@ class Acf
 		global $post;
 		
 		// hide upgrade page from nav
-		echo '<style type="text/css"> #menu-settings a[href="options-general.php?page=acf-upgrade"]{ display:none; }</style>';
+		echo '<style type="text/css"> 
+			#toplevel_page_edit-post_type-acf a[href="edit.php?post_type=acf&page=acf-upgrade"]{ display:none; }
+			#toplevel_page_edit-post_type-acf .wp-menu-image { background: url("../wp-admin/images/menu.png") no-repeat scroll 0 -33px transparent; }
+			#toplevel_page_edit-post_type-acf .wp-menu-image img { display:none; }
+		</style>';
 		
 		
 		// only add to edit pages
 		if(in_array($GLOBALS['pagenow'], array('post.php', 'post-new.php')))
 		{
-			
+			// edit field
 			if($GLOBALS['post_type'] == 'acf')
 			{
 				echo '<script type="text/javascript" src="'.$this->dir.'/js/fields.js" ></script>';
@@ -391,15 +424,15 @@ class Acf
 	function admin_footer()
 	{
 		// acf edit list
-		if($GLOBALS['pagenow'] == 'edit.php' && $GLOBALS['post_type'] == 'acf')
+		if($GLOBALS['pagenow'] == 'edit.php' && isset($GLOBALS['post_type']) && $GLOBALS['post_type'] == 'acf')
 		{
-			include('core/admin/meta_box_acf.php');
+			include('core/admin/page_acf.php');
 		}
 		
 		// input meta boxes
 		if(in_array($GLOBALS['pagenow'], array('post.php', 'post-new.php')) && $GLOBALS['post_type'] != 'acf')
 		{
-			wp_preload_dialogs( array( 'plugins' => 'safari,inlinepopups,spellchecker,paste,wordpress,media,fullscreen,wpeditimage,wpgallery,tabfocus' ) );
+			//wp_preload_dialogs( array( 'plugins' => 'safari,inlinepopups,spellchecker,paste,wordpress,media,fullscreen,wpeditimage,wpgallery,tabfocus' ) );
 			?>
 			<script type="text/javascript">
 			(function($){
@@ -698,6 +731,27 @@ class Acf
 		if(isset($_POST['save_fields']) &&  $_POST['save_fields'] == 'true') include('core/actions/save_fields.php');
 		if(isset($_POST['save_input']) &&  $_POST['save_input'] == 'true') include('core/actions/save_input.php');
 		
+	}
+	
+	
+	/*--------------------------------------------------------------------------------------
+	*
+	*	save_name
+	*	- this function intercepts the acf post obejct and adds an "acf_" to the start of 
+	*	it's name to stop conflicts between acf's and page's urls
+	*
+	*	@author Elliot Condon
+	*	@since 1.0.0
+	* 
+	*-------------------------------------------------------------------------------------*/
+	
+	function save_name($name)
+	{
+        if (isset($_POST['post_type']) && $_POST['post_type'] == 'acf') 
+        {
+			$name = 'acf_' . sanitize_title_with_dashes($_POST['post_title']);
+        }
+        return $name;
 	}
 	
 	
@@ -1520,6 +1574,7 @@ class Acf
 				{
 					foreach($taxonomies as $taxonomy)
 					{
+						if(!is_taxonomy_hierarchical($taxonomy)) continue;
 						$terms = get_terms($taxonomy, array('hide_empty' => false));
 						if($terms)
 						{

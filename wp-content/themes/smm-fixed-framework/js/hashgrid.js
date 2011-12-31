@@ -108,26 +108,26 @@ var hashgrid = function(set) {
 	}
 
 	// Remove any conflicting overlay
-	if ($('#' + options.id).length > 0) {
-		$('#' + options.id).remove();
+	if (jQuery('#' + options.id).length > 0) {
+		jQuery('#' + options.id).remove();
 	}
 
 	// Create overlay, hidden before adding to DOM
-	overlayEl = $('<div></div>');
+	overlayEl = jQuery('<div></div>');
 	overlayEl
 		.attr('id', options.id)
 		.css({
 			display: 'none',
 			'pointer-events': 'none'
 		});
-	$("body").prepend(overlayEl);
-	overlay = $('#' + options.id);
+	jQuery("body").prepend(overlayEl);
+	overlay = jQuery('#' + options.id);
 
 	// Unless a custom z-index is set, ensure the overlay will be behind everything
 	if (overlay.css('z-index') == 'auto') overlay.css('z-index', overlayZBackground);
 
 	// Override the default overlay height with the actual page height
-	pageHeight = parseFloat($(document).height());
+	pageHeight = parseFloat(jQuery(document).height());
 	overlay.height(pageHeight);
 
 	// Add the first grid line so that we can measure it
@@ -141,7 +141,7 @@ var hashgrid = function(set) {
 	});
 
 	// Calculate the number of grid lines needed
-	line = $('#' + options.id + '-horiz');
+	line = jQuery('#' + options.id + '-horiz');
 	lineHeight = line.outerHeight();
 
 	// Hide and reset top
@@ -165,7 +165,7 @@ var hashgrid = function(set) {
 	overlay.append(gridLines);
 
 	// vertical grid
-	overlay.append($('<div class="vert-container"></div>'));
+	overlay.append(jQuery('<div class="vert-container"></div>'));
 	overlayVert = overlay.children('.vert-container');
 	gridWidth = overlay.width();
 	overlayVert.css({width: gridWidth, position: 'absolute', top: 0});
@@ -206,8 +206,8 @@ var hashgrid = function(set) {
 	}
 
 	// Keyboard controls
-	$(document).bind('keydown', keydownHandler);
-	$(document).bind('keyup', keyupHandler);
+	jQuery(document).bind('keydown', keydownHandler);
+	jQuery(document).bind('keyup', keyupHandler);
 
 	/**
 	 * Helpers
@@ -250,9 +250,9 @@ var hashgrid = function(set) {
 		overlayVert.css({width: overlay.width()});
 		// hide any vertical blocks that aren't at the top of the viewport
 		overlayVert.children('.vert').each(function () {
-			$(this).css('display','inline-block');
-			if ($(this).offset().top > 0) {
-				$(this).hide();
+			jQuery(this).css('display','inline-block');
+			if (jQuery(this).offset().top > 0) {
+				jQuery(this).hide();
 			}
 		});
 	}
@@ -416,7 +416,7 @@ var hashgrid = function(set) {
  * You can call hashgrid from your own code, but it's loaded here as
  * an example for your convenience.
  */
-$(document).ready(function() {
+jQuery(document).ready(function() {
 
 	var grid = new hashgrid({
 		numberOfGrids: 2

@@ -2,9 +2,9 @@
 Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
-Requires at least: 3.1
-Tested up to: 3.2
-Stable tag: 3.9.0
+Requires at least: 3.2
+Tested up to: 3.3
+Stable tag: 4.0.0
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
 == Description ==
@@ -33,12 +33,26 @@ Don't see your language on the list? Feel free to translate Breadcrumb NavXT and
 Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#installation "Go to Breadcrumb NavXT's project page's installation section.") project page for installation and usage instructions.
 
 == Changelog ==
+= 4.0.0 =
+* Behavior change: Prefix, suffix, and anchor settings have been replaced with templates for all breadcrumb types.
+* Behavior change: `bcn_display_nested` function was removed from the main plugin. Will appear in a supplementary plugin.
+* Behavior change: Import/Export/Reset tab moved under the admin bar Help menu.
+* Behavior change: Paged breadcrumbs are enabled in the default settings, among other subtle changes.
+* New feature: More useful Help menu, utilizing the new WordPress 3.3 Help menu.
+* New feature: True URLs are now generated for current items when link current item is enabled.
+* New feature: The display of the custom post type archive breadcrumb for custom post types may now be disabled.
+* New feature: Added in fallback functions for PHP’s multibyte character string functions for environments that do not have multibyte character support.
+* Bug fix: Custom post type archives now respect the root page setting.
+* Bug fix: Custom post types without WordPress post archives enabled will no longer cause a double root page breadcrumb to be generated.
+* Bug fix: Tabs on the settings page are now rounded for all “modern” browsers, including Firefox, Chrome, and IE9.
+* Bug fix: Tabs on the settings page are now remembered between setting saves (including multiple saves from within the same tab).
+* Bug fix: Fixed another cause of the “The following settings were not saved” error message.
 = 3.9.0 =
 * Behavior change: Settings can not be saved, imported, or exported until any necessary settings updates and/or installs are completed.
 * New feature: Support for WordPress 3.1 custom post type archives.
 * Bug fix: Displays a warning message in the WordPress dashboard if PHP version is too old rather than trying to deactivate and dieing on all pages.
 * Bug fix: Fixed a potential cause for the "options not saved" error.
-* Bug fix: Fixed bug where the “Blog Breadcrumb” was not obeyed on archives.
+* Bug fix: Fixed bug where the "Blog Breadcrumb" was not obeyed on archives.
 = 3.8.1 =
 * Bug fix: Root pages for custom post types should work again.
 * Bug fix: The post_post_root and post_page_root not being saved warning when saving settings should be fixed.

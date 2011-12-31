@@ -71,7 +71,9 @@
 	Field: WYSIWYG
 ---------------------------------------------------------------------------------------------*/
 
-
+.acf_wysiwyg .wp_themeSkin table.mceToolbarRow1 {
+    margin-top: 2px !important;
+}
 
 
 

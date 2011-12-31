@@ -83,6 +83,7 @@ class acf_Wysiwyg extends acf_Field
 	function admin_print_styles()
 	{
   		wp_enqueue_style(array(
+  			'editor-buttons',
 			'thickbox',		
 		));
 	}
@@ -301,32 +302,26 @@ class acf_Wysiwyg extends acf_Field
 		$version = get_bloginfo('version');
 		
 		?>
+		<?php if(version_compare($version,'3.2.1') > 0): ?>
+			
+		<?php else: ?>
+			
+		<?php endif; ?>
+		
 		<div class="acf_wysiwyg wp-editor-wrap" data-toolbar="<?php echo $field['toolbar']; ?>">
 			<?php if($field['media_upload'] == 'yes'): ?>
 				<?php if(version_compare($version,'3.2.1') > 0): ?>
-					<div class="wp-editor-tools" id="wp-content-editor-tools">
-						<div class="hide-if-no-js wp-media-buttons" id="wp-content-media-buttons">
-							<a onclick="return false;" title="<?php _e("Add Media"); ?>" id="content-add_media" class="thickbox add_media" href="<?php echo $this->parent->wpadminurl; ?>media-upload.php?post_id=5&amp;TB_iframe=1&amp;width=640&amp;height=526"><?php _e("Upload/Insert"); ?> <img width="15" height="15" src="<?php echo $this->parent->wpadminurl; ?>images/media-button.png?ver=20111005"></a>
+					<div id="wp-content-editor-tools" class="wp-editor-tools">
+						<div class="hide-if-no-js wp-media-buttons">
+							<?php do_action( 'media_buttons' ); ?>
 						</div>
-</div>
-				<?php else: ?>
-				<div id="editor-toolbar" class="hide-if-no-js">	
-					<div id="media-buttons" class="hide-if-no-js">
-						<?php _e("Upload/Insert"); ?>
-						<a title="<?php _e("Add an Image"); ?>" class="thickbox" id="add_image" href="media-upload.php?post_id=1802&amp;type=image&amp;TB_iframe=1&amp;width=640&amp;height=314">
-							<img onclick="return false;" alt="<?php _e("Add an Image"); ?>" src="<?php echo $this->parent->wpadminurl; ?>images/media-button-image.gif?ver=20100531">
-						</a>
-						<a title="<?php _e("Add Video"); ?>" class="thickbox" id="add_video" href="media-upload.php?post_id=1802&amp;type=video&amp;TB_iframe=1&amp;width=640&amp;height=314">
-							<img onclick="return false;" alt="<?php _e("Add Video"); ?>" src="<?php echo $this->parent->wpadminurl; ?>images/media-button-video.gif?ver=20100531">
-						</a>
-						<a title="<?php _e("Add Audio"); ?>" class="thickbox" id="add_audio" href="media-upload.php?post_id=1802&amp;type=audio&amp;TB_iframe=1&amp;width=640&amp;height=314">
-							<img onclick="return false;" alt="<?php _e("Add Audio"); ?>" src="<?php echo $this->parent->wpadminurl; ?>images/media-button-music.gif?ver=20100531">
-						</a>
-						<a title="<?php _e("Add Media"); ?>" class="thickbox" id="add_media" href="media-upload.php?post_id=1802&amp;TB_iframe=1&amp;width=640&amp;height=314">
-							<img onclick="return false;" alt="<?php _e("Add Media"); ?>" src="<?php echo $this->parent->wpadminurl; ?>images/media-button-other.gif?ver=20100531">
-						</a>
 					</div>
-				</div>
+				<?php else: ?>
+					<div id="editor-toolbar">
+						<div id="media-buttons" class="hide-if-no-js">
+							<?php do_action( 'media_buttons' ); ?>
+						</div>
+					</div>
 				<?php endif; ?>
 			<?php endif; ?>
 			<div id="editorcontainer" class="wp-editor-container">

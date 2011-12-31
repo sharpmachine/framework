@@ -63,6 +63,32 @@ class SU_UserCode extends SU_Module {
 		return $this->get_usercode('the_content_before') . $content . $this->get_usercode('the_content_after');
 	}
 	
+	function add_help_tabs($screen) {
+		
+		$screen->add_help_tab(array(
+			  'id' => 'su-user-code-overview'
+			, 'title' => __('Overview', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><strong>What it does:</strong> Code Inserter can add custom HTML code to various parts of your site.</li>
+	<li>
+		<p><strong>Why it helps:</strong> Code Inserter is useful for inserting third-party code that can improve the SEO or user experience of your site. For example, you can use Code Inserter to add Google Analytics code to your footer, Feedburner FeedFlares or social media widgets after your posts, or Google AdSense section targeting code before/after your content.</p>
+		<p>Using Code Inserter is easier than editing your theme manually because your custom code is stored in one convenient location and will be added to your site even if you change your site&#8217;s theme.</p>
+	</li>
+	<li><strong>How to use it:</strong> Just paste the desired HTML code into the appropriate fields and then click Save Changes.</li>
+</ul>
+", 'seo-ultimate')));
+
+		$screen->add_help_tab(array(
+			  'id' => 'su-user-code-troubleshooting'
+			, 'title' => __('Troubleshooting', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><strong>Why doesn't my code appear on my site?</strong><br />It&#8217;s possible that your theme doesn't have the proper &#8220;hooks,&#8221; which are pieces of code that let WordPress plugins insert custom HTML into your theme. <a href='http://johnlamansky.com/wordpress/theme-plugin-hooks/' target='_blank'>Click here</a> for information on how to check your theme and add the hooks if needed.</li>
+</ul>
+", 'seo-ultimate')));
+		
+	}
 }
 
 }

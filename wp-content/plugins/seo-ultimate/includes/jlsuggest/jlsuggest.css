@@ -18,6 +18,11 @@ input.jls_loading {
 	padding: 1px 0;
 }
 
+.jlsuggest-disabled {
+	background-color: #FFE0E0;
+	border-color: #FFC1C1;
+}
+
 .jls_text_dest_text {
 	cursor: default;
 	padding: 0 5px;

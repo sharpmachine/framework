@@ -333,6 +333,130 @@ class SU_Titles extends SU_Module {
 		$help[] = __('<strong>Title Tag</strong> &mdash; The exact contents of the &lt;title&gt; tag. The title appears in visitors&#8217; title bars and in search engine result titles. If this box is left blank, then the <a href="admin.php?page=su-titles" target="_blank">default post/page titles</a> are used.', 'seo-ultimate');
 		return $help;
 	}
+	
+	function add_help_tabs($screen) {
+		
+		$screen->add_help_tab(array(
+			  'id' => 'su-titles-overview'
+			, 'title' => __('Overview', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><strong>What it does:</strong> Title Tag Rewriter helps you customize the contents of your website&#8217;s <code>&lt;title&gt;</code> tags. The tag contents are displayed in web browser title bars and in search engine result pages.</li>
+	<li><strong>Why it helps:</strong> Proper title rewriting ensures that the keywords in your post/Page titles have greater prominence for search engine spiders and users. This is an important foundation for WordPress SEO.</li>
+	<li><strong>How to use it:</strong> Title Tag Rewriter enables recommended settings automatically, so you shouldn&#8217;t need to change anything. If you do wish to edit the rewriting formats, you can do so using the textboxes below (the &#8220;Formats & Variables&#8221; help tab includes additional information on this). You also have the option of overriding the <code>&lt;title&gt;</code> tag of an individual post/page/category/tag/etc. using the appropriate tabs below, or by using the &#8220;Title Tag&#8221; textbox that Title Tag Rewriter adds to the post/page editors.</li>
+</ul>
+", 'seo-ultimate')));
+	
+	$screen->add_help_tab(array(
+			  'id' => 'su-titles-vars'
+			, 'title' => __('Formats &amp; Variables', 'seo-ultimate')
+			, 'content' => __("
+<p>Various variables, surrounded in {curly brackets}, are provided for use in the title formats. All settings support the {blog} variable, which is replaced with the name of the blog, and the {tagline} variable, which is replaced with the blog tagline as set under <a href='options-general.php'>Settings &rArr; General</a>.</p>
+
+<p>Here&#8217;s information on each of the settings and its supported variables:</p>
+
+<ul>
+	<li><strong>Blog Homepage Title</strong> &mdash; Displays on the main blog posts page.</li>
+	<li>
+		<p><strong>Post Title Format</strong> &mdash; Displays on single-post pages. Supports these variables:</p>
+		<ul>
+			<li>{post} &mdash; The post&#8217;s title.</li>
+			<li>{category} &mdash; The title of the post category with the lowest ID number.</li>
+			<li>{categories} &mdash; A natural-language list of the post&#8217;s categories (e.g. &#8220;Category A, Category B, and Category C&#8221;).</li>
+			<li>{tags} &mdash; A natural-language list of the post's tags (e.g. &#8220;Tag A, Tag B, and Tag C&#8221;).</li>
+			<li>{author} &mdash; The Display Name of the post's author.</li>
+			<li>{author_username}, {author_firstname}, {author_lastname}, {author_nickname} &mdash; The username, first name, last name, and nickname of the post&#8217;s author, respectively, as set in his or her profile.</li>
+		</ul>
+	</li>
+	<li>
+		<p><strong>Page Title Format</strong> &mdash; Displays on WordPress Pages. Supports these variables:
+		<ul>
+			<li>{page} &mdash; The page&#8217;s title.</li>
+			<li>{page_parent} &mdash; The title of the page&#8217;s parent page.</li>
+			<li>{author} &mdash; The Display Name of the page&#8217;s author.</li>
+			<li>{author_username}, {author_firstname}, {author_lastname}, {author_nickname} &mdash; The username, first name, last name, and nickname of the page&#8217;s author, respectively, as set in his or her profile.</li>
+		</ul>
+	</li>
+	<li><strong>Category Title Format</strong> &mdash; Displays on category archives. The {category} variable is replaced with the name of the category, and {category_description} is replaced with its description.</li>
+	<li><strong>Tag Title Format</strong> &mdash; Displays on tag archives. The {tag} variable is replaced with the name of the tag, and {tag_description} is replaced with its description.</li>
+	<li>
+		<p><strong>Day Archive Title Format</strong> &mdash; Displays on day archives. Supports these variables:</p>
+		<ul>
+			<li>{day} &mdash; The day number, with ordinal suffix, e.g. 23rd</li>
+			<li>{daynum} &mdash; The two-digit day number, e.g. 23</li>
+			<li>{month} &mdash; The name of the month, e.g. April</li>
+			<li>{monthnum} &mdash; The two-digit number of the month, e.g. 04</li>
+			<li>{year} &mdash; The year, e.g. 2009</li>
+		</ul>
+	</li>
+	<li><strong>Month Archive Title Format</strong> &mdash; Displays on month archives. Supports {month}, {monthnum}, and {year}.</li>
+	<li><strong>Year Archive Title Format</strong> &mdash; Displays on year archives. Supports the {year} variable.</li>
+	<li><strong>Author Archive Title Format</strong> &mdash; Displays on author archives. Supports the same author variables as the Post Title Format box, i.e. {author}, {author_username}, {author_firstname}, {author_lastname}, and {author_nickname}.</li>
+	<li><strong>Search Title Format</strong> &mdash; Displays on the result pages for WordPress&#8217;s blog search function. The {query} variable is replaced with the search query as-is. The {ucwords} variable returns the search query with the first letter of each word capitalized.</li>
+	<li>
+		<p><strong>404 Title Format</strong> &mdash; Displays whenever a URL doesn&#8217;t go anywhere. Supports this variable:</p>
+		<ul>
+			<li>{url_words} &mdash; The words used in the error-generating URL. The first letter of each word will be capitalized.</li>
+		</ul>
+	</li>
+	<li>
+		<p><strong>Pagination Title Format</strong> &mdash; Displays whenever the visitor is on a subpage (page 2, page 3, etc.) of the homepage or of an archive. Supports these variables:</p>
+		<ul>
+			<li>{title} &mdash; The title that would normally be displayed on page 1</li>
+			<li>{num} &mdash; The current page number (2, 3, etc.)</li>
+			<li>{max} &mdash; The total number of subpages available. Would usually be used like this: Page {num} of {max}</li>
+		</ul>
+	</li>
+</ul>
+", 'seo-ultimate')));
+	
+	$screen->add_help_tab(array(
+			  'id' => 'su-titles-settings'
+			, 'title' => __('Settings Help', 'seo-ultimate')
+			, 'content' => __("
+<p>Here&#8217;s documentation for the options on the &#8220;Settings&#8221; tab.</p>
+<ul>
+	<li>
+		<p><strong>Rewrite Method</strong> &mdash; This setting controls the method by which Title Tag Rewriter edits your site&#8217;s <code>&lt;title&gt;</code> tags.</p>
+		<ul>
+			<li><strong>Use output buffering</strong> &mdash; This is the &#8220;traditional&#8221; method that most SEO plugins use. With this method, SEO Ultimate will intercept your site&#8217;s <code>&lt;head&gt;</code> tag section as it&#8217;s being outputted, locate the <code>&lt;title&gt;</code> tag, edit its value, and then output the edited <code>&lt;head&gt;</code> data. The good thing about this method is that you don&#8217;t have to edit your theme in any way, as SEO Ultimate will overwrite whatever your theme puts in your <code>&lt;title&gt;</code> tag. The bad thing is that this output interception takes a few extra milliseconds to complete. If you are concerned about performance, are comfortable editing your theme&#8217;s `header.php` file, and will remember to edit the `header.php` file of any new themes you activate, you may want to try the filtering rewrite method.</li>
+			<li>
+				<p><strong>Use filtering</strong> &mdash; With this method, SEO Ultimate will register itself with WordPress and will replace WordPress&#8217;s <code>&lt;title&gt;</code> tag output with its own. This method can only edit the text that WordPress itself generates for the <code>&lt;title&gt;</code> tag; the filtering method can&#8217;t edit anything extra your theme may add. For this reason, you need to edit your theme to make sure it&#8217;s only pulling <code>&lt;title&gt;</code> tag data from WordPress and is not adding anything else.</p>
+				<p>Here&#8217;s how to set up filtering:</p>
+				<ol>
+					<li>Go to <a href='theme-editor.php'>Appearance &rArr; Editor</a> (if you get a permissions error, you may be on a WordPress multi-site environment and may not be able to use the filtering rewrite method)</li>
+					<li>Click &#8220;Header (header.php)&#8221;</li>
+					<li>Look for the <code>&lt;title&gt;</code> start tag and the <code>&lt;/title&gt;</code> end tag</li>
+					<li>Edit the text in between those tags so that it looks like this: <code>&lt;title&gt;&lt;?php wp_title(''); ?&gt;&lt;/title&gt;</code></li>
+					<li>Click &#8220;Update File&#8221;</li>
+					<li>Return to the &#8220;Settings&#8221; tab of Title Tag Rewriter, select &#8220;Use filtering,&#8221; and click &#8220;Save Changes&#8221;</li>
+				</ol>
+			</li>
+		</ul>
+	</li>
+</ul>
+", 'seo-ultimate')));
+		
+		$screen->add_help_tab(array(
+			  'id' => 'su-titles-faq'
+			, 'title' => __('FAQ', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><strong>Does the Title Tag Rewriter edit my post/page titles?</strong><br />No. The Title Tag Rewriter edits the <code>&lt;title&gt;</code> tags of your site, not your post/page titles.</li>
+	<li><strong>Will rewriting the title tags of my posts change their permalinks/URLs?</strong><br />No.</li>
+	<li><strong>What&#8217;s the difference between the &#8220;title&#8221; and the &#8220;title tag&#8221; of a post/page?</strong><br />The &#8220;title&#8221; is the title of your post or page that&#8217;s used in your site&#8217;s theme, in your site&#8217;s admin, in your site&#8217;s RSS feeds, and in your site&#8217;s <code>&lt;title&gt;</code> tags. A <code>&lt;title&gt;</code> tag is the title of a specific webpage, and it appears in your browser&#8217;s title bar and in search result listings. Title Tag Rewriter lets you edit your post&#8217;s <code>&lt;title&gt;</code> tags without editing their actual titles. This means you can edit a post&#8217;s title as it appears in search results, but not as it appears on your site.</li>
+</ul>
+", 'seo-ultimate')));
+	
+		$screen->add_help_tab(array(
+			  'id' => 'su-titles-troubleshooting'
+			, 'title' => __('Troubleshooting', 'seo-ultimate')
+			, 'content' => __("
+<ul>
+	<li><strong>Why isn&#8217;t Title Tag Rewriter changing my <code>&lt;title&gt;</code> tags?</strong><br />Try disabling other SEO plugins, as they may be conflicting with SEO Ultimate. If you&#8217;re using the default &#8220;output buffering&#8221; rewrite method, check to make sure your theme is <a href='http://johnlamansky.com/wordpress/theme-plugin-hooks/' target='_blank'>plugin-friendly</a>. If you're using the &#8220;filtering&#8221; rewrite method, check your theme&#8217;s <code>header.php</code> file and make sure the <code>&lt;title&gt;</code> tag looks like this: <code>&lt;title&gt;&lt;?php wp_title(''); ?&gt;&lt;/title&gt;</code>.</li>
+</ul>
+", 'seo-ultimate')));
+	}
 }
 
 }

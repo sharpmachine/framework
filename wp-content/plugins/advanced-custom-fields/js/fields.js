@@ -407,7 +407,7 @@
 	
 		
 		// add active to Settings Menu
-		$('#adminmenu #menu-settings').removeClass('wp-not-current-submenu').addClass('current wp-menu-open wp-has-current-submenu');
+		//$('#adminmenu #menu-settings').removeClass('wp-not-current-submenu').addClass('current wp-menu-open wp-has-current-submenu');
 		
 		// setup fields
 		setup_fields();
