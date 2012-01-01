@@ -4,19 +4,18 @@
 */
 get_header(); ?>
 
-		<div id="content-container" class="span-20">
-			<section id="content" role="main">
+		<section id="page" class="span-20">
 
-			<?php get_template_part( 'loop', 'blog' ); ?>
-			<?php rewind_posts(); ?>
+		<?php get_template_part( 'loop', 'blog' ); ?>
+		<?php rewind_posts(); ?>
 			
-			<?php
-				$temp = $wp_query;
-				$wp_query= null;
-				$wp_query = new WP_Query();
-				$wp_query->query('&paged='.$paged);
-				while ($wp_query->have_posts()) : $wp_query->the_post();
-			?>
+		<?php
+			$temp = $wp_query;
+			$wp_query= null;
+			$wp_query = new WP_Query();
+			$wp_query->query('&paged='.$paged);
+			while ($wp_query->have_posts()) : $wp_query->the_post();
+		?>
 			
 			<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<h3 class="entry-title">
@@ -24,7 +23,7 @@ get_header(); ?>
 				</h3>
 				<div><?php twentyten_posted_on(); ?></div>
 				<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( array (100, 100) ); ?></a>
-			<?php the_excerpt(); ?>
+				<?php the_excerpt(); ?>
 			
 				<div class="entry-utility">
 				<?php if ( count( get_the_category() ) ) : ?>
@@ -44,8 +43,8 @@ get_header(); ?>
 				<?php endif; ?>
 				<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'twentyten' ), __( '1 Comment', 'twentyten' ), __( '% Comments', 'twentyten' ) ); ?></span>
 				<?php edit_post_link( __( 'Edit', 'twentyten' ), '<span class="meta-sep">|</span> <span class="edit-link">', '</span>' ); ?>
-			</div><!-- .entry-utility -->
-			</div>
+				</div><!-- .entry-utility -->
+			</div><!-- #post -->
 
 			<?php endwhile; ?>
 	
@@ -58,8 +57,7 @@ get_header(); ?>
 
 			<?php $wp_query = null; $wp_query = $temp;?>
 			
-			</section><!-- #content -->
-		</div><!-- #content-container -->
+		</section><!-- #page -->
 
 <?php get_sidebar(); ?>
 <?php get_footer(); ?>

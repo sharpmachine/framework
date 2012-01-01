@@ -5,7 +5,10 @@ article, aside, figure, footer, header, hgroup, menu, nav, section { display: bl
 }
 html { overflow-y: scroll; }
 html, body { height: 100%; }
-header { margin-bottom: 6em; }
+header {
+  width: 950px;
+  margin: 0 auto;
+}
 nav {
   background: #dddddd;
   display: block;
@@ -90,7 +93,11 @@ nav ul li.current-menu-parent > a { color: #000000; }
 * html nav ul li.current-menu-item a { color: #000000; }
 * html nav ul li.current-menu-parent a { color: #000000; }
 * html nav ul li a:hover { color: #000000; }
-footer { clear: both; }
+footer {
+  width: 950px;
+  margin: 0 auto;
+  clear: both;
+}
 .wp-paginate {
   padding: 0;
   margin: 0;

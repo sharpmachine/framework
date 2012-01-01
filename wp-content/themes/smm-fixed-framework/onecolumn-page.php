@@ -8,12 +8,10 @@
 
 get_header(); ?>
 
-		<div id="content-container" class="span-24">
-			<section id="content" role="main">
+		<section id="page">
 
 			<?php get_template_part( 'loop', 'page' ); ?>
-
-			</section><!-- #content -->
-		</div><!-- #content-container -->
+			
+		</section><!-- #page -->
 
 <?php get_footer(); ?>

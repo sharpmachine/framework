@@ -1,11 +1,9 @@
 <?php get_header(); ?>
 				
-		<div id="content-container" class="single-attachment span-20">
-			<section id="content" role="main">
+		<section id="page" class="span-20">
 
 			<?php get_template_part( 'loop', 'attachment' ); ?>
 
-			</section><!-- #content -->
-		</div><!-- #content-container -->
+		</section><!-- #content -->
 
 <?php get_footer(); ?>

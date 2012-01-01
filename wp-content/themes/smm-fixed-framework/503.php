@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title></title>
-	<!--[if IE]>
-  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
+<meta charset="utf-8">
+<title>Down for Maintenance</title>
 
 <style type="text/css">
 	body
@@ -29,13 +26,13 @@
 </style>
 
 </head>
-	<body>
+<body>
 		
-		<div id="logo">
-			<img src="http://www.domain.com/wp-content/themes/project_theme/images/logo.png" width="335" height="52" alt="Logo">
-			<p>We are currently undergoing routine maintenance.  Please check back soon.</p>
-		</div>
+	<div id="logo">
+		<img src="http://www.domain.com/wp-content/themes/project_theme/images/logo.png" width="335" height="52" alt="Logo">
+		<p>We are currently undergoing routine maintenance.  Please check back soon.</p>
+	</div>
 		
-	</body>
+</body>
 </html>
 
