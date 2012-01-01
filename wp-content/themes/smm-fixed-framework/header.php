@@ -33,7 +33,7 @@
 
 	// Add a page number if necessary:
 	if ( $paged >= 2 || $page >= 2 )
-		echo ' | ' . sprintf( __( 'Page %s', 'twentyten' ), max( $paged, $page ) );
+		echo ' | ' . sprintf( __( 'Page %s', 'smm' ), max( $paged, $page ) );
 
 	?></title>
 <meta name="author" content="Jesse Kade of Sharp Machine Media">
@@ -44,7 +44,6 @@
 <link rel="profile" href="http://gmpg.org/xfn/11" />
 <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/screen.css" type="text/css" media="screen, projection">
 <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/print.css" type="text/css" media="print">
-<!--<link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/wp-style.css">-->
 <link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/style.css">
 <!--[if lt IE 8]><link rel="stylesheet" href="<?php bloginfo('template_directory'); ?>/css/ie.css" type="text/css" media="screen, projection"><![endif]-->
 	
@@ -89,7 +88,7 @@
 						<?php endif; ?>-->
 				<nav role="navigation">
 				  <?php /*  Allow screen readers / text browsers to skip the navigation menu and get right to the good stuff */ ?>
-					<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentyten' ); ?>"><?php _e( 'Skip to content', 'twentyten' ); ?></a></div>
+					<div class="skip-link screen-reader-text"><a href="#content" title="<?php esc_attr_e( 'Skip to content', 'smm' ); ?>"><?php _e( 'Skip to content', 'smm' ); ?></a></div>
 					<?php /* Our navigation menu.  If one isn't filled out, wp_nav_menu falls back to wp_page_menu.  The menu assiged to the primary position is the one used.  If none is assigned, the menu with the lowest ID is used.  */ ?>
 					<?php wp_nav_menu( array( 'container_class' => 'menu-header', 'theme_location' => 'primary' ) ); ?>
 				</nav><!-- nav -->

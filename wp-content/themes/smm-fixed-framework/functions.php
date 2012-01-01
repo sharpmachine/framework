@@ -1,42 +1,6 @@
 <?php
-/**
- * TwentyTen functions and definitions
- *
- * Sets up the theme and provides some helper functions. Some helper functions
- * are used in the theme as custom template tags. Others are attached to action and
- * filter hooks in WordPress to change core functionality.
- *
- * The first function, twentyten_setup(), sets up the theme by registering support
- * for various features in WordPress, such as post thumbnails, navigation menus, and the like.
- *
- * When using a child theme (see http://codex.wordpress.org/Theme_Development and
- * http://codex.wordpress.org/Child_Themes), you can override certain functions
- * (those wrapped in a function_exists() call) by defining them first in your child theme's
- * functions.php file. The child theme's functions.php file is included before the parent
- * theme's file, so the child theme functions would be used.
- *
- * Functions that are not pluggable (not wrapped in function_exists()) are instead attached
- * to a filter or action hook. The hook can be removed by using remove_action() or
- * remove_filter() and you can attach your own function to the hook.
- *
- * We can remove the parent theme's hook only after it is attached, which means we need to
- * wait until setting up the child theme:
- *
- * <code>
- * add_action( 'after_setup_theme', 'my_child_theme_setup' );
- * function my_child_theme_setup() {
- *     // We are providing our own filter for excerpt_length (or using the unfiltered value)
- *     remove_filter( 'excerpt_length', 'twentyten_excerpt_length' );
- *     ...
- * }
- * </code>
- *
- * For more information on hooks, actions, and filters, see http://codex.wordpress.org/Plugin_API.
- *
- * @package WordPress
- * @subpackage Twenty_Ten
- * @since Twenty Ten 1.0
- */
+include 'functions/need-help-dashboard-widget.php';
+include 'functions/customize-admin.php';
 
 /**
  * Set the content width based on the theme's design and stylesheet.
@@ -47,10 +11,10 @@
 if ( ! isset( $content_width ) )
 	$content_width = 640;
 
-/** Tell WordPress to run twentyten_setup() when the 'after_setup_theme' hook is run. */
-add_action( 'after_setup_theme', 'twentyten_setup' );
+/** Tell WordPress to run smm_setup() when the 'after_setup_theme' hook is run. */
+add_action( 'after_setup_theme', 'smm_setup' );
 
-if ( ! function_exists( 'twentyten_setup' ) ):
+if ( ! function_exists( 'smm_setup' ) ):
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -58,7 +22,7 @@ if ( ! function_exists( 'twentyten_setup' ) ):
  * before the init hook. The init hook is too late for some features, such as indicating
  * support post thumbnails.
  *
- * To override twentyten_setup() in a child theme, add your own twentyten_setup to your child theme's
+ * To override smm_setup() in a child theme, add your own smm_setup to your child theme's
  * functions.php file.
  *
  * @uses add_theme_support() To add support for post thumbnails and automatic feed links.
@@ -74,7 +38,7 @@ if ( ! function_exists( 'twentyten_setup' ) ):
  */
 remove_action('wp_head', 'wp_generator');  
 
-function twentyten_setup() {
+function smm_setup() {
 
 	// This theme styles the visual editor with editor-style.css to match the theme style.
 	add_editor_style();
@@ -90,7 +54,7 @@ function twentyten_setup() {
 
 	// Make theme available for translation
 	// Translations can be filed in the /languages/ directory
-	load_theme_textdomain( 'twentyten', TEMPLATEPATH . '/languages' );
+	load_theme_textdomain( 'smm', TEMPLATEPATH . '/languages' );
 
 	$locale = get_locale();
 	$locale_file = TEMPLATEPATH . "/languages/$locale.php";
@@ -99,7 +63,7 @@ function twentyten_setup() {
 
 	// This theme uses wp_nav_menu() in one location.
 	register_nav_menus( array(
-		'primary' => __( 'Primary Navigation', 'twentyten' ),
+		'primary' => __( 'Primary Navigation', 'smm' ),
 	) );
 
 	// This theme allows users to set a custom background
@@ -114,9 +78,9 @@ function twentyten_setup() {
 		define( 'HEADER_IMAGE', '%s/images/headers/path.jpg' );
 
 	// The height and width of your custom header. You can hook into the theme's own filters to change these values.
-	// Add a filter to twentyten_header_image_width and twentyten_header_image_height to change these values.
-	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'twentyten_header_image_width', 940 ) );
-	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'twentyten_header_image_height', 198 ) );
+	// Add a filter to smm_header_image_width and smm_header_image_height to change these values.
+	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'smm_header_image_width', 940 ) );
+	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'smm_header_image_height', 198 ) );
 
 	// We'll be using post thumbnails for custom header images on posts and pages.
 	// We want them to be 940 pixels wide by 198 pixels tall.
@@ -128,8 +92,8 @@ function twentyten_setup() {
 		define( 'NO_HEADER_TEXT', true );
 
 	// Add a way for the custom header to be styled in the admin panel that controls
-	// custom headers. See twentyten_admin_header_style(), below.
-	add_custom_image_header( '', 'twentyten_admin_header_style' );
+	// custom headers. See smm_admin_header_style(), below.
+	add_custom_image_header( '', 'smm_admin_header_style' );
 
 	// ... and thus ends the changeable header business.
 
@@ -139,63 +103,63 @@ function twentyten_setup() {
 			'url' => '%s/images/headers/berries.jpg',
 			'thumbnail_url' => '%s/images/headers/berries-thumbnail.jpg',
 			/* translators: header image description */
-			'description' => __( 'Berries', 'twentyten' )
+			'description' => __( 'Berries', 'smm' )
 		),
 		'cherryblossom' => array(
 			'url' => '%s/images/headers/cherryblossoms.jpg',
 			'thumbnail_url' => '%s/images/headers/cherryblossoms-thumbnail.jpg',
 			/* translators: header image description */
-			'description' => __( 'Cherry Blossoms', 'twentyten' )
+			'description' => __( 'Cherry Blossoms', 'smm' )
 		),
 		'concave' => array(
 			'url' => '%s/images/headers/concave.jpg',
 			'thumbnail_url' => '%s/images/headers/concave-thumbnail.jpg',
 			/* translators: header image description */
-			'description' => __( 'Concave', 'twentyten' )
+			'description' => __( 'Concave', 'smm' )
 		),
 		'fern' => array(
 			'url' => '%s/images/headers/fern.jpg',
 			'thumbnail_url' => '%s/images/headers/fern-thumbnail.jpg',
 			/* translators: header image description */
-			'description' => __( 'Fern', 'twentyten' )
+			'description' => __( 'Fern', 'smm' )
 		),
 		'forestfloor' => array(
 			'url' => '%s/images/headers/forestfloor.jpg',
 			'thumbnail_url' => '%s/images/headers/forestfloor-thumbnail.jpg',
 			/* translators: header image description */
-			'description' => __( 'Forest Floor', 'twentyten' )
+			'description' => __( 'Forest Floor', 'smm' )
 		),
 		'inkwell' => array(
 			'url' => '%s/images/headers/inkwell.jpg',
 			'thumbnail_url' => '%s/images/headers/inkwell-thumbnail.jpg',
 			/* translators: header image description */
-			'description' => __( 'Inkwell', 'twentyten' )
+			'description' => __( 'Inkwell', 'smm' )
 		),
 		'path' => array(
 			'url' => '%s/images/headers/path.jpg',
 			'thumbnail_url' => '%s/images/headers/path-thumbnail.jpg',
 			/* translators: header image description */
-			'description' => __( 'Path', 'twentyten' )
+			'description' => __( 'Path', 'smm' )
 		),
 		'sunset' => array(
 			'url' => '%s/images/headers/sunset.jpg',
 			'thumbnail_url' => '%s/images/headers/sunset-thumbnail.jpg',
 			/* translators: header image description */
-			'description' => __( 'Sunset', 'twentyten' )
+			'description' => __( 'Sunset', 'smm' )
 		)
 	) );
 }
 endif;
 
-if ( ! function_exists( 'twentyten_admin_header_style' ) ) :
+if ( ! function_exists( 'smm_admin_header_style' ) ) :
 /**
  * Styles the header image displayed on the Appearance > Header admin panel.
  *
- * Referenced via add_custom_image_header() in twentyten_setup().
+ * Referenced via add_custom_image_header() in smm_setup().
  *
  * @since Twenty Ten 1.0
  */
-function twentyten_admin_header_style() {
+function smm_admin_header_style() {
 ?>
 <style type="text/css">
 /* Shows the same border as on front end */
@@ -220,11 +184,11 @@ endif;
  *
  * @since Twenty Ten 1.0
  */
-function twentyten_page_menu_args( $args ) {
+function smm_page_menu_args( $args ) {
 	$args['show_home'] = true;
 	return $args;
 }
-add_filter( 'wp_page_menu_args', 'twentyten_page_menu_args' );
+add_filter( 'wp_page_menu_args', 'smm_page_menu_args' );
 
 /**
  * Sets the post excerpt length to 40 characters.
@@ -235,10 +199,10 @@ add_filter( 'wp_page_menu_args', 'twentyten_page_menu_args' );
  * @since Twenty Ten 1.0
  * @return int
  */
-function twentyten_excerpt_length( $length ) {
+function smm_excerpt_length( $length ) {
 	return 40;
 }
-add_filter( 'excerpt_length', 'twentyten_excerpt_length' );
+add_filter( 'excerpt_length', 'smm_excerpt_length' );
 
 /**
  * Returns a "Continue Reading" link for excerpts
@@ -246,12 +210,12 @@ add_filter( 'excerpt_length', 'twentyten_excerpt_length' );
  * @since Twenty Ten 1.0
  * @return string "Continue Reading" link
  */
-function twentyten_continue_reading_link() {
-	return ' <a href="'. get_permalink() . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) . '</a>';
+function smm_continue_reading_link() {
+	return ' <a href="'. get_permalink() . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'smm' ) . '</a>';
 }
 
 /**
- * Replaces "[...]" (appended to automatically generated excerpts) with an ellipsis and twentyten_continue_reading_link().
+ * Replaces "[...]" (appended to automatically generated excerpts) with an ellipsis and smm_continue_reading_link().
  *
  * To override this in a child theme, remove the filter and add your own
  * function tied to the excerpt_more filter hook.
@@ -259,10 +223,10 @@ function twentyten_continue_reading_link() {
  * @since Twenty Ten 1.0
  * @return string An ellipsis
  */
-function twentyten_auto_excerpt_more( $more ) {
-	return ' &hellip;' . twentyten_continue_reading_link();
+function smm_auto_excerpt_more( $more ) {
+	return ' &hellip;' . smm_continue_reading_link();
 }
-add_filter( 'excerpt_more', 'twentyten_auto_excerpt_more' );
+add_filter( 'excerpt_more', 'smm_auto_excerpt_more' );
 
 /**
  * Adds a pretty "Continue Reading" link to custom post excerpts.
@@ -273,13 +237,13 @@ add_filter( 'excerpt_more', 'twentyten_auto_excerpt_more' );
  * @since Twenty Ten 1.0
  * @return string Excerpt with a pretty "Continue Reading" link
  */
-function twentyten_custom_excerpt_more( $output ) {
+function smm_custom_excerpt_more( $output ) {
 	if ( has_excerpt() && ! is_attachment() ) {
-		$output .= twentyten_continue_reading_link();
+		$output .= smm_continue_reading_link();
 	}
 	return $output;
 }
-add_filter( 'get_the_excerpt', 'twentyten_custom_excerpt_more' );
+add_filter( 'get_the_excerpt', 'smm_custom_excerpt_more' );
 
 /**
  * Remove inline styles printed when the gallery shortcode is used.
@@ -302,25 +266,25 @@ add_filter( 'use_default_gallery_style', '__return_false' );
  *
  * @return string The gallery style filter, with the styles themselves removed.
  */
-function twentyten_remove_gallery_css( $css ) {
+function smm_remove_gallery_css( $css ) {
 	return preg_replace( "#<style type='text/css'>(.*?)</style>#s", '', $css );
 }
 // Backwards compatibility with WordPress 3.0.
 if ( version_compare( $GLOBALS['wp_version'], '3.1', '<' ) )
-	add_filter( 'gallery_style', 'twentyten_remove_gallery_css' );
+	add_filter( 'gallery_style', 'smm_remove_gallery_css' );
 
-if ( ! function_exists( 'twentyten_comment' ) ) :
+if ( ! function_exists( 'smm_comment' ) ) :
 /**
  * Template for comments and pingbacks.
  *
  * To override this walker in a child theme without modifying the comments template
- * simply create your own twentyten_comment(), and that function will be used instead.
+ * simply create your own smm_comment(), and that function will be used instead.
  *
  * Used as a callback by wp_list_comments() for displaying the comments.
  *
  * @since Twenty Ten 1.0
  */
-function twentyten_comment( $comment, $args, $depth ) {
+function smm_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
 	switch ( $comment->comment_type ) :
 		case '' :
@@ -329,17 +293,17 @@ function twentyten_comment( $comment, $args, $depth ) {
 		<div id="comment-<?php comment_ID(); ?>">
 		<div class="comment-author vcard">
 			<?php echo get_avatar( $comment, 40 ); ?>
-			<?php printf( __( '%s <span class="says">says:</span>', 'twentyten' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
+			<?php printf( __( '%s <span class="says">says:</span>', 'smm' ), sprintf( '<cite class="fn">%s</cite>', get_comment_author_link() ) ); ?>
 		</div><!-- .comment-author .vcard -->
 		<?php if ( $comment->comment_approved == '0' ) : ?>
-			<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'twentyten' ); ?></em>
+			<em class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'smm' ); ?></em>
 			<br />
 		<?php endif; ?>
 
 		<div class="comment-meta commentmetadata"><a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>">
 			<?php
 				/* translators: 1: date, 2: time */
-				printf( __( '%1$s at %2$s', 'twentyten' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)', 'twentyten' ), ' ' );
+				printf( __( '%1$s at %2$s', 'smm' ), get_comment_date(),  get_comment_time() ); ?></a><?php edit_comment_link( __( '(Edit)', 'smm' ), ' ' );
 			?>
 		</div><!-- .comment-meta .commentmetadata -->
 
@@ -356,7 +320,7 @@ function twentyten_comment( $comment, $args, $depth ) {
 		case 'trackback' :
 	?>
 	<li class="post pingback">
-		<p><?php _e( 'Pingback:', 'twentyten' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __( '(Edit)', 'twentyten' ), ' ' ); ?></p>
+		<p><?php _e( 'Pingback:', 'smm' ); ?> <?php comment_author_link(); ?><?php edit_comment_link( __( '(Edit)', 'smm' ), ' ' ); ?></p>
 	<?php
 			break;
 	endswitch;
@@ -366,18 +330,18 @@ endif;
 /**
  * Register widgetized areas, including two sidebars and four widget-ready columns in the footer.
  *
- * To override twentyten_widgets_init() in a child theme, remove the action hook and add your own
+ * To override smm_widgets_init() in a child theme, remove the action hook and add your own
  * function tied to the init hook.
  *
  * @since Twenty Ten 1.0
  * @uses register_sidebar
  */
-function twentyten_widgets_init() {
+function smm_widgets_init() {
 	// Area 1, located at the top of the sidebar.
 	register_sidebar( array(
-		'name' => __( 'Primary Widget Area', 'twentyten' ),
+		'name' => __( 'Primary Widget Area', 'smm' ),
 		'id' => 'primary-widget-area',
-		'description' => __( 'The primary widget area', 'twentyten' ),
+		'description' => __( 'The primary widget area', 'smm' ),
 		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
 		'after_widget' => '</li>',
 		'before_title' => '<h3 class="widget-title">',
@@ -386,9 +350,9 @@ function twentyten_widgets_init() {
 
 	// Area 2, located below the Primary Widget Area in the sidebar. Empty by default.
 	register_sidebar( array(
-		'name' => __( 'Secondary Widget Area', 'twentyten' ),
+		'name' => __( 'Secondary Widget Area', 'smm' ),
 		'id' => 'secondary-widget-area',
-		'description' => __( 'The secondary widget area', 'twentyten' ),
+		'description' => __( 'The secondary widget area', 'smm' ),
 		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
 		'after_widget' => '</li>',
 		'before_title' => '<h3 class="widget-title">',
@@ -397,9 +361,9 @@ function twentyten_widgets_init() {
 
 	// Area 3, located in the footer. Empty by default.
 	register_sidebar( array(
-		'name' => __( 'First Footer Widget Area', 'twentyten' ),
+		'name' => __( 'First Footer Widget Area', 'smm' ),
 		'id' => 'first-footer-widget-area',
-		'description' => __( 'The first footer widget area', 'twentyten' ),
+		'description' => __( 'The first footer widget area', 'smm' ),
 		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
 		'after_widget' => '</li>',
 		'before_title' => '<h3 class="widget-title">',
@@ -408,9 +372,9 @@ function twentyten_widgets_init() {
 
 	// Area 4, located in the footer. Empty by default.
 	register_sidebar( array(
-		'name' => __( 'Second Footer Widget Area', 'twentyten' ),
+		'name' => __( 'Second Footer Widget Area', 'smm' ),
 		'id' => 'second-footer-widget-area',
-		'description' => __( 'The second footer widget area', 'twentyten' ),
+		'description' => __( 'The second footer widget area', 'smm' ),
 		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
 		'after_widget' => '</li>',
 		'before_title' => '<h3 class="widget-title">',
@@ -419,9 +383,9 @@ function twentyten_widgets_init() {
 
 	// Area 5, located in the footer. Empty by default.
 	register_sidebar( array(
-		'name' => __( 'Third Footer Widget Area', 'twentyten' ),
+		'name' => __( 'Third Footer Widget Area', 'smm' ),
 		'id' => 'third-footer-widget-area',
-		'description' => __( 'The third footer widget area', 'twentyten' ),
+		'description' => __( 'The third footer widget area', 'smm' ),
 		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
 		'after_widget' => '</li>',
 		'before_title' => '<h3 class="widget-title">',
@@ -430,17 +394,17 @@ function twentyten_widgets_init() {
 
 	// Area 6, located in the footer. Empty by default.
 	register_sidebar( array(
-		'name' => __( 'Fourth Footer Widget Area', 'twentyten' ),
+		'name' => __( 'Fourth Footer Widget Area', 'smm' ),
 		'id' => 'fourth-footer-widget-area',
-		'description' => __( 'The fourth footer widget area', 'twentyten' ),
+		'description' => __( 'The fourth footer widget area', 'smm' ),
 		'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
 		'after_widget' => '</li>',
 		'before_title' => '<h3 class="widget-title">',
 		'after_title' => '</h3>',
 	) );
 }
-/** Register sidebars by running twentyten_widgets_init() on the widgets_init hook. */
-add_action( 'widgets_init', 'twentyten_widgets_init' );
+/** Register sidebars by running smm_widgets_init() on the widgets_init hook. */
+add_action( 'widgets_init', 'smm_widgets_init' );
 
 /**
  * Removes the default styles that are packaged with the Recent Comments widget.
@@ -454,19 +418,19 @@ add_action( 'widgets_init', 'twentyten_widgets_init' );
  *
  * @since Twenty Ten 1.0
  */
-function twentyten_remove_recent_comments_style() {
+function smm_remove_recent_comments_style() {
 	add_filter( 'show_recent_comments_widget_style', '__return_false' );
 }
-add_action( 'widgets_init', 'twentyten_remove_recent_comments_style' );
+add_action( 'widgets_init', 'smm_remove_recent_comments_style' );
 
-if ( ! function_exists( 'twentyten_posted_on' ) ) :
+if ( ! function_exists( 'smm_posted_on' ) ) :
 /**
  * Prints HTML with meta information for the current post-date/time and author.
  *
  * @since Twenty Ten 1.0
  */
-function twentyten_posted_on() {
-	printf( __( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep">by</span> %3$s', 'twentyten' ),
+function smm_posted_on() {
+	printf( __( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep">by</span> %3$s', 'smm' ),
 		'meta-prep meta-prep-author',
 		sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
 			get_permalink(),
@@ -475,28 +439,28 @@ function twentyten_posted_on() {
 		),
 		sprintf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s">%3$s</a></span>',
 			get_author_posts_url( get_the_author_meta( 'ID' ) ),
-			sprintf( esc_attr__( 'View all posts by %s', 'twentyten' ), get_the_author() ),
+			sprintf( esc_attr__( 'View all posts by %s', 'smm' ), get_the_author() ),
 			get_the_author()
 		)
 	);
 }
 endif;
 
-if ( ! function_exists( 'twentyten_posted_in' ) ) :
+if ( ! function_exists( 'smm_posted_in' ) ) :
 /**
  * Prints HTML with meta information for the current post (category, tags and permalink).
  *
  * @since Twenty Ten 1.0
  */
-function twentyten_posted_in() {
+function smm_posted_in() {
 	// Retrieves tag list of current post, separated by commas.
 	$tag_list = get_the_tag_list( '', ', ' );
 	if ( $tag_list ) {
-		$posted_in = __( 'This entry was posted in %1$s and tagged %2$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'twentyten' );
+		$posted_in = __( 'This entry was posted in %1$s and tagged %2$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'smm' );
 	} elseif ( is_object_in_taxonomy( get_post_type(), 'category' ) ) {
-		$posted_in = __( 'This entry was posted in %1$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'twentyten' );
+		$posted_in = __( 'This entry was posted in %1$s. Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'smm' );
 	} else {
-		$posted_in = __( 'Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'twentyten' );
+		$posted_in = __( 'Bookmark the <a href="%3$s" title="Permalink to %4$s" rel="bookmark">permalink</a>.', 'smm' );
 	}
 	// Prints the string, replacing the placeholders.
 	printf(
@@ -508,119 +472,3 @@ function twentyten_posted_in() {
 	);
 }
 endif;
-
-// Custom Functions
-function remove_dashboard_widgets(){
-  global$wp_meta_boxes;
-  unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']);
-  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
-  unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
-  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); 
-  unset($wp_meta_boxes['dashboard']['normal']['core']['yoast_db_widget']);
-}
-
-add_action('wp_dashboard_setup', 'remove_dashboard_widgets');
-
-function modify_footer_admin () {
-  echo 'Created by <a href="http://sharpmachinemedia.com">Sharp Machine Media</a>.';
-  echo '  Powered by <a href="http://WordPress.org">WordPress</a>.';
-}
-
-add_filter('admin_footer_text', 'modify_footer_admin');
-
-//Custom logo should be 16 x16
-function custom_logo() {
-  echo '<style type="text/css">
-    #header-logo  { 
-    	background-image: url('.get_bloginfo('template_directory').'/images/admin-logo.png) !important; 
-	}
-	#cpt_info_box {
-		display: none !important; /* Hides Custom Post Type info box */
-	}
-    </style>';
-}
-
-add_action('admin_head', 'custom_logo');
-
-function custom_login_logo() {
-  echo '<style type="text/css">
-    h1 a { background-image:url('.get_bloginfo('template_directory').'/images/login-logo.png) !important; }
-    </style>';
-}
-
-add_action('login_head', 'custom_login_logo');
-
-// Create the function to output the contents of our Dashboard Widget
-function help_dashboard_widget_function() {
-	// Display whatever it is you want to show
-	echo "
-		<ul style=width:40%;float:left;margin-right:55px;min-width:153px;>
-			<li style=color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;>WordPress 101 Videos:</li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target=_blank>The Dashboard</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/ target=_blank>Creating A New Post</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/ target=_blank>Edit Existing Post</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/ target=_blank>Using Categories and Tag</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-5-creating-and-editing-pages/ target=_blank>Creating and Editing Pages</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-6-adding-images/ target=_blank>Adding Images &amp; Photos</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-7-embedding-video/ target=_blank>How to Embed Video</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-8-media-library/ target=_blank>Using the Media Library</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-9-managing-comments/ target=_blank>Managing Comments</a></li> 
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-10-creating-links/ target=_blank>Creating Links</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-12-widgets/ target=_blank>Adding Widgets</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-13-custom-menus/ target=_blank>Building Custom Menus</a></li>
-			<li><a href=http://wp.tutsplus.com/tutorials/wp-101-video-training-part-15-users/ target=_blank>Adding New Users</a></li>
-		</ul>
-		
-		<ul style=width:40%;float:left;min-width:153px;>
-			<li style=color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;>Videos Specific To Your Site:</li>
-			<li><a href=http://www.youtube.com/watch?v=IE_10_nwe0c target=_blank>SEO Ultimate Tutorial</a></li>
-			<li><a href=# target=_blank>Video</a></li>
-			<li><a href=# target=_blank>Video</a></li>
-		</ul>
-		
-		<p style=clear:both;padding-top:5px;margin-bottom:0.5em;color:#666;font-size:14px;>Helpful Quick Links:</p>
-		
-		<a href=http://login.mailchimp.com target=_blank>Mailchimp Login</a> |
-		<a href=http://mailchimp.com/support/online-training target=_blank>Mailchimp Training</a> |
-		<a href=http://docs.disqus.com/kb target=_blank>Disqus Training</a> |
-		<a href=http://google.com/analytics target=_blank>Analytics Login</a> | 
-		<a href=http://mail.google.com target=_blank>Mail Login</a>
-		
-		<p>Still stuck?  Give us a call at <strong>(480) 648-8229</strong> or email us at <a href=mailto:info@sharpmachinemedia.com?subject=Help!><strong>info@sharpmachinemedia.com</strong></a>.
-	";
-} 
-
-// Create the function use in the action hook
-function help_add_dashboard_widgets() {
-	wp_add_dashboard_widget('help_dashboard_widget', 'Need Help?', 'help_dashboard_widget_function');	
-} 
-
-// Hook into the 'wp_dashboard_setup' action to register our other functions
-add_action('wp_dashboard_setup', 'help_add_dashboard_widgets' );
-
-// Remove items from admin menu
-// function remove_admin_bar_links() {
-// 	global $wp_admin_bar;
-// 	$wp_admin_bar->remove_menu('themes');
-// 	$wp_admin_bar->remove_menu('background');
-// 	$wp_admin_bar->remove_menu('header');
-// 	$wp_admin_bar->remove_menu('new-theme');
-// 	$wp_admin_bar->remove_menu('new-plugin');
-// 	$wp_admin_bar->remove_menu('new-product_extras');
-// 	$wp_admin_bar->remove_menu('new-acf');
-// }
-// add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
-
-// Add items to admin menu
-// function my_admin_bar_link() {
-// 	global $wp_admin_bar;
-// 	if ( !is_super_admin() || !is_admin_bar_showing() )
-// 		return;
-// 	$wp_admin_bar->add_menu( array(
-// 	'id' => 'new_link',
-// 	'parent' => 'new-content',
-// 	'title' => __( 'Link'),
-// 	'href' => admin_url( 'link-add.php' )
-// 	) );
-// }
-// add_action('admin_bar_menu', 'my_admin_bar_link');
