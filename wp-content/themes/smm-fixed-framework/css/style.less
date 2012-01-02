@@ -1,32 +1,17 @@
 
 @import url('less.less'); /* LESS colors, font families, mixins and variables */
-
 article, aside, figure, footer, header, hgroup, 
 menu, nav, section { display: block; }
-
-.screen-reader-text {position: absolute;left: -9000px;} /* Text meant only for screen readers */
-
 html { overflow-y: scroll; } /* force scrollbar */
 html, body { height: 100%; }
+.screen-reader-text { position: absolute; left: -9000px; } /* Text meant only for screen readers */
+#wrapper { min-height: 100%; margin: 0 auto -235px; } /* To always force footer to bottom.  Needs to minus whatever height your footer is set too */
+.container { padding: 0 20px; }
 
 /*.......................................................the usual*/
 body
 {
 	
-}
-
-/* To always force footer to bottom */
-#wrapper 
-{
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -235px; /* Needs to minus whatever height your footer is set too */
-}
-
-.container
-{
-	padding: 0 20px;
 }
 
 h1

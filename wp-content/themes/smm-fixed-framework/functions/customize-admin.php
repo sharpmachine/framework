@@ -41,23 +41,34 @@ function custom_login_logo() {
 add_action('login_head', 'custom_login_logo');
 
 // Remove items from admin menu bar
-// function remove_admin_bar_links() {
-// 	global $wp_admin_bar;
-// 	$wp_admin_bar->remove_menu('themes');
-// }
-// add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
+function remove_admin_bar_links() {
+	global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('themes');
+	$wp_admin_bar->remove_menu('background');
+	$wp_admin_bar->remove_menu('header');
+	$wp_admin_bar->remove_menu('documentation');
+	$wp_admin_bar->remove_menu('about');
+}
+add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
 
 // Add items to admin menu bar
-// function my_admin_bar_link() {
-// 	global $wp_admin_bar;
-// 	if ( !is_super_admin() || !is_admin_bar_showing() )
-// 		return;
-// 	$wp_admin_bar->add_menu( array(
-// 	'id' => 'new_link',
-// 	'parent' => 'new-content',
-// 	'title' => __( 'Link'),
-// 	'href' => admin_url( 'link-add.php' )
-// 	) );
-// }
-// add_action('admin_bar_menu', 'my_admin_bar_link');
+function my_admin_bar_link() {
+	global $wp_admin_bar;
+	if ( !is_super_admin() || !is_admin_bar_showing() )
+		return;
+	$wp_admin_bar->add_menu( array(
+	'id' => 'new_link',
+	'parent' => 'wp-logo',
+	'title' => __( 'Sharp Machine Media'),
+	'href' => 'http://www.sharpmachinemedia.com'
+	) );
+	
+	$wp_admin_bar->add_menu( array(
+	'id' => 'test',
+	'parent' => 'wp-logo',
+	'title' => __( 'Sharp Hello Media'),
+	'href' => 'http://www.sharpmachinemedia.com'
+	) );
+}
+add_action('admin_bar_menu', 'my_admin_bar_link');
 ?>
