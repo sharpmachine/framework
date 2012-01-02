@@ -20,7 +20,7 @@ add_filter('admin_footer_text', 'modify_footer_admin');
 //Custom logo should be 20 x 20
 function custom_logo() {
   echo '<style type="text/css">
-    #header-logo  { 
+    #wp-admin-bar-wp-logo > .ab-item .ab-icon { 
     	background-image: url('.get_bloginfo('template_directory').'/images/admin-logo.png) !important; 
 	}
 	#cpt_info_box {
@@ -48,6 +48,9 @@ function remove_admin_bar_links() {
 	$wp_admin_bar->remove_menu('header');
 	$wp_admin_bar->remove_menu('documentation');
 	$wp_admin_bar->remove_menu('about');
+	$wp_admin_bar->remove_menu('wporg');
+	$wp_admin_bar->remove_menu('support-forums');
+	$wp_admin_bar->remove_menu('feedback');
 }
 add_action( 'wp_before_admin_bar_render', 'remove_admin_bar_links' );
 
@@ -57,18 +60,53 @@ function my_admin_bar_link() {
 	if ( !is_super_admin() || !is_admin_bar_showing() )
 		return;
 	$wp_admin_bar->add_menu( array(
-	'id' => 'new_link',
+	'id' => 'sharpmachine',
 	'parent' => 'wp-logo',
 	'title' => __( 'Sharp Machine Media'),
 	'href' => 'http://www.sharpmachinemedia.com'
 	) );
 	
 	$wp_admin_bar->add_menu( array(
-	'id' => 'test',
-	'parent' => 'wp-logo',
-	'title' => __( 'Sharp Hello Media'),
-	'href' => 'http://www.sharpmachinemedia.com'
+	'id' => 'mailchimp',
+	'parent' => 'wp-logo-external',
+	'title' => __( 'Mailchimp'),
+	'href' => 'http://login.mailchimp.com'
 	) );
+	
+	$wp_admin_bar->add_menu( array(
+	'id' => 'analytics',
+	'parent' => 'wp-logo-external',
+	'title' => __( 'Analytics'),
+	'href' => 'http://www.google.com/analytics'
+	) );
+	
+	$wp_admin_bar->add_menu( array(
+	'id' => 'mail',
+	'parent' => 'wp-logo-external',
+	'title' => __( 'Mail'),
+	'href' => 'http://mail.'. substr(get_bloginfo('url'), 7).'.com'
+	) );
+	
+	$wp_admin_bar->add_menu( array(
+	'id' => 'calendar',
+	'parent' => 'wp-logo-external',
+	'title' => __( 'Calendar'),
+	'href' => 'http://calendar.'. substr(get_bloginfo('url'), 7).'.com'
+	) );
+	
+	$wp_admin_bar->add_menu( array(
+	'id' => 'docs',
+	'parent' => 'wp-logo-external',
+	'title' => __( 'Docs'),
+	'href' => 'http://docs.'. substr(get_bloginfo('url'), 7).'.com'
+	) );
+
+	// $wp_admin_bar->add_menu( array(
+	// 	'id' => 'test',
+	// 	'parent' => 'wp-logo-external',
+	// 	'title' => __( 'Sharp Hello Media'),
+	// 	'href' => admin_url('add-link.php')
+	// 	) );
 }
 add_action('admin_bar_menu', 'my_admin_bar_link');
 ?>
