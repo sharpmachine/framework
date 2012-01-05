@@ -20,9 +20,9 @@ add_filter('admin_footer_text', 'modify_footer_admin');
 //Custom logo should be 20 x 20
 function custom_logo() {
   echo '<style type="text/css">
-    #wp-admin-bar-wp-logo > .ab-item .ab-icon { 
+    /*#wp-admin-bar-wp-logo > .ab-item .ab-icon { 
     	background-image: url('.get_bloginfo('template_directory').'/images/admin-logo.png) !important; 
-	}
+	}*/
 	#cpt_info_box {
 		display: none !important; /* Hides Custom Post Type info box */
 	}

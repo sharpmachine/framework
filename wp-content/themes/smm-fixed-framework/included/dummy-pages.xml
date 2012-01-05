@@ -16,7 +16,7 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-<!-- generator="WordPress/3.2.1" created="2011-12-12 18:12" -->
+<!-- generator="WordPress/3.3" created="2012-01-03 18:01" -->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.1/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -29,7 +29,7 @@
 	<title>Framework</title>
 	<link>http://localhost/framework</link>
 	<description>Just another WordPress site</description>
-	<pubDate>Mon, 12 Dec 2011 18:12:41 +0000</pubDate>
+	<pubDate>Tue, 03 Jan 2012 18:01:29 +0000</pubDate>
 	<language>en</language>
 	<wp:wxr_version>1.1</wp:wxr_version>
 	<wp:base_site_url>http://localhost/framework</wp:base_site_url>
@@ -41,7 +41,7 @@
 	<wp:author><wp:author_id>5</wp:author_id><wp:author_login>John Alcock</wp:author_login><wp:author_email></wp:author_email><wp:author_display_name><![CDATA[John Alcock]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
 
 
-	<generator>http://wordpress.org/?v=3.2.1</generator>
+	<generator>http://wordpress.org/?v=3.3</generator>
 
 	<item>
 		<title>Giving</title>
@@ -50,14 +50,14 @@
 		<dc:creator>admin</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=14</guid>
 		<description></description>
-		<content:encoded><![CDATA[<div class="feature-box">
-<div class="box">
-<h4><a href="http://greaterworkshealing.com/wp-content/uploads/2011/06/cards.png"><img class="alignleft size-full wp-image-230 feature-box-img" title="Card Logos" src="http://greaterworkshealing.com/wp-content/uploads/2011/06/cards.png" alt="Card Logos" width="144" height="21" /></a>All payments are process by Paypal<img class="alignleft size-full wp-image-235 feature-box-img" title="Paypal Logo" src="http://greaterworkshealing.com/wp-content/uploads/2011/06/paypal.png" alt="Paypal Logo" width="74" height="21" /></h4>
-</div>
-</div>
-<h4>Make a:</h4>
+		<content:encoded><![CDATA[<a href="http://greaterworkshealing.com/wp-content/uploads/2011/06/cards.png"><img class="alignleft size-full wp-image-230 feature-box-img" title="Card Logos" src="http://greaterworkshealing.com/wp-content/uploads/2011/06/cards.png" alt="Card Logos" width="144" height="21" /></a>All payments are process by Paypal<img class="alignleft size-full wp-image-235 feature-box-img" title="Paypal Logo" src="http://greaterworkshealing.com/wp-content/uploads/2011/06/paypal.png" alt="Paypal Logo" width="74" height="21" />
+
+Make a:
+
 <a class="button paypal one-time" title="One-Time Donation" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=FN4B865X7CKJ2">one-time donation</a>
-<h4 class="clear">Become a Monthly Partner:</h4>
+
+Become a Monthly Partner:
+
 <a class="button paypal" title="$10" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=QQD6U6NNKG5HN">$10</a><a class="button paypal" title="$25" href=" https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=Z4EVWJZP68QWJ">$25</a><a class="button paypal" title="$50" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=V9994N3UXQV8J">$50</a><a class="button paypal" title="$100" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=3C6WRDNM6WSPG">$100</a><a class="button paypal" title="$500" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=KYM9XXHDXEXXG">$500</a><a class="button paypal" title="$1000" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=FX8THZ8SBCPN6">$1000</a>]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>14</wp:post_id>
@@ -87,102 +87,6 @@
 		<wp:postmeta>
 			<wp:meta_key>_su_title</wp:meta_key>
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Online Healing Rooms</title>
-		<link>http://localhost/framework/?page_id=28</link>
-		<pubDate>Sun, 05 Jun 2011 01:38:14 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=28</guid>
-		<description></description>
-		<content:encoded><![CDATA[We have a vision to offer 24-7 on demand Healing ministry to anyone, at anytime, from anywhere in the world. We have launched an online healing room through The Spokane Healing Rooms and the International Association of Healing Rooms (Cal Pierce). Through this cutting edge ministry we are able to offer anyone healing ministry through the internet, in an instant messaging or video messaging chat room. We have seen miracles, healings and even deliverance take place through the internet. There is truly no time or distance in the realm of Heaven and just like the centurion (Mattthew 8:5-13) or the Canaanite woman (Matthew 15:22-28), people are healed long distance.
-
-If you would like to be considered for an online healing warrior position or to be an intercessor for this ministry, please fill out the contact us form near the bottom.
-
-<a title="Online Healing Rooms" href="http://healingrooms.com/index.php?src=prayerRequest">Receive online healing</a> | <a title="Giving" href="http://greaterworkshealing.com/giving/">Support us financially</a>]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>28</wp:post_id>
-		<wp:post_date>2011-06-05 01:38:14</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:38:14</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>online-healing-rooms</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712772]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Testimonies</title>
-		<link>http://localhost/framework/?page_id=32</link>
-		<pubDate>Sun, 05 Jun 2011 01:39:29 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=32</guid>
-		<description></description>
-		<content:encoded><![CDATA[<a title="Submit a Testimony" href="http://greaterworkshealing.com/submit-a-testimony/">submit a testimony</a>]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>32</wp:post_id>
-		<wp:post_date>2011-06-05 01:39:29</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:39:29</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>testimonies</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>28</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[onecolumn-page.php]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712772]]></wp:meta_value>
 		</wp:postmeta>
 	</item>
 	<item>
@@ -224,169 +128,6 @@ If you would like to be considered for an online healing warrior position or to 
 		</wp:postmeta>
 	</item>
 	<item>
-		<title>Mark &amp; Cathy</title>
-		<link>http://localhost/framework/?page_id=36</link>
-		<pubDate>Sun, 05 Jun 2011 01:40:46 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=36</guid>
-		<description></description>
-		<content:encoded><![CDATA[<strong><img class="alignleft size-medium wp-image-170" title="Mark &amp; Cathy" src="http://greaterworkshealing.com/wp-content/uploads/2011/06/s-b-3-239x300.jpg" alt="Mark and Cathy" width="239" height="300" />Mark &amp; Cathy Kuntz</strong> are XP (Extreme Prophetic) Web pastors, and associate itinerants who have served with XP for six years. God has recently led them to serve with the Spokane Healing Rooms Team, (whom they are ordained under), building an online Healing Room with a vision for offering 24-7 on-demand healing ministry to anyone, at anytime, from anywhere in the world.  They are the founders of Greater Works Healing Ministry. Their passion is to equip the church to carry the heart, love and character of Jesus Christ to the captives outside of the four walls of the church, especially in emotional and physical healing. This passion also includes releasing  the body of Christ into the end time Healing Harvest by training and equipping the church to live in a lifestyle of divine health and in ministering healing to the nations. They truly believe “ all things are possible” and love to lead teams into the market place for prophetic evangelism and healing.
-
-They offer Healing Schools where they teach people to walk in divine health and minister healing to the world as a lifestyle, taking teams to the streets to show them how easy it is to love on needy people. In the process many are healed, saved, delivered and touched by the Fathers love.  <a title="Invite Mark &amp; Cathy" href="http://greaterworkshealing.com/events/invite-mark-cathy/">Invite them to minister in your church!</a>]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>36</wp:post_id>
-		<wp:post_date>2011-06-05 01:40:46</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:40:46</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>mark-cathy</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>34</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712720]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Greater Works</title>
-		<link>http://localhost/framework/?page_id=38</link>
-		<pubDate>Sun, 05 Jun 2011 01:41:09 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=38</guid>
-		<description></description>
-		<content:encoded><![CDATA[Greater Works was founded by <a title="Mark &amp; Cathy" href="http://greaterworkshealing.com/about/mark-cathy/">Mark and Cathy Kuntz</a>.  We have a vision to usher in the end time healing harvest by teaching people how to walk in divine healing, minister healing to others, do market place ministry and leading teams out on the streets to heal, save and deliver.  We are very passionate about revival, miracles and healings and believe the core of the gospel is revival and restoration of the entire man, spirit, soul and body.
-
-We have also helped establish worldwide <a title="Connect" href="http://healingrooms.com/index.php?src=prayerRequest">online healing rooms</a> with the <a title="International Association of Healing Rooms" href="http://healingrooms.com/">International Association of Healing Rooms</a>.  We truly believe that all things are possible to those who believe in God.
-
-If you'd like to support Greater Works by through intercession or with another gift or talent, fill out the contact us form below.
-
-<a title="Invite Mark &amp; Cathy" href="http://greaterworkshealing.com/events/invite-mark-cathy/">Invite Mark &amp; Cathy </a>| <a title="Giving" href="http://greaterworkshealing.com/giving/">Support us financially</a>]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>38</wp:post_id>
-		<wp:post_date>2011-06-05 01:41:09</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:41:09</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>greater-works</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>34</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712719]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>What We Believe</title>
-		<link>http://localhost/framework/?page_id=40</link>
-		<pubDate>Sun, 05 Jun 2011 01:41:32 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=40</guid>
-		<description></description>
-		<content:encoded><![CDATA[<ol class="sof">
-	<li>We believe Jesus Christ is not only the Son of God, but came to earth as God in the flesh.  John 1:1-14</li>
-	<li>We believe the only way (relationship with God), to the Father is through Jesus Christ.  John 14:6</li>
-	<li>We believe the only way to enter heaven (eternal life) is through faith in Jesus Christ.  Romans 10:9-11</li>
-	<li>We believe that the only way to salvation (freedom from eternal judgment) is by God’s grace, through Jesus Christ.  Ephesians 2:8-9</li>
-	<li>We believe that without faith (opposite of works) it is impossible to please God.  Hebrews 11:6</li>
-	<li>We believe that faith without works is dead (useless) and that works without faith is dead (useless).  James 2:14-24</li>
-	<li>We believe that Jesus emptied Himself (stripped Himself) of His Godhead (deity) and humbled Himself as a man on earth.  Philippians 2:6-11</li>
-	<li>We believe Jesus did nothing on earth (performing countless miracles and healings) as God, but as a man, anointed of the Holy Spirit.  Luke 4:1, 14, John 5:19.</li>
-	<li>We believe that we (the Body of Christ), His disciples, are all commissioned to heal the sick, raise the dead, cleanse the lepers (heal diseases) and cast out demons.  Mark 16: 15-20, Matthew 10:1,8, Mark 6:7,12-13, John 14:12-14, 15:7, 15:16, 16:23, 17:18 , Ephesians 4:11-16, Acts 5:12-16, 1st John 4:17, 3:2</li>
-	<li>We believe that all believers (all those that claim Jesus Christ as their Savior and Lord) will do even greater works (miracles, healings, signs and wonders ) than Jesus did.  John 14:12</li>
-	<li>We believe that we as believers were sent, just like Jesus was sent to the earth, to destroy all the works of the devil and to enforce satan's defeat.  John 17:18, 1st John 3:8</li>
-	<li>We believe that our power source to enforce satan's defeat, is only through the promise of the  Father, the Holy Spirit. Acts 2:33</li>
-	<li>We believe if any person does not possess the Holy Spirit, that they do not belong to Jesus Christ, that they are not truly a child of God.  Romans 8:9, 14 (Amplified)</li>
-	<li>We believe that relationship with Holy Spirit, and the use of His gifts is what marks the New Testament church (His Children) as His own.  John 16:7, John 14:26, 1st Corinthians 12, 2nd Timothy 3:5</li>
-	<li>We believe that faith should only be in God’s Word, His logos (the written Word) and His rhema, the living Word, Jesus Christ.  Hebrews 4:12, John 1:1-14</li>
-</ol>
-According to John 17:18 just as Jesus was sent to the earth by the Father, we also are sent into the world.  Jesus perfectly represented the Father (John 17:6 ) in the world, demonstrating His outrageous grace and love for mankind, through healing the sick, raising the dead, cleansing the lepers and casting out demons.  Just as Jesus represented the Father, now we are to perfectly represent the Son, by doing exactly what He did.  Jesus was our supreme example of what His Body is to do on this earth, to represent Him. We too are sent to destroy the works of the devil, through intimate relationship with Holy Spirit, by healing the sick, raising the dead, cleansing the lepers and casting out demons. The core truth of the simple message of the gospel is revival, the manifestation of God’s love and power over all the power of the enemy. We are here to enforce satan's defeat at every turn.]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>40</wp:post_id>
-		<wp:post_date>2011-06-05 01:41:32</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:41:32</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>what-we-believe</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>34</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712728]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
 		<title>Media</title>
 		<link>http://localhost/framework/?page_id=63</link>
 		<pubDate>Mon, 06 Jun 2011 03:42:47 +0000</pubDate>
@@ -425,47 +166,6 @@ According to John 17:18 just as Jesus was sent to the earth by the Father, we al
 		</wp:postmeta>
 	</item>
 	<item>
-		<title>Front Page</title>
-		<link>http://localhost/framework/?page_id=79</link>
-		<pubDate>Tue, 07 Jun 2011 01:24:09 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=79</guid>
-		<description></description>
-		<content:encoded><![CDATA[<h1>Welcome</h1>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>79</wp:post_id>
-		<wp:post_date>2011-06-07 01:24:09</wp:post_date>
-		<wp:post_date_gmt>2011-06-07 01:24:09</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>front-page</wp:post_name>
-		<wp:status>publish</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>-10</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_rich_snippet_type</wp:meta_key>
-			<wp:meta_value><![CDATA[none]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[Greater Works Healing | Heaven is kicking the door down]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
 		<title>Blog</title>
 		<link>http://localhost/framework/?page_id=87</link>
 		<pubDate>Tue, 07 Jun 2011 01:43:54 +0000</pubDate>
@@ -501,133 +201,6 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 		<wp:postmeta>
 			<wp:meta_key>_su_title</wp:meta_key>
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Events</title>
-		<link>http://localhost/framework/?page_id=103</link>
-		<pubDate>Tue, 07 Jun 2011 05:00:52 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/events/</guid>
-		<description></description>
-		<content:encoded><![CDATA[Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>103</wp:post_id>
-		<wp:post_date>2011-06-07 05:00:52</wp:post_date>
-		<wp:post_date_gmt>2011-06-07 05:00:52</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>events</wp:post_name>
-		<wp:status>publish</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_rich_snippet_type</wp:meta_key>
-			<wp:meta_value><![CDATA[none]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Invite Mark &amp; Cathy</title>
-		<link>http://localhost/framework/?page_id=108</link>
-		<pubDate>Tue, 07 Jun 2011 05:15:05 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=108</guid>
-		<description></description>
-		<content:encoded><![CDATA[<big>If you'd like to invite Mark &amp; Cathy to come minister at your church or event please fill out the form below.</big>
-[contact-form 2 "Invite Mark and Cathy"] ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>108</wp:post_id>
-		<wp:post_date>2011-06-07 05:15:05</wp:post_date>
-		<wp:post_date_gmt>2011-06-07 05:15:05</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>invite-mark-cathy</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>103</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712752]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Submit a Testimony</title>
-		<link>http://localhost/framework/?page_id=110</link>
-		<pubDate>Tue, 07 Jun 2011 05:15:49 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=110</guid>
-		<description></description>
-		<content:encoded><![CDATA[[contact-form 3 "Submit a Testimony"] ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>110</wp:post_id>
-		<wp:post_date>2011-06-07 05:15:49</wp:post_date>
-		<wp:post_date_gmt>2011-06-07 05:15:49</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>submit-a-testimony</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712773]]></wp:meta_value>
 		</wp:postmeta>
 	</item>
 	<item>
@@ -775,166 +348,6 @@ commodo consequat.</dd></dl>As a new WordPress user, you should go to <a href="#
 		</wp:postmeta>
 	</item>
 	<item>
-		<title>Store</title>
-		<link>http://localhost/framework/?page_id=769</link>
-		<pubDate>Sun, 05 Jun 2011 01:02:34 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/shop/</guid>
-		<description></description>
-		<content:encoded><![CDATA[[catalog] ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>769</wp:post_id>
-		<wp:post_date>2011-06-04 19:02:10</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:02:34</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>store</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712693]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Cart</title>
-		<link>http://localhost/framework/?page_id=770</link>
-		<pubDate>Sun, 05 Jun 2011 01:02:34 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/shop/cart/</guid>
-		<description></description>
-		<content:encoded><![CDATA[[cart] ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>770</wp:post_id>
-		<wp:post_date>2011-06-04 19:02:10</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:02:34</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>cart</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>769</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712693]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Checkout</title>
-		<link>http://localhost/framework/?page_id=771</link>
-		<pubDate>Sun, 05 Jun 2011 01:02:34 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">https://greaterworkshealing.com/shop/checkout/</guid>
-		<description></description>
-		<content:encoded><![CDATA[[checkout] ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>771</wp:post_id>
-		<wp:post_date>2011-06-04 19:02:10</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:02:34</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>checkout</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>769</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712693]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Your Orders</title>
-		<link>http://localhost/framework/?page_id=772</link>
-		<pubDate>Sun, 05 Jun 2011 01:02:34 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/shop/account/</guid>
-		<description></description>
-		<content:encoded><![CDATA[[account] ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>772</wp:post_id>
-		<wp:post_date>2011-06-04 19:02:10</wp:post_date>
-		<wp:post_date_gmt>2011-06-05 01:02:34</wp:post_date_gmt>
-		<wp:comment_status>closed</wp:comment_status>
-		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>account</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>769</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712694]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
 		<title>Contact</title>
 		<link>http://localhost/framework/?page_id=787</link>
 		<pubDate>Mon, 12 Dec 2011 18:01:01 +0000</pubDate>
@@ -946,8 +359,8 @@ commodo consequat.</dd></dl>As a new WordPress user, you should go to <a href="#
 		<wp:post_id>787</wp:post_id>
 		<wp:post_date>2011-12-12 18:01:01</wp:post_date>
 		<wp:post_date_gmt>2011-12-12 18:01:01</wp:post_date_gmt>
-		<wp:comment_status>open</wp:comment_status>
-		<wp:ping_status>open</wp:ping_status>
+		<wp:comment_status>closed</wp:comment_status>
+		<wp:ping_status>closed</wp:ping_status>
 		<wp:post_name>contact</wp:post_name>
 		<wp:status>publish</wp:status>
 		<wp:post_parent>0</wp:post_parent>
@@ -965,101 +378,42 @@ commodo consequat.</dd></dl>As a new WordPress user, you should go to <a href="#
 		</wp:postmeta>
 	</item>
 	<item>
-		<title>Sample Page</title>
-		<link>http://localhost/framework/?page_id=2</link>
-		<pubDate>Sat, 13 Aug 2011 18:35:56 +0000</pubDate>
+		<title>Privacy Policy</title>
+		<link>http://localhost/framework/?page_id=820</link>
+		<pubDate>Tue, 03 Jan 2012 17:50:24 +0000</pubDate>
 		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://localhost/framework/?page_id=2</guid>
+		<guid isPermaLink="false">http://localhost/framework/?page_id=820</guid>
 		<description></description>
-		<content:encoded><![CDATA[This is an example page. It's different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:
+		<content:encoded><![CDATA[This document outlines how personal information may be collected and used (or not used) on this web site, and outlines responsibilities and liabilities that correspond to such collection and/or use. These terms cover this web site and its content exclusively, and do not include web sites that are linked, or malicious third-parties.
 
-<blockquote>Hi there! I'm a bike messenger by day, aspiring actor by night, and this is my blog. I live in Los Angeles, have a great dog named Jack, and I like pi&#241;a coladas. (And gettin' caught in the rain.)</blockquote>
+It is our commitment to end users to operate this web site with integrity and honesty – taking the time, effort, and care to protect users and information that may be provided.
+<h3>Collection of Information</h3>
+We only collect personal information such as names, addresses, and contact information when it is voluntarily submitted by our users. The information provided is only used to fulfill your specific request, and cannot be used for any other purpose unless permission is given by the individual who provided the information.
+<h3>Third Parties</h3>
+We may link to or display content from third parties on our web site. Should a user follow such links they would be leaving this web site and no longer be governed by this privacy policy. This policy and these terms apply only to content existing on this web site.
+<h3>Cookies and Tracking Technology</h3>
+This site may use cookies or browser tracking technologies to provide a better overall user experience. This information allows us to continue modifying the site to meet end user browser types, operating systems, and frequency of visits. Personal information cannot be collected by these methods unless expressly provided by the end user. Aggregate cookie and tracking information may be shared with third parties.
 
-...or something like this:
+This policy applies only to interactions taking place via the web site, and does not govern offline interactions.
+<h3>Distribution of Information</h3>
+We may only share your personal information with government agencies or other companies assisting us in fraud prevention or investigation, and when it is legally required for us to do so. This information is never shared with third-party companies for marketing purposes.
+<h3>Commitment to Security</h3>
+When personal information is provided to us voluntarily by end users, we agree to make reasonable efforts to make such information secure. Only authorized employees, agents and contractors (who operate under confidentiality agreements) will ever have access to such information, and are also stipulated to make every effort to ensure security and integrity of the data.
+<h3>Rights to Changes</h3>
+We reserve the rights to make changes to this document and these terms without notice to end users, but will highlight any changes on this page.
 
-<blockquote>The XYZ Doohickey Company was founded in 1971, and has been providing quality doohickies to the public ever since. Located in Gotham City, XYZ employs over 2,000 people and does all kinds of awesome things for the Gotham community.</blockquote>
-
-As a new WordPress user, you should go to <a href="http://localhost/framework/wp-admin/">your dashboard</a> to delete this page and create new pages for your content. Have fun!]]></content:encoded>
+[Company Name]
+[Physical Address]
+[Phone], [Email]
+[URL] ]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>2</wp:post_id>
-		<wp:post_date>2011-08-13 18:35:56</wp:post_date>
-		<wp:post_date_gmt>2011-08-13 18:35:56</wp:post_date_gmt>
-		<wp:comment_status>open</wp:comment_status>
-		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name>sample-page</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[default]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712772]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Blog Page</title>
-		<link>http://localhost/framework/?page_id=8</link>
-		<pubDate>Mon, 12 Sep 2011 18:07:47 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://localhost/framework/?page_id=8</guid>
-		<description></description>
-		<content:encoded><![CDATA[]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>8</wp:post_id>
-		<wp:post_date>2011-09-12 18:07:47</wp:post_date>
-		<wp:post_date_gmt>2011-09-12 18:07:47</wp:post_date_gmt>
-		<wp:comment_status>open</wp:comment_status>
-		<wp:ping_status>open</wp:ping_status>
-		<wp:post_name>blog-page</wp:post_name>
-		<wp:status>trash</wp:status>
-		<wp:post_parent>0</wp:post_parent>
-		<wp:menu_order>0</wp:menu_order>
-		<wp:post_type>page</wp:post_type>
-		<wp:post_password></wp:post_password>
-		<wp:is_sticky>0</wp:is_sticky>
-		<wp:postmeta>
-			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_page_template</wp:meta_key>
-			<wp:meta_value><![CDATA[blog.php]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712732]]></wp:meta_value>
-		</wp:postmeta>
-	</item>
-	<item>
-		<title>Photo Gallery</title>
-		<link>http://localhost/framework/?page_id=116</link>
-		<pubDate>Tue, 07 Jun 2011 07:39:36 +0000</pubDate>
-		<dc:creator>admin</dc:creator>
-		<guid isPermaLink="false">http://greaterworkshealing.com/?page_id=116</guid>
-		<description></description>
-		<content:encoded><![CDATA[[gallery] ]]></content:encoded>
-		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
-		<wp:post_id>116</wp:post_id>
-		<wp:post_date>2011-06-07 07:39:36</wp:post_date>
-		<wp:post_date_gmt>2011-06-07 07:39:36</wp:post_date_gmt>
+		<wp:post_id>820</wp:post_id>
+		<wp:post_date>2012-01-03 17:50:24</wp:post_date>
+		<wp:post_date_gmt>2012-01-03 17:50:24</wp:post_date_gmt>
 		<wp:comment_status>closed</wp:comment_status>
 		<wp:ping_status>closed</wp:ping_status>
-		<wp:post_name>photo-gallery</wp:post_name>
-		<wp:status>trash</wp:status>
+		<wp:post_name>privacy-policy</wp:post_name>
+		<wp:status>publish</wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
 		<wp:post_type>page</wp:post_type>
@@ -1073,21 +427,49 @@ As a new WordPress user, you should go to <a href="http://localhost/framework/wp
 			<wp:meta_key>_wp_page_template</wp:meta_key>
 			<wp:meta_value><![CDATA[default]]></wp:meta_value>
 		</wp:postmeta>
+	</item>
+	<item>
+		<title>Terms &amp; Conditions</title>
+		<link>http://localhost/framework/?page_id=823</link>
+		<pubDate>Tue, 03 Jan 2012 17:54:42 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/framework/?page_id=823</guid>
+		<description></description>
+		<content:encoded><![CDATA[By using this web site, you are agreeing to comply and be bound by the following terms of service and use. Please review the following terms in their entirety and ensure their comprehension before using and viewing this web site.
+
+The terms "us", "we", "our", or "owners" refers to "[client name]" and administrative operators of this web site, [url]. "You" refers to the user or viewer of this web site.
+<h3>Copyright</h3>
+The content in its entirety, including text content, graphics, layouts, and all source code, belong to the owners of the web site. This term is protected by intellectual property rights and copyright law. Copying, redistribution, use or publication either for free or for monetary gain is strictly prohibited. Some of the content on the site is the copyrighted and licensed work of third parties.
+<h3>Terms of Use</h3>
+<ol>
+	<li>The content of this web site in its entirety is subject to change without notice. Its purpose is for your general information only.</li>
+	<li>No parties guarantee the accuracy, timeliness, performance, completeness, or suitability of the content and information found on this site. You acknowledge that errors or inaccuracies may exist, and that the owners of the site are in no way liable for any such errors.</li>
+	<li>The owners of the site are not responsible and hold no liability for third-party content that may be posted on the site by end users, or for content that is linked to from this web site including other web sites.</li>
+	<li>The use of and viewing of information on this site is at your own risk. Any consequences of use that may occur are not the liability of the web site owners.</li>
+	<li>Unauthorized use of this web site or its contents may give rise to a claim for damages and/or be a criminal offense enforceable by local and international law.</li>
+	<li>We reserve the right to restrict access to certain areas of the web site at our own discretion. If a username and password, or any other access credentials, are provided to you as the end user, it is your responsibility to keep such information confidential.</li>
+	<li>The ow</li>
+</ol>]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>823</wp:post_id>
+		<wp:post_date>2012-01-03 17:54:42</wp:post_date>
+		<wp:post_date_gmt>2012-01-03 17:54:42</wp:post_date_gmt>
+		<wp:comment_status>closed</wp:comment_status>
+		<wp:ping_status>closed</wp:ping_status>
+		<wp:post_name>terms-conditions</wp:post_name>
+		<wp:status>publish</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>page</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
 		<wp:postmeta>
-			<wp:meta_key>_su_description</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
+			<wp:meta_key>_edit_last</wp:meta_key>
+			<wp:meta_value><![CDATA[1]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
-			<wp:meta_key>_su_title</wp:meta_key>
-			<wp:meta_value><![CDATA[]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
-			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
-		</wp:postmeta>
-		<wp:postmeta>
-			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
-			<wp:meta_value><![CDATA[1323712772]]></wp:meta_value>
+			<wp:meta_key>_wp_page_template</wp:meta_key>
+			<wp:meta_value><![CDATA[default]]></wp:meta_value>
 		</wp:postmeta>
 	</item>
 </channel>

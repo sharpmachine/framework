@@ -16,7 +16,7 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
-<!-- generator="WordPress/3.2.1" created="2011-12-12 09:55" -->
+<!-- generator="WordPress/3.3" created="2012-01-03 18:01" -->
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.1/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -26,26 +26,75 @@
 >
 
 <channel>
-	<title>Greater Works</title>
-	<link>http://greaterworkshealing.com</link>
-	<description>Let the miraculous power of God flow through you</description>
-	<pubDate>Mon, 12 Dec 2011 09:55:21 +0000</pubDate>
+	<title>Framework</title>
+	<link>http://localhost/framework</link>
+	<description>Just another WordPress site</description>
+	<pubDate>Tue, 03 Jan 2012 18:01:58 +0000</pubDate>
 	<language>en</language>
 	<wp:wxr_version>1.1</wp:wxr_version>
-	<wp:base_site_url>http://greaterworkshealing.com</wp:base_site_url>
-	<wp:base_blog_url>http://greaterworkshealing.com</wp:base_blog_url>
+	<wp:base_site_url>http://localhost/framework</wp:base_site_url>
+	<wp:base_blog_url>http://localhost/framework</wp:base_blog_url>
 
-	<wp:author><wp:author_id>1</wp:author_id><wp:author_login>sharpmachine</wp:author_login><wp:author_email>jessekade@gmail.com</wp:author_email><wp:author_display_name><![CDATA[Jesse Kade]]></wp:author_display_name><wp:author_first_name><![CDATA[Jesse]]></wp:author_first_name><wp:author_last_name><![CDATA[Kade]]></wp:author_last_name></wp:author>
-	<wp:author><wp:author_id>2</wp:author_id><wp:author_login>mark</wp:author_login><wp:author_email>mark@greaterworkshealing.com</wp:author_email><wp:author_display_name><![CDATA[Mark Kuntz]]></wp:author_display_name><wp:author_first_name><![CDATA[Mark]]></wp:author_first_name><wp:author_last_name><![CDATA[Kuntz]]></wp:author_last_name></wp:author>
-	<wp:author><wp:author_id>3</wp:author_id><wp:author_login>edward</wp:author_login><wp:author_email>edward.taylor@integriis.com</wp:author_email><wp:author_display_name><![CDATA[Edward Taylor]]></wp:author_display_name><wp:author_first_name><![CDATA[Edward]]></wp:author_first_name><wp:author_last_name><![CDATA[Taylor]]></wp:author_last_name></wp:author>
+	<wp:author><wp:author_id>1</wp:author_id><wp:author_login>admin</wp:author_login><wp:author_email>jessekade@gmail.com</wp:author_email><wp:author_display_name><![CDATA[admin]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
+	<wp:author><wp:author_id>2</wp:author_id><wp:author_login>sharpmachine</wp:author_login><wp:author_email>jessekade@gmail.com</wp:author_email><wp:author_display_name><![CDATA[Jesse Kade]]></wp:author_display_name><wp:author_first_name><![CDATA[Jesse]]></wp:author_first_name><wp:author_last_name><![CDATA[Kade]]></wp:author_last_name></wp:author>
+	<wp:author><wp:author_id>3</wp:author_id><wp:author_login>mark</wp:author_login><wp:author_email>mark@greaterworkshealing.com</wp:author_email><wp:author_display_name><![CDATA[Mark Kuntz]]></wp:author_display_name><wp:author_first_name><![CDATA[Mark]]></wp:author_first_name><wp:author_last_name><![CDATA[Kuntz]]></wp:author_last_name></wp:author>
 	<wp:author><wp:author_id>5</wp:author_id><wp:author_login>John Alcock</wp:author_login><wp:author_email></wp:author_email><wp:author_display_name><![CDATA[John Alcock]]></wp:author_display_name><wp:author_first_name><![CDATA[]]></wp:author_first_name><wp:author_last_name><![CDATA[]]></wp:author_last_name></wp:author>
 
 
-	<generator>http://wordpress.org/?v=3.2.1</generator>
+	<generator>http://wordpress.org/?v=3.3</generator>
 
 	<item>
+		<title>Hello world!</title>
+		<link>http://localhost/framework/?p=1</link>
+		<pubDate>Sat, 13 Aug 2011 18:35:56 +0000</pubDate>
+		<dc:creator>admin</dc:creator>
+		<guid isPermaLink="false">http://localhost/framework/?p=1</guid>
+		<description></description>
+		<content:encoded><![CDATA[Welcome to WordPress. This is your first post. Edit or delete it, then start blogging!]]></content:encoded>
+		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
+		<wp:post_id>1</wp:post_id>
+		<wp:post_date>2011-08-13 18:35:56</wp:post_date>
+		<wp:post_date_gmt>2011-08-13 18:35:56</wp:post_date_gmt>
+		<wp:comment_status>open</wp:comment_status>
+		<wp:ping_status>open</wp:ping_status>
+		<wp:post_name>hello-world</wp:post_name>
+		<wp:status>trash</wp:status>
+		<wp:post_parent>0</wp:post_parent>
+		<wp:menu_order>0</wp:menu_order>
+		<wp:post_type>post</wp:post_type>
+		<wp:post_password></wp:post_password>
+		<wp:is_sticky>0</wp:is_sticky>
+		<category domain="category" nicename="uncategorized"><![CDATA[Uncategorized]]></category>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
+			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
+			<wp:meta_value><![CDATA[1325612191]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_comments_status</wp:meta_key>
+			<wp:meta_value><![CDATA[a:1:{i:1;s:1:"1";}]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:comment>
+			<wp:comment_id>1</wp:comment_id>
+			<wp:comment_author><![CDATA[Mr WordPress]]></wp:comment_author>
+			<wp:comment_author_email></wp:comment_author_email>
+			<wp:comment_author_url>http://wordpress.org/</wp:comment_author_url>
+			<wp:comment_author_IP></wp:comment_author_IP>
+			<wp:comment_date>2011-08-13 18:35:56</wp:comment_date>
+			<wp:comment_date_gmt>2011-08-13 18:35:56</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[Hi, this is a comment.<br />To delete a comment, just log in and view the post&#039;s comments. There you will have the option to edit or delete them.]]></wp:comment_content>
+			<wp:comment_approved>post-trashed</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+			<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+	</item>
+	<item>
 		<title>Intercession Strategies</title>
-		<link>http://greaterworkshealing.com/2010/05/intercession-strategies-3/</link>
+		<link>http://localhost/framework/?p=77</link>
 		<pubDate>Thu, 20 May 2010 19:02:40 +0000</pubDate>
 		<dc:creator>John Alcock</dc:creator>
 		<guid isPermaLink="false">http://mobilisenow.com/?p=77</guid>
@@ -178,7 +227,7 @@ John Alcock]]></content:encoded>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_description</wp:meta_key>
@@ -189,7 +238,7 @@ John Alcock]]></content:encoded>
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>7</wp:comment_id>
+			<wp:comment_id>2</wp:comment_id>
 			<wp:comment_author><![CDATA[Jesse Kade]]></wp:comment_author>
 			<wp:comment_author_email>jessekade@gmail.com</wp:comment_author_email>
 			<wp:comment_author_url>http://www.sharpmachinemedia.com</wp:comment_author_url>
@@ -200,10 +249,10 @@ John Alcock]]></content:encoded>
 			<wp:comment_approved>1</wp:comment_approved>
 			<wp:comment_type></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
-			<wp:comment_user_id>1</wp:comment_user_id>
+			<wp:comment_user_id>2</wp:comment_user_id>
 		</wp:comment>
 		<wp:comment>
-			<wp:comment_id>8</wp:comment_id>
+			<wp:comment_id>3</wp:comment_id>
 			<wp:comment_author><![CDATA[Heather Alcock]]></wp:comment_author>
 			<wp:comment_author_email>heather@mobilisenow.com</wp:comment_author_email>
 			<wp:comment_author_url>http://www.mobilisenow.com</wp:comment_author_url>
@@ -214,12 +263,12 @@ John Alcock]]></content:encoded>
 			<wp:comment_approved>1</wp:comment_approved>
 			<wp:comment_type></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
-			<wp:comment_user_id>6</wp:comment_user_id>
+			<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 	</item>
 	<item>
 		<title>The Spirit of Revival</title>
-		<link>http://greaterworkshealing.com/2011/07/the-spirit-of-revival/</link>
+		<link>http://localhost/framework/?p=303</link>
 		<pubDate>Thu, 14 Jul 2011 21:33:11 +0000</pubDate>
 		<dc:creator>mark</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=303</guid>
@@ -247,7 +296,7 @@ I believe that the Spirit of Revival has been released in the earth and that God
 		<category domain="category" nicename="revival"><![CDATA[Revival]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_description</wp:meta_key>
@@ -258,7 +307,7 @@ I believe that the Spirit of Revival has been released in the earth and that God
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>5</wp:comment_id>
+			<wp:comment_id>4</wp:comment_id>
 			<wp:comment_author><![CDATA[Shawn Honnld]]></wp:comment_author>
 			<wp:comment_author_email>shawnsfurniture@gmail.com</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -272,7 +321,7 @@ I believe that the Spirit of Revival has been released in the earth and that God
 			<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 		<wp:comment>
-			<wp:comment_id>6</wp:comment_id>
+			<wp:comment_id>5</wp:comment_id>
 			<wp:comment_author><![CDATA[Charles Hoover]]></wp:comment_author>
 			<wp:comment_author_email>choover3@gmail.com</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -286,7 +335,7 @@ I believe that the Spirit of Revival has been released in the earth and that God
 			<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 		<wp:comment>
-			<wp:comment_id>26</wp:comment_id>
+			<wp:comment_id>6</wp:comment_id>
 			<wp:comment_author><![CDATA[Mich]]></wp:comment_author>
 			<wp:comment_author_email>michellearchbell@yahoo.com.au</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -319,7 +368,7 @@ I believe that the Spirit of Revival has been released in the earth and that God
 	</item>
 	<item>
 		<title>What does Justified mean to a believer in Christ Jesus</title>
-		<link>http://greaterworkshealing.com/2010/05/what-does-justified-mean-to-a-believer-in-christ-jesus/</link>
+		<link>http://localhost/framework/?p=366</link>
 		<pubDate>Sat, 29 May 2010 15:22:33 +0000</pubDate>
 		<dc:creator>John Alcock</dc:creator>
 		<guid isPermaLink="false">http://mobilisenow.com/?p=366</guid>
@@ -429,7 +478,7 @@ John Alcock.
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_description</wp:meta_key>
@@ -442,7 +491,7 @@ John Alcock.
 	</item>
 	<item>
 		<title>Why do we dream?</title>
-		<link>http://greaterworkshealing.com/2010/06/why-do-we-dream/</link>
+		<link>http://localhost/framework/?p=540</link>
 		<pubDate>Wed, 09 Jun 2010 09:24:06 +0000</pubDate>
 		<dc:creator>John Alcock</dc:creator>
 		<guid isPermaLink="false">http://mobilisenow.com/?p=540</guid>
@@ -523,7 +572,7 @@ If you are interested in dream interpretation check out this resource:  <a titl
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_sexybookmarks_permaHash</wp:meta_key>
@@ -538,7 +587,7 @@ If you are interested in dream interpretation check out this resource:  <a titl
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>9</wp:comment_id>
+			<wp:comment_id>7</wp:comment_id>
 			<wp:comment_author><![CDATA[Elia]]></wp:comment_author>
 			<wp:comment_author_email>boltinj@yahoo.com</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -552,7 +601,7 @@ If you are interested in dream interpretation check out this resource:  <a titl
 			<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 		<wp:comment>
-			<wp:comment_id>10</wp:comment_id>
+			<wp:comment_id>8</wp:comment_id>
 			<wp:comment_author><![CDATA[Patricia Bento]]></wp:comment_author>
 			<wp:comment_author_email>pmarybento@yahoo.com</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -568,7 +617,7 @@ If you are interested in dream interpretation check out this resource:  <a titl
 	</item>
 	<item>
 		<title>Do born again believers have to keep the Law?</title>
-		<link>http://greaterworkshealing.com/2010/06/do-born-again-believers-have-to-keep-the-law/</link>
+		<link>http://localhost/framework/?p=549</link>
 		<pubDate>Tue, 22 Jun 2010 07:35:13 +0000</pubDate>
 		<dc:creator>John Alcock</dc:creator>
 		<guid isPermaLink="false">http://mobilisenow.com/?p=549</guid>
@@ -655,7 +704,7 @@ The righteousness that God has given us is a free gift that is imputed to us.  
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_description</wp:meta_key>
@@ -666,7 +715,7 @@ The righteousness that God has given us is a free gift that is imputed to us.  
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>11</wp:comment_id>
+			<wp:comment_id>9</wp:comment_id>
 			<wp:comment_author><![CDATA[Trevor Lovegrove]]></wp:comment_author>
 			<wp:comment_author_email>trevlin@btinternet.com</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -681,7 +730,7 @@ The truth of what you have said brings freedom and liberty and far from causing 
 			<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 		<wp:comment>
-			<wp:comment_id>12</wp:comment_id>
+			<wp:comment_id>10</wp:comment_id>
 			<wp:comment_author><![CDATA[Jesse]]></wp:comment_author>
 			<wp:comment_author_email>jessekade@gmail.com</wp:comment_author_email>
 			<wp:comment_author_url>http://www.sharpmachinemedia.com</wp:comment_author_url>
@@ -697,7 +746,7 @@ The truth of what you have said brings freedom and liberty and far from causing 
 	</item>
 	<item>
 		<title>Why Christians aren&#039;t sinners</title>
-		<link>http://greaterworkshealing.com/2010/06/why-christians-arent-sinners/</link>
+		<link>http://localhost/framework/?p=555</link>
 		<pubDate>Wed, 30 Jun 2010 22:57:56 +0000</pubDate>
 		<dc:creator>John Alcock</dc:creator>
 		<guid isPermaLink="false">http://mobilisenow.com/?p=555</guid>
@@ -766,7 +815,7 @@ Let us rise up and be strong in the Lord and in the power of His might without 
 		<category domain="category" nicename="new-life-realities"><![CDATA[New Life Realities]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_sexybookmarks_permaHash</wp:meta_key>
@@ -785,7 +834,7 @@ Let us rise up and be strong in the Lord and in the power of His might without 
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>15</wp:comment_id>
+			<wp:comment_id>11</wp:comment_id>
 			<wp:comment_author><![CDATA[Mark Kuntz]]></wp:comment_author>
 			<wp:comment_author_email>mark@greaterworkshealing.com</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -798,12 +847,12 @@ Let us rise up and be strong in the Lord and in the power of His might without 
 			<wp:comment_approved>1</wp:comment_approved>
 			<wp:comment_type></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
-			<wp:comment_user_id>2</wp:comment_user_id>
+			<wp:comment_user_id>3</wp:comment_user_id>
 		</wp:comment>
 	</item>
 	<item>
 		<title>Overcoming Unbelief</title>
-		<link>http://greaterworkshealing.com/2011/06/overcoming-unbelief/</link>
+		<link>http://localhost/framework/?p=666</link>
 		<pubDate>Mon, 27 Jun 2011 15:10:12 +0000</pubDate>
 		<dc:creator>John Alcock</dc:creator>
 		<guid isPermaLink="false">http://mobilisenow.com/?p=666</guid>
@@ -844,7 +893,7 @@ John.]]></content:encoded>
 		<category domain="category" nicename="new-life-realities"><![CDATA[New Life Realities]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_wp_old_slug</wp:meta_key>
@@ -861,7 +910,7 @@ John.]]></content:encoded>
 	</item>
 	<item>
 		<title>Revival in Laramie Wyoming</title>
-		<link>http://greaterworkshealing.com/2011/07/revival-in-laramie-wyoming/</link>
+		<link>http://localhost/framework/?p=691</link>
 		<pubDate>Sun, 17 Jul 2011 14:45:27 +0000</pubDate>
 		<dc:creator>mark</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=691</guid>
@@ -880,7 +929,7 @@ While attending the Bay of Holy Spirit Revival in Mobile Alabama last year the L
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>revival-in-laramie-wyoming</wp:post_name>
-		<wp:status>publish</wp:status>
+		<wp:status>trash</wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
 		<wp:post_type>post</wp:post_type>
@@ -891,7 +940,7 @@ While attending the Bay of Holy Spirit Revival in Mobile Alabama last year the L
 		<category domain="category" nicename="revival"><![CDATA[Revival]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_description</wp:meta_key>
@@ -901,8 +950,34 @@ While attending the Bay of Holy Spirit Revival in Mobile Alabama last year the L
 			<wp:meta_key>_su_title</wp:meta_key>
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
+			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
+			<wp:meta_value><![CDATA[1325612226]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_comments_status</wp:meta_key>
+			<wp:meta_value><![CDATA[a:2:{i:12;s:1:"1";i:13;s:1:"1";}]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>18</wp:comment_id>
+			<wp:comment_id>12</wp:comment_id>
+			<wp:comment_author><![CDATA[Susan McKenzie]]></wp:comment_author>
+			<wp:comment_author_email>susan.d.mckenzie@gmail.com</wp:comment_author_email>
+			<wp:comment_author_url>http://teamfamilyonline.com</wp:comment_author_url>
+			<wp:comment_author_IP>72.173.64.58</wp:comment_author_IP>
+			<wp:comment_date>2011-07-17 18:10:57</wp:comment_date>
+			<wp:comment_date_gmt>2011-07-17 18:10:57</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[A wave of love, sacrificial love... a people who love to serve, always in gratitude and praying without ceasing... that is what I've been seeing... sweeping across the world. People living 1 Corinthians 13... I want to one of such people... revival a a lifestyle. Thanks for an inspiring article, and as a resident of Wyoming, very excited!]]></wp:comment_content>
+			<wp:comment_approved>post-trashed</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+			<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+		<wp:comment>
+			<wp:comment_id>13</wp:comment_id>
 			<wp:comment_author><![CDATA[Pat Speer]]></wp:comment_author>
 			<wp:comment_author_email>zoesozo@bresnan.net</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -911,21 +986,7 @@ While attending the Bay of Holy Spirit Revival in Mobile Alabama last year the L
 			<wp:comment_date_gmt>2011-07-24 20:39:54</wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Two years ago God gave a Word of Prophecy to us in Cheyenne WY that He was going to bring revival throughout America.  This fire of revival would begin in Alabama, the first state listed alphabetically, and also in Wyoming, the last state alphabetically listed.  As the fire of His Holiness and Presence burned from these two states outward beyond their borders, revival would be spread from the first and the last states to touch every state of this country with His Holiness and Fire.  
 What you have shared is an encouragement to all of us in Wyoming to believe that He will bring His Word to pass and that we will experience a true revival of Holiness and Fire not only in our state but also in our nation!]]></wp:comment_content>
-			<wp:comment_approved>1</wp:comment_approved>
-			<wp:comment_type></wp:comment_type>
-			<wp:comment_parent>0</wp:comment_parent>
-			<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-		<wp:comment>
-			<wp:comment_id>14</wp:comment_id>
-			<wp:comment_author><![CDATA[Susan McKenzie]]></wp:comment_author>
-			<wp:comment_author_email>susan.d.mckenzie@gmail.com</wp:comment_author_email>
-			<wp:comment_author_url>http://teamfamilyonline.com</wp:comment_author_url>
-			<wp:comment_author_IP>72.173.64.58</wp:comment_author_IP>
-			<wp:comment_date>2011-07-17 18:10:57</wp:comment_date>
-			<wp:comment_date_gmt>2011-07-17 18:10:57</wp:comment_date_gmt>
-			<wp:comment_content><![CDATA[A wave of love, sacrificial love... a people who love to serve, always in gratitude and praying without ceasing... that is what I've been seeing... sweeping across the world. People living 1 Corinthians 13... I want to one of such people... revival a a lifestyle. Thanks for an inspiring article, and as a resident of Wyoming, very excited!]]></wp:comment_content>
-			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_approved>post-trashed</wp:comment_approved>
 			<wp:comment_type></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>0</wp:comment_user_id>
@@ -933,7 +994,7 @@ What you have shared is an encouragement to all of us in Wyoming to believe that
 	</item>
 	<item>
 		<title>Miracles Break Out in Laramie</title>
-		<link>http://greaterworkshealing.com/2011/07/miracles-break-out-in-laramie/</link>
+		<link>http://localhost/framework/?p=702</link>
 		<pubDate>Mon, 18 Jul 2011 15:07:12 +0000</pubDate>
 		<dc:creator>mark</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=702</guid>
@@ -956,7 +1017,7 @@ Glory to God!!! His holy fire came and touched people as they sat in their seats
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>miracles-break-out-in-laramie</wp:post_name>
-		<wp:status>publish</wp:status>
+		<wp:status>trash</wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
 		<wp:post_type>post</wp:post_type>
@@ -967,7 +1028,7 @@ Glory to God!!! His holy fire came and touched people as they sat in their seats
 		<category domain="category" nicename="revival"><![CDATA[Revival]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[2]]></wp:meta_value>
+			<wp:meta_value><![CDATA[3]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_description</wp:meta_key>
@@ -977,22 +1038,20 @@ Glory to God!!! His holy fire came and touched people as they sat in their seats
 			<wp:meta_key>_su_title</wp:meta_key>
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
+			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
+			<wp:meta_value><![CDATA[1325612222]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_comments_status</wp:meta_key>
+			<wp:meta_value><![CDATA[a:3:{i:14;s:1:"1";i:15;s:1:"1";i:16;s:1:"1";}]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>17</wp:comment_id>
-			<wp:comment_author><![CDATA[kevin Bike4God.com]]></wp:comment_author>
-			<wp:comment_author_email>kbw721@yahoo.com</wp:comment_author_email>
-			<wp:comment_author_url>http://bike4god.com</wp:comment_author_url>
-			<wp:comment_author_IP>97.121.80.99</wp:comment_author_IP>
-			<wp:comment_date>2011-07-24 00:49:13</wp:comment_date>
-			<wp:comment_date_gmt>2011-07-24 00:49:13</wp:comment_date_gmt>
-			<wp:comment_content><![CDATA[Nice ! God rock there world . Spirit have your way . JESUS COME !!!  Love Him and let the Spirit flow . God's moving are you ready . Press in for more with all your heart . &gt;&gt;&gt; Its By HIS Spirit , Yes God &lt;&lt;&lt;]]></wp:comment_content>
-			<wp:comment_approved>1</wp:comment_approved>
-			<wp:comment_type></wp:comment_type>
-			<wp:comment_parent>0</wp:comment_parent>
-			<wp:comment_user_id>0</wp:comment_user_id>
-		</wp:comment>
-		<wp:comment>
-			<wp:comment_id>16</wp:comment_id>
+			<wp:comment_id>14</wp:comment_id>
 			<wp:comment_author><![CDATA[Charles Hoover]]></wp:comment_author>
 			<wp:comment_author_email>choover3@gmail.com</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -1000,13 +1059,27 @@ Glory to God!!! His holy fire came and touched people as they sat in their seats
 			<wp:comment_date>2011-07-20 15:23:22</wp:comment_date>
 			<wp:comment_date_gmt>2011-07-20 15:23:22</wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Boy that is really great to read. Our spirits are flying high. All praise goes to God.]]></wp:comment_content>
-			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_approved>post-trashed</wp:comment_approved>
 			<wp:comment_type></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>0</wp:comment_user_id>
 		</wp:comment>
 		<wp:comment>
-			<wp:comment_id>25</wp:comment_id>
+			<wp:comment_id>15</wp:comment_id>
+			<wp:comment_author><![CDATA[kevin Bike4God.com]]></wp:comment_author>
+			<wp:comment_author_email>kbw721@yahoo.com</wp:comment_author_email>
+			<wp:comment_author_url>http://bike4god.com</wp:comment_author_url>
+			<wp:comment_author_IP>97.121.80.99</wp:comment_author_IP>
+			<wp:comment_date>2011-07-24 00:49:13</wp:comment_date>
+			<wp:comment_date_gmt>2011-07-24 00:49:13</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[Nice ! God rock there world . Spirit have your way . JESUS COME !!!  Love Him and let the Spirit flow . God's moving are you ready . Press in for more with all your heart . &gt;&gt;&gt; Its By HIS Spirit , Yes God &lt;&lt;&lt;]]></wp:comment_content>
+			<wp:comment_approved>post-trashed</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+			<wp:comment_user_id>0</wp:comment_user_id>
+		</wp:comment>
+		<wp:comment>
+			<wp:comment_id>16</wp:comment_id>
 			<wp:comment_author><![CDATA[Mich]]></wp:comment_author>
 			<wp:comment_author_email>michellearchbell@yahoo.com.au</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -1014,7 +1087,7 @@ Glory to God!!! His holy fire came and touched people as they sat in their seats
 			<wp:comment_date>2011-08-18 06:52:13</wp:comment_date>
 			<wp:comment_date_gmt>2011-08-18 06:52:13</wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Awesome, thanks for sharing the testimonies, building my faith before I go to Fiji for mission.]]></wp:comment_content>
-			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_approved>post-trashed</wp:comment_approved>
 			<wp:comment_type></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>0</wp:comment_user_id>
@@ -1039,7 +1112,7 @@ Glory to God!!! His holy fire came and touched people as they sat in their seats
 	</item>
 	<item>
 		<title>More Fire in Sheridan Wyoming</title>
-		<link>http://greaterworkshealing.com/2011/07/more-fire-in-sheridan-wyoming/</link>
+		<link>http://localhost/framework/?p=706</link>
 		<pubDate>Tue, 26 Jul 2011 20:55:58 +0000</pubDate>
 		<dc:creator>mark</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=706</guid>
@@ -1054,7 +1127,7 @@ The pastor gave birth to spiritual twins as he recieved a word about birthing in
 		<wp:comment_status>open</wp:comment_status>
 		<wp:ping_status>open</wp:ping_status>
 		<wp:post_name>more-fire-in-sheridan-wyoming</wp:post_name>
-		<wp:status>publish</wp:status>
+		<wp:status>trash</wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
 		<wp:post_type>post</wp:post_type>
@@ -1066,7 +1139,7 @@ The pastor gave birth to spiritual twins as he recieved a word about birthing in
 		<category domain="post_tag" nicename="revival-2"><![CDATA[revival]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[2]]></wp:meta_value>
+			<wp:meta_value><![CDATA[3]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_description</wp:meta_key>
@@ -1076,8 +1149,20 @@ The pastor gave birth to spiritual twins as he recieved a word about birthing in
 			<wp:meta_key>_su_title</wp:meta_key>
 			<wp:meta_value><![CDATA[]]></wp:meta_value>
 		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_status</wp:meta_key>
+			<wp:meta_value><![CDATA[publish]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_time</wp:meta_key>
+			<wp:meta_value><![CDATA[1325612198]]></wp:meta_value>
+		</wp:postmeta>
+		<wp:postmeta>
+			<wp:meta_key>_wp_trash_meta_comments_status</wp:meta_key>
+			<wp:meta_value><![CDATA[a:1:{i:17;s:1:"1";}]]></wp:meta_value>
+		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>24</wp:comment_id>
+			<wp:comment_id>17</wp:comment_id>
 			<wp:comment_author><![CDATA[Mich]]></wp:comment_author>
 			<wp:comment_author_email>michellearchbell@yahoo.com.au</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -1085,7 +1170,7 @@ The pastor gave birth to spiritual twins as he recieved a word about birthing in
 			<wp:comment_date>2011-08-18 06:50:29</wp:comment_date>
 			<wp:comment_date_gmt>2011-08-18 06:50:29</wp:comment_date_gmt>
 			<wp:comment_content><![CDATA[Praise the Lord , God is moving, thanks for sharing Mark.]]></wp:comment_content>
-			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_approved>post-trashed</wp:comment_approved>
 			<wp:comment_type></wp:comment_type>
 			<wp:comment_parent>0</wp:comment_parent>
 			<wp:comment_user_id>0</wp:comment_user_id>
@@ -1110,7 +1195,7 @@ The pastor gave birth to spiritual twins as he recieved a word about birthing in
 	</item>
 	<item>
 		<title>The Substance of Faith</title>
-		<link>http://greaterworkshealing.com/2011/07/the-substance-of-faith/</link>
+		<link>http://localhost/framework/?p=711</link>
 		<pubDate>Sun, 31 Jul 2011 04:09:08 +0000</pubDate>
 		<dc:creator>sharpmachine</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=711</guid>
@@ -1179,7 +1264,7 @@ Is faith a substance we secrete much like the oils in our hands?  Do we leave a
 		<category domain="post_tag" nicename="substance"><![CDATA[substance]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[1]]></wp:meta_value>
+			<wp:meta_value><![CDATA[2]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_title</wp:meta_key>
@@ -1194,7 +1279,7 @@ Is faith a substance we secrete much like the oils in our hands?  Do we leave a
 			<wp:meta_value><![CDATA[none]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>19</wp:comment_id>
+			<wp:comment_id>18</wp:comment_id>
 			<wp:comment_author><![CDATA[Josh]]></wp:comment_author>
 			<wp:comment_author_email>joshg73@hotmail.com</wp:comment_author_email>
 			<wp:comment_author_url>http://jjomgmoments.blogspot.com</wp:comment_author_url>
@@ -1225,38 +1310,7 @@ Is faith a substance we secrete much like the oils in our hands?  Do we leave a
 			</wp:commentmeta>
 		</wp:comment>
 		<wp:comment>
-			<wp:comment_id>28</wp:comment_id>
-			<wp:comment_author><![CDATA[Susan Darr]]></wp:comment_author>
-			<wp:comment_author_email>susandarr@hotmail.com</wp:comment_author_email>
-			<wp:comment_author_url></wp:comment_author_url>
-			<wp:comment_author_IP>24.19.203.156</wp:comment_author_IP>
-			<wp:comment_date>2011-08-23 16:17:02</wp:comment_date>
-			<wp:comment_date_gmt>2011-08-23 16:17:02</wp:comment_date_gmt>
-			<wp:comment_content><![CDATA[Enjoyed reading the article.  Found myself wondering about our faith vs the faith of God; is it different or the same? Is it the same element, or maybe it has isotopes like hydrogen (0 neutrons o extra neutron)? Hmmm?  Forgive me, my geek is showing.]]></wp:comment_content>
-			<wp:comment_approved>1</wp:comment_approved>
-			<wp:comment_type></wp:comment_type>
-			<wp:comment_parent>0</wp:comment_parent>
-			<wp:comment_user_id>0</wp:comment_user_id>
-			<wp:commentmeta>
-				<wp:meta_key>akismet_result</wp:meta_key>
-				<wp:meta_value><![CDATA[false]]></wp:meta_value>
-			</wp:commentmeta>
-			<wp:commentmeta>
-				<wp:meta_key>akismet_history</wp:meta_key>
-				<wp:meta_value><![CDATA[a:4:{s:4:"time";s:15:"1314116222.3752";s:7:"message";s:28:"Akismet cleared this comment";s:5:"event";s:9:"check-ham";s:4:"user";s:0:"";}]]></wp:meta_value>
-			</wp:commentmeta>
-			<wp:commentmeta>
-				<wp:meta_key>akismet_as_submitted</wp:meta_key>
-				<wp:meta_value><![CDATA[a:55:{s:15:"comment_post_ID";s:3:"711";s:14:"comment_author";s:10:"Susan Darr";s:20:"comment_author_email";s:21:"susandarr@hotmail.com";s:18:"comment_author_url";s:0:"";s:15:"comment_content";s:250:"Enjoyed reading the article.  Found myself wondering about our faith vs the faith of God; is it different or the same? Is it the same element, or maybe it has isotopes like hydrogen (0 neutrons o extra neutron)? Hmmm?  Forgive me, my geek is showing.";s:12:"comment_type";s:0:"";s:14:"comment_parent";s:1:"0";s:7:"user_ID";s:1:"0";s:7:"user_ip";s:13:"24.19.203.156";s:10:"user_agent";s:63:"Mozilla/5.0 (Windows NT 6.0; rv:6.0) Gecko/20100101 Firefox/6.0";s:8:"referrer";s:62:"http://greaterworkshealing.com/2011/07/the-substance-of-faith/";s:4:"blog";s:30:"http://greaterworkshealing.com";s:9:"blog_lang";s:5:"en_US";s:12:"blog_charset";s:5:"UTF-8";s:9:"permalink";s:62:"http://greaterworkshealing.com/2011/07/the-substance-of-faith/";s:9:"user_role";s:0:"";s:21:"akismet_comment_nonce";s:6:"passed";s:11:"POST_author";s:10:"Susan Darr";s:10:"POST_email";s:21:"susandarr@hotmail.com";s:8:"POST_url";s:0:"";s:12:"POST_comment";s:250:"Enjoyed reading the article.  Found myself wondering about our faith vs the faith of God; is it different or the same? Is it the same element, or maybe it has isotopes like hydrogen (0 neutrons o extra neutron)? Hmmm?  Forgive me, my geek is showing.";s:11:"POST_submit";s:12:"Post Comment";s:20:"POST_comment_post_ID";s:3:"711";s:19:"POST_comment_parent";s:1:"0";s:26:"POST_akismet_comment_nonce";s:10:"18fa4ca38a";s:15:"SERVER_SOFTWARE";s:22:"Apache/2.2.14 (Ubuntu)";s:11:"REQUEST_URI";s:21:"/wp-comments-post.php";s:9:"HTTP_HOST";s:23:"greaterworkshealing.com";s:15:"HTTP_USER_AGENT";s:63:"Mozilla/5.0 (Windows NT 6.0; rv:6.0) Gecko/20100101 Firefox/6.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:14:"en-us,en;q=0.5";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:19:"HTTP_ACCEPT_CHARSET";s:30:"ISO-8859-1,utf-8;q=0.7,*;q=0.7";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"HTTP_REFERER";s:62:"http://greaterworkshealing.com/2011/07/the-substance-of-faith/";s:11:"HTTP_COOKIE";s:0:"";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"417";s:4:"PATH";s:29:"/sbin:/usr/sbin:/bin:/usr/bin";s:16:"SERVER_SIGNATURE";s:84:"<address>Apache/2.2.14 (Ubuntu) Server at greaterworkshealing.com Port 80</address>
-";s:11:"SERVER_NAME";s:23:"greaterworkshealing.com";s:11:"SERVER_ADDR";s:12:"96.126.97.58";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:13:"24.19.203.156";s:13:"DOCUMENT_ROOT";s:37:"/sites/greaterworkshealing.com/public";s:12:"SERVER_ADMIN";s:18:"[no address given]";s:15:"SCRIPT_FILENAME";s:58:"/sites/greaterworkshealing.com/public/wp-comments-post.php";s:11:"REMOTE_PORT";s:5:"50616";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"SCRIPT_NAME";s:21:"/wp-comments-post.php";s:8:"PHP_SELF";s:21:"/wp-comments-post.php";s:12:"REQUEST_TIME";s:10:"1314116221";}]]></wp:meta_value>
-			</wp:commentmeta>
-			<wp:commentmeta>
-				<wp:meta_key>akismet_history</wp:meta_key>
-				<wp:meta_value><![CDATA[a:4:{s:4:"time";s:14:"1314116523.164";s:7:"message";s:51:"sharpmachine changed the comment status to approved";s:5:"event";s:15:"status-approved";s:4:"user";s:12:"sharpmachine";}]]></wp:meta_value>
-			</wp:commentmeta>
-		</wp:comment>
-		<wp:comment>
-			<wp:comment_id>23</wp:comment_id>
+			<wp:comment_id>19</wp:comment_id>
 			<wp:comment_author><![CDATA[Mich]]></wp:comment_author>
 			<wp:comment_author_email>michellearchbell@yahoo.com.au</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -1286,10 +1340,41 @@ Is faith a substance we secrete much like the oils in our hands?  Do we leave a
 				<wp:meta_value><![CDATA[a:4:{s:4:"time";s:15:"1313686600.8657";s:7:"message";s:51:"sharpmachine changed the comment status to approved";s:5:"event";s:15:"status-approved";s:4:"user";s:12:"sharpmachine";}]]></wp:meta_value>
 			</wp:commentmeta>
 		</wp:comment>
+		<wp:comment>
+			<wp:comment_id>20</wp:comment_id>
+			<wp:comment_author><![CDATA[Susan Darr]]></wp:comment_author>
+			<wp:comment_author_email>susandarr@hotmail.com</wp:comment_author_email>
+			<wp:comment_author_url></wp:comment_author_url>
+			<wp:comment_author_IP>24.19.203.156</wp:comment_author_IP>
+			<wp:comment_date>2011-08-23 16:17:02</wp:comment_date>
+			<wp:comment_date_gmt>2011-08-23 16:17:02</wp:comment_date_gmt>
+			<wp:comment_content><![CDATA[Enjoyed reading the article.  Found myself wondering about our faith vs the faith of God; is it different or the same? Is it the same element, or maybe it has isotopes like hydrogen (0 neutrons o extra neutron)? Hmmm?  Forgive me, my geek is showing.]]></wp:comment_content>
+			<wp:comment_approved>1</wp:comment_approved>
+			<wp:comment_type></wp:comment_type>
+			<wp:comment_parent>0</wp:comment_parent>
+			<wp:comment_user_id>0</wp:comment_user_id>
+			<wp:commentmeta>
+				<wp:meta_key>akismet_result</wp:meta_key>
+				<wp:meta_value><![CDATA[false]]></wp:meta_value>
+			</wp:commentmeta>
+			<wp:commentmeta>
+				<wp:meta_key>akismet_history</wp:meta_key>
+				<wp:meta_value><![CDATA[a:4:{s:4:"time";s:15:"1314116222.3752";s:7:"message";s:28:"Akismet cleared this comment";s:5:"event";s:9:"check-ham";s:4:"user";s:0:"";}]]></wp:meta_value>
+			</wp:commentmeta>
+			<wp:commentmeta>
+				<wp:meta_key>akismet_as_submitted</wp:meta_key>
+				<wp:meta_value><![CDATA[a:55:{s:15:"comment_post_ID";s:3:"711";s:14:"comment_author";s:10:"Susan Darr";s:20:"comment_author_email";s:21:"susandarr@hotmail.com";s:18:"comment_author_url";s:0:"";s:15:"comment_content";s:250:"Enjoyed reading the article.  Found myself wondering about our faith vs the faith of God; is it different or the same? Is it the same element, or maybe it has isotopes like hydrogen (0 neutrons o extra neutron)? Hmmm?  Forgive me, my geek is showing.";s:12:"comment_type";s:0:"";s:14:"comment_parent";s:1:"0";s:7:"user_ID";s:1:"0";s:7:"user_ip";s:13:"24.19.203.156";s:10:"user_agent";s:63:"Mozilla/5.0 (Windows NT 6.0; rv:6.0) Gecko/20100101 Firefox/6.0";s:8:"referrer";s:62:"http://greaterworkshealing.com/2011/07/the-substance-of-faith/";s:4:"blog";s:30:"http://greaterworkshealing.com";s:9:"blog_lang";s:5:"en_US";s:12:"blog_charset";s:5:"UTF-8";s:9:"permalink";s:62:"http://greaterworkshealing.com/2011/07/the-substance-of-faith/";s:9:"user_role";s:0:"";s:21:"akismet_comment_nonce";s:6:"passed";s:11:"POST_author";s:10:"Susan Darr";s:10:"POST_email";s:21:"susandarr@hotmail.com";s:8:"POST_url";s:0:"";s:12:"POST_comment";s:250:"Enjoyed reading the article.  Found myself wondering about our faith vs the faith of God; is it different or the same? Is it the same element, or maybe it has isotopes like hydrogen (0 neutrons o extra neutron)? Hmmm?  Forgive me, my geek is showing.";s:11:"POST_submit";s:12:"Post Comment";s:20:"POST_comment_post_ID";s:3:"711";s:19:"POST_comment_parent";s:1:"0";s:26:"POST_akismet_comment_nonce";s:10:"18fa4ca38a";s:15:"SERVER_SOFTWARE";s:22:"Apache/2.2.14 (Ubuntu)";s:11:"REQUEST_URI";s:21:"/wp-comments-post.php";s:9:"HTTP_HOST";s:23:"greaterworkshealing.com";s:15:"HTTP_USER_AGENT";s:63:"Mozilla/5.0 (Windows NT 6.0; rv:6.0) Gecko/20100101 Firefox/6.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:14:"en-us,en;q=0.5";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:19:"HTTP_ACCEPT_CHARSET";s:30:"ISO-8859-1,utf-8;q=0.7,*;q=0.7";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"HTTP_REFERER";s:62:"http://greaterworkshealing.com/2011/07/the-substance-of-faith/";s:11:"HTTP_COOKIE";s:0:"";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"417";s:4:"PATH";s:29:"/sbin:/usr/sbin:/bin:/usr/bin";s:16:"SERVER_SIGNATURE";s:84:"<address>Apache/2.2.14 (Ubuntu) Server at greaterworkshealing.com Port 80</address>
+";s:11:"SERVER_NAME";s:23:"greaterworkshealing.com";s:11:"SERVER_ADDR";s:12:"96.126.97.58";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:13:"24.19.203.156";s:13:"DOCUMENT_ROOT";s:37:"/sites/greaterworkshealing.com/public";s:12:"SERVER_ADMIN";s:18:"[no address given]";s:15:"SCRIPT_FILENAME";s:58:"/sites/greaterworkshealing.com/public/wp-comments-post.php";s:11:"REMOTE_PORT";s:5:"50616";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"SCRIPT_NAME";s:21:"/wp-comments-post.php";s:8:"PHP_SELF";s:21:"/wp-comments-post.php";s:12:"REQUEST_TIME";s:10:"1314116221";}]]></wp:meta_value>
+			</wp:commentmeta>
+			<wp:commentmeta>
+				<wp:meta_key>akismet_history</wp:meta_key>
+				<wp:meta_value><![CDATA[a:4:{s:4:"time";s:14:"1314116523.164";s:7:"message";s:51:"sharpmachine changed the comment status to approved";s:5:"event";s:15:"status-approved";s:4:"user";s:12:"sharpmachine";}]]></wp:meta_value>
+			</wp:commentmeta>
+		</wp:comment>
 	</item>
 	<item>
 		<title>Faith</title>
-		<link>http://greaterworkshealing.com/2011/10/faith/</link>
+		<link>http://localhost/framework/?p=745</link>
 		<pubDate>Mon, 17 Oct 2011 07:00:33 +0000</pubDate>
 		<dc:creator>mark</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=745</guid>
@@ -1343,14 +1428,14 @@ Hebrews 11:6 (Amp.)]]></excerpt:encoded>
 		<category domain="post_tag" nicename="who-am-i-in-christ"><![CDATA[who am I in Christ]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[3]]></wp:meta_value>
+			<wp:meta_value><![CDATA[4]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_rich_snippet_type</wp:meta_key>
 			<wp:meta_value><![CDATA[none]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>42</wp:comment_id>
+			<wp:comment_id>21</wp:comment_id>
 			<wp:comment_author><![CDATA[Mich]]></wp:comment_author>
 			<wp:comment_author_email>michellearchbell@yahoo.com.au</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -1379,7 +1464,7 @@ Hebrews 11:6 (Amp.)]]></excerpt:encoded>
 	</item>
 	<item>
 		<title>A Call to a Higher Life</title>
-		<link>http://greaterworkshealing.com/2011/10/call-higher-life/</link>
+		<link>http://localhost/framework/?p=751</link>
 		<pubDate>Mon, 24 Oct 2011 07:00:06 +0000</pubDate>
 		<dc:creator>mark</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=751</guid>
@@ -1415,14 +1500,14 @@ May we rise up together, as a true church of God, not just existing, not just go
 		<category domain="category" nicename="new-life-realities"><![CDATA[New Life Realities]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[3]]></wp:meta_value>
+			<wp:meta_value><![CDATA[4]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_rich_snippet_type</wp:meta_key>
 			<wp:meta_value><![CDATA[none]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>51</wp:comment_id>
+			<wp:comment_id>22</wp:comment_id>
 			<wp:comment_author><![CDATA[Mich]]></wp:comment_author>
 			<wp:comment_author_email>michellearchbell@yahoo.com.au</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -1449,7 +1534,7 @@ May we rise up together, as a true church of God, not just existing, not just go
 			</wp:commentmeta>
 		</wp:comment>
 		<wp:comment>
-			<wp:comment_id>58</wp:comment_id>
+			<wp:comment_id>23</wp:comment_id>
 			<wp:comment_author><![CDATA[Mark Kuntz]]></wp:comment_author>
 			<wp:comment_author_email>mark@greaterworkshealing.com</wp:comment_author_email>
 			<wp:comment_author_url>http://www.greaterworkshealing.com</wp:comment_author_url>
@@ -1460,7 +1545,7 @@ May we rise up together, as a true church of God, not just existing, not just go
   An angel came to John G. Lake and said to him, " this is Pentecost as God gave it through the heart of Jesus. Strive for this, contend for this, Teach the people to pray for this. For this ALONE, ( emphasis mine ), will meet the necessity of the human heart and have the power to overcome the forces of darkness. What was this angel saying? He was declaring, that Pentecost, ( being truly baptized in Holy Spirit), and this alone, will destroy all bondage in the human heart, and overcome the dark veil over peoples minds, wills and emotions, in and out of the church. Only this power will heal the sick, raise the dead, cleanse the lepers, ( incurable diseases ), cast out demons, heal the broken hearted, open blind eyes, open deaf ears, release the captives, deliver the oppressed, bruised, crushed and broken down. Our God reigns! Mark Kuntz]]></wp:comment_content>
 			<wp:comment_approved>1</wp:comment_approved>
 			<wp:comment_type></wp:comment_type>
-			<wp:comment_parent>51</wp:comment_parent>
+			<wp:comment_parent>22</wp:comment_parent>
 			<wp:comment_user_id>0</wp:comment_user_id>
 			<wp:commentmeta>
 				<wp:meta_key>akismet_result</wp:meta_key>
@@ -1472,16 +1557,13 @@ May we rise up together, as a true church of God, not just existing, not just go
 			</wp:commentmeta>
 			<wp:commentmeta>
 				<wp:meta_key>akismet_as_submitted</wp:meta_key>
-				<wp:meta_value><![CDATA[a:58:{s:15:"comment_post_ID";s:3:"751";s:14:"comment_author";s:10:"Mark Kuntz";s:20:"comment_author_email";s:28:"mark@greaterworkshealing.com";s:18:"comment_author_url";s:34:"http://www.greaterworkshealing.com";s:15:"comment_content";s:1330:"OH, its so our hearts to rise up above status quo Christianity. Powerless Christianity will not change peoples lives, let alone change the culture of nations to Kingdom Culture. How else are we to demonstrate Daddy's love to a lost, poor, blind, naked and needy world, if we do not demonstrate it like Jesus did, in absolute unfettered power. Power that breaks the chains of every type of bondage and eradicates every type of disease, even destroying and overcoming literal death. 
-  An angel came to John G. Lake and said to him, " this is Pentecost as God gave it through the heart of Jesus. Strive for this, contend for this, Teach the people to pray for this. For this ALONE, ( emphasis mine ), will meet the necessity of the human heart and have the power to overcome the forces of darkness. What was this angel saying? He was declaring, that Pentecost, ( being truly baptized in Holy Spirit), and this alone, will destroy all bondage in the human heart, and overcome the dark veil over peoples minds, wills and emotions, in and out of the church. Only this power will heal the sick, raise the dead, cleanse the lepers, ( incurable diseases ), cast out demons, heal the broken hearted, open blind eyes, open deaf ears, release the captives, deliver the oppressed, bruised, crushed and broken down. Our God reigns! Mark Kuntz";s:12:"comment_type";s:0:"";s:14:"comment_parent";s:2:"51";s:7:"user_ID";s:1:"0";s:7:"user_ip";s:12:"72.200.97.78";s:10:"user_agent";s:99:"Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";s:8:"referrer";s:56:"http://greaterworkshealing.com/2011/10/call-higher-life/";s:4:"blog";s:30:"http://greaterworkshealing.com";s:9:"blog_lang";s:5:"en_US";s:12:"blog_charset";s:5:"UTF-8";s:9:"permalink";s:56:"http://greaterworkshealing.com/2011/10/call-higher-life/";s:9:"user_role";s:0:"";s:21:"akismet_comment_nonce";s:6:"passed";s:11:"POST_author";s:10:"Mark Kuntz";s:10:"POST_email";s:28:"mark@greaterworkshealing.com";s:8:"POST_url";s:34:"http://www.greaterworkshealing.com";s:12:"POST_comment";s:1330:"OH, its so our hearts to rise up above status quo Christianity. Powerless Christianity will not change peoples lives, let alone change the culture of nations to Kingdom Culture. How else are we to demonstrate Daddy's love to a lost, poor, blind, naked and needy world, if we do not demonstrate it like Jesus did, in absolute unfettered power. Power that breaks the chains of every type of bondage and eradicates every type of disease, even destroying and overcoming literal death. 
-  An angel came to John G. Lake and said to him, " this is Pentecost as God gave it through the heart of Jesus. Strive for this, contend for this, Teach the people to pray for this. For this ALONE, ( emphasis mine ), will meet the necessity of the human heart and have the power to overcome the forces of darkness. What was this angel saying? He was declaring, that Pentecost, ( being truly baptized in Holy Spirit), and this alone, will destroy all bondage in the human heart, and overcome the dark veil over peoples minds, wills and emotions, in and out of the church. Only this power will heal the sick, raise the dead, cleanse the lepers, ( incurable diseases ), cast out demons, heal the broken hearted, open blind eyes, open deaf ears, release the captives, deliver the oppressed, bruised, crushed and broken down. Our God reigns! Mark Kuntz";s:11:"POST_submit";s:12:"Post Comment";s:20:"POST_comment_post_ID";s:3:"751";s:19:"POST_comment_parent";s:2:"51";s:26:"POST_akismet_comment_nonce";s:10:"742d1d3f52";s:15:"SERVER_SOFTWARE";s:22:"Apache/2.2.14 (Ubuntu)";s:11:"REQUEST_URI";s:21:"/wp-comments-post.php";s:8:"W3TC_ENC";s:5:"_gzip";s:9:"HTTP_HOST";s:23:"greaterworkshealing.com";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:14:"CONTENT_LENGTH";s:4:"1615";s:18:"HTTP_CACHE_CONTROL";s:9:"max-age=0";s:11:"HTTP_ORIGIN";s:30:"http://greaterworkshealing.com";s:15:"HTTP_USER_AGENT";s:99:"Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.121 Safari/535.2";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:12:"HTTP_REFERER";s:56:"http://greaterworkshealing.com/2011/10/call-higher-life/";s:20:"HTTP_ACCEPT_ENCODING";s:17:"gzip,deflate,sdch";s:20:"HTTP_ACCEPT_LANGUAGE";s:14:"en-US,en;q=0.8";s:19:"HTTP_ACCEPT_CHARSET";s:30:"ISO-8859-1,utf-8;q=0.7,*;q=0.3";s:11:"HTTP_COOKIE";s:0:"";s:4:"PATH";s:28:"/usr/local/bin:/usr/bin:/bin";s:16:"SERVER_SIGNATURE";s:84:"<address>Apache/2.2.14 (Ubuntu) Server at greaterworkshealing.com Port 80</address>
-";s:11:"SERVER_NAME";s:23:"greaterworkshealing.com";s:11:"SERVER_ADDR";s:12:"96.126.97.58";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:12:"72.200.97.78";s:13:"DOCUMENT_ROOT";s:41:"/sites/production/greaterworkshealing.com";s:12:"SERVER_ADMIN";s:18:"[no address given]";s:15:"SCRIPT_FILENAME";s:62:"/sites/production/greaterworkshealing.com/wp-comments-post.php";s:11:"REMOTE_PORT";s:5:"49759";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"SCRIPT_NAME";s:21:"/wp-comments-post.php";s:8:"PHP_SELF";s:21:"/wp-comments-post.php";s:12:"REQUEST_TIME";s:10:"1323294699";}]]></wp:meta_value>
+				<wp:meta_value><![CDATA[]]></wp:meta_value>
 			</wp:commentmeta>
 		</wp:comment>
 	</item>
 	<item>
 		<title>Renewing the Mind - Part 1</title>
-		<link>http://greaterworkshealing.com/2011/10/renewing-mind-part-1/</link>
+		<link>http://localhost/framework/?p=761</link>
 		<pubDate>Mon, 31 Oct 2011 07:00:25 +0000</pubDate>
 		<dc:creator>mark</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=761</guid>
@@ -1521,14 +1603,14 @@ Let us cross over into the promised land instead of living so far below what God
 		<category domain="category" nicename="new-life-realities"><![CDATA[New Life Realities]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[3]]></wp:meta_value>
+			<wp:meta_value><![CDATA[4]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_rich_snippet_type</wp:meta_key>
 			<wp:meta_value><![CDATA[none]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:comment>
-			<wp:comment_id>49</wp:comment_id>
+			<wp:comment_id>24</wp:comment_id>
 			<wp:comment_author><![CDATA[Mich]]></wp:comment_author>
 			<wp:comment_author_email>michellearchbell@yahoo.com.au</wp:comment_author_email>
 			<wp:comment_author_url></wp:comment_author_url>
@@ -1557,7 +1639,7 @@ Let us cross over into the promised land instead of living so far below what God
 	</item>
 	<item>
 		<title>Renewing the Mind, Part 2</title>
-		<link>http://greaterworkshealing.com/2011/11/renewing-mind-part-2/</link>
+		<link>http://localhost/framework/?p=766</link>
 		<pubDate>Mon, 07 Nov 2011 08:00:33 +0000</pubDate>
 		<dc:creator>mark</dc:creator>
 		<guid isPermaLink="false">http://greaterworkshealing.com/?p=766</guid>
@@ -1600,7 +1682,7 @@ Father, help us to think and to meditate (chew on) You. Help us to keep our eyes
 		<category domain="category" nicename="new-life-realities"><![CDATA[New Life Realities]]></category>
 		<wp:postmeta>
 			<wp:meta_key>_edit_last</wp:meta_key>
-			<wp:meta_value><![CDATA[3]]></wp:meta_value>
+			<wp:meta_value><![CDATA[4]]></wp:meta_value>
 		</wp:postmeta>
 		<wp:postmeta>
 			<wp:meta_key>_su_rich_snippet_type</wp:meta_key>

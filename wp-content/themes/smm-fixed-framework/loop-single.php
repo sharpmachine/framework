@@ -50,7 +50,6 @@
 
 					<div class="entry-utility">
 						<?php smm_posted_in(); ?>
-						<?php edit_post_link( __( 'Edit', 'smm' ), '<span class="edit-link">', '</span>' ); ?>
 					</div><!-- .entry-utility -->
 				</div><!-- #post-## -->
 
