@@ -84,21 +84,21 @@ function my_admin_bar_link() {
 	'id' => 'mail',
 	'parent' => 'wp-logo-external',
 	'title' => __( 'Mail'),
-	'href' => 'http://mail.'. substr(get_bloginfo('url'), 7).'.com'
+	'href' => 'http://mail.'. substr(get_bloginfo('url'), 7).''
 	) );
 	
 	$wp_admin_bar->add_menu( array(
 	'id' => 'calendar',
 	'parent' => 'wp-logo-external',
 	'title' => __( 'Calendar'),
-	'href' => 'http://calendar.'. substr(get_bloginfo('url'), 7).'.com'
+	'href' => 'http://calendar.'. substr(get_bloginfo('url'), 7).''
 	) );
 	
 	$wp_admin_bar->add_menu( array(
 	'id' => 'docs',
 	'parent' => 'wp-logo-external',
 	'title' => __( 'Docs'),
-	'href' => 'http://docs.'. substr(get_bloginfo('url'), 7).'.com'
+	'href' => 'http://docs.'. substr(get_bloginfo('url'), 7).''
 	) );
 
 	// $wp_admin_bar->add_menu( array(
