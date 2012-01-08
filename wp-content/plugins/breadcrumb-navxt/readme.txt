@@ -3,8 +3,8 @@ Contributors: mtekk, hakre
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XEU783BR8U&lc=US&item_name=Breadcrumb%20NavXT%20Donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.2
-Tested up to: 3.3
-Stable tag: 4.0.0
+Tested up to: 3.3.1
+Stable tag: 4.0.1
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
 == Description ==
@@ -33,6 +33,10 @@ Don't see your language on the list? Feel free to translate Breadcrumb NavXT and
 Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#installation "Go to Breadcrumb NavXT's project page's installation section.") project page for installation and usage instructions.
 
 == Changelog ==
+= 4.0.1 =
+* New feature: Norwegian translations added props to Jan Rosvoldsve.
+* Bug fix: Fixed line 591 and line 646 errors in multisite installs.
+* Bug fix: Attachments will now obey the root page setting for their parent, regardless of the parent’s post type.
 = 4.0.0 =
 * Behavior change: Prefix, suffix, and anchor settings have been replaced with templates for all breadcrumb types.
 * Behavior change: `bcn_display_nested` function was removed from the main plugin. Will appear in a supplementary plugin.
