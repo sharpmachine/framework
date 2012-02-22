@@ -4,39 +4,50 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=FD5XE
 Tags: breadcrumb, breadcrumbs, trail, navigation, menu, widget
 Requires at least: 3.2
 Tested up to: 3.3.1
-Stable tag: 4.0.1
+Stable tag: 4.0.2
 Adds breadcrumb navigation showing the visitor's path to their current location.
 
 == Description ==
 
-Breadcrumb NavXT, the successor to the popular WordPress plugin Breadcrumb Navigation XT, was written from the ground up to be better than its ancestor. This plugin generates locational breadcrumb trails for your WordPress powered blog or website. These breadcrumb trails are highly customizable to suit the needs of just about any website running WordPress. The Administrative interface makes setting options easy, while a direct class access is available for theme developers and more adventurous users. Do note that Breadcrumb NavXT requires PHP5.2 or newer.
+Breadcrumb NavXT, the successor to the popular WordPress plugin Breadcrumb Navigation XT, was written from the ground up to be better than its ancestor. This plugin generates locational breadcrumb trails for your WordPress powered blog or website. These breadcrumb trails are highly customizable to suit the needs of just about any website running WordPress. The Administrative interface makes setting options easy, while a direct class access is available for theme developers and more adventurous users.
 
 = Translations =
 
 Breadcrumb NavXT distributes with translations for the following languages:
 
 * English - default -
-* German by Tom Klingenberg
-* French by Laurent Grabielle
 * Spanish by Karin Sequen
-* Dutch by Stan Lenssen
-* Russian by Yuri Gribov
 * Swedish by Patrik Spathon
-* Italian by Luca Camellini
-* Japanese by Kazuhiro Terada
+* Estonian by Martin Orn
+* Azerbaijani by Zaur Bayramov
 
+The following translations are in need of a maintainer:
 
-Don't see your language on the list? Feel free to translate Breadcrumb NavXT and send John Havlik the translations.
+* German originally maintained by Tom Klingenberg
+* French originally maintained by Laurent Grabielle
+* Dutch originally maintained by Stan Lenssen
+* Russian originally maintained by Yuri Gribov
+* Italian originally maintained by Luca Camellini
+* Japanese originally maintained by Kazuhiro Terada
+
+Don't see your language on the list? Stop by [Breadcrumb NavXT's translation project](http://translate.mtekk.us/projects/breadcrumb-navxt "Go to Breadcrumb NavXT's GlotPress based translation project").
 
 == Installation ==
 
 Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#installation "Go to Breadcrumb NavXT's project page's installation section.") project page for installation and usage instructions.
 
 == Changelog ==
+= 4.0.2 =
+* New feature: Estonian translation added props to Martin Orn.
+* New feature: Azerbaijani translation added props to Zaur Bayramov.
+* Bug fix: Replaced deprecated RDFa and Microformat breadcrumbs with Schema.org breadcrumbs support in the included sidebar widget.
+* Bug fix: Mainsite breadcrumbs are linked once again.
+* Bug fix: Safe default settings for CPTs and taxonomies should work now.
+* Bug fix: Updated translations should work, previously the old ones loaded.
 = 4.0.1 =
 * New feature: Norwegian translations added props to Jan Rosvoldsve.
 * Bug fix: Fixed line 591 and line 646 errors in multisite installs.
-* Bug fix: Attachments will now obey the root page setting for their parent, regardless of the parent’s post type.
+* Bug fix: Attachments will now obey the root page setting for their parent, regardless of the parent's post type.
 = 4.0.0 =
 * Behavior change: Prefix, suffix, and anchor settings have been replaced with templates for all breadcrumb types.
 * Behavior change: `bcn_display_nested` function was removed from the main plugin. Will appear in a supplementary plugin.
@@ -45,12 +56,12 @@ Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#install
 * New feature: More useful Help menu, utilizing the new WordPress 3.3 Help menu.
 * New feature: True URLs are now generated for current items when link current item is enabled.
 * New feature: The display of the custom post type archive breadcrumb for custom post types may now be disabled.
-* New feature: Added in fallback functions for PHP’s multibyte character string functions for environments that do not have multibyte character support.
+* New feature: Added in fallback functions for PHP's multibyte character string functions for environments that do not have multibyte character support.
 * Bug fix: Custom post type archives now respect the root page setting.
 * Bug fix: Custom post types without WordPress post archives enabled will no longer cause a double root page breadcrumb to be generated.
-* Bug fix: Tabs on the settings page are now rounded for all “modern” browsers, including Firefox, Chrome, and IE9.
+* Bug fix: Tabs on the settings page are now rounded for all "modern" browsers, including Firefox, Chrome, and IE9.
 * Bug fix: Tabs on the settings page are now remembered between setting saves (including multiple saves from within the same tab).
-* Bug fix: Fixed another cause of the “The following settings were not saved” error message.
+* Bug fix: Fixed another cause of the "The following settings were not saved" error message.
 = 3.9.0 =
 * Behavior change: Settings can not be saved, imported, or exported until any necessary settings updates and/or installs are completed.
 * New feature: Support for WordPress 3.1 custom post type archives.
@@ -74,14 +85,14 @@ Please visit [Breadcrumb NavXT's](http://mtekk.us/code/breadcrumb-navxt/#install
 * Bug fix: Fixed multibyte UTF-8 character support for custom taxonomies.
 * Bug fix: Fixed issue where the widget (Appearance > Widgets) would not load the appropriate translations.
 = 3.7.0 =
-* New feature: Support for “global”/network wide breadcrumb trails in networked setups of WordPress 3.0.
+* New feature: Support for "global"/network wide breadcrumb trails in networked setups of WordPress 3.0.
 * New feature: Can use any hierarchical post type as a hierarchy for flat post types.
 * New feature: Users are now warned if settings are out of date, allowed to do a one click settings migration.
-* New feature: Users can now control if a post type uses the “posts page” in it's hierarchy or not.
+* New feature: Users can now control if a post type uses the "posts page" in it's hierarchy or not.
 * Bug fix: Breadcrumb trails for attachments work properly now for custom post types.
 * Bug fix: Users can now set custom post types to have a page hierarchy through the settings page.
 * Bug fix: Fixed issues where the PHP version check did not work correctly.
-* Bug fix: Fixed issue where all settings would get reset on “clean” 3.6.0 installs on plugin activation.
+* Bug fix: Fixed issue where all settings would get reset on "clean" 3.6.0 installs on plugin activation.
 * Bug fix: Fixed issue when a static front page is specified but the post page is not.
 = 3.6.0 =
 * New feature: Vastly improved support for WordPress custom post types.

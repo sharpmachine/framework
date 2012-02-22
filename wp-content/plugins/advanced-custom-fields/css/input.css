@@ -7,14 +7,32 @@
 	padding: 0;
 }
 
-.acf_postbox .field {
+#poststuff .acf_postbox .field {
 	position: relative;
 	padding: 10px 10px;
 	border-top: 1px solid #fff;
 	border-bottom: #e8e8e8 solid 1px;
 }
 
-.acf_postbox .field:last-child {
+#poststuff .acf_postbox .field.error {
+	margin: 0;
+	border: #CC0000 solid 1px !important;
+	border-radius: 0;
+}
+
+#poststuff .acf_postbox .field.error + .error {
+	border-top: 0 none !important;
+}
+
+#poststuff .acf_postbox .field.error:last-child {
+    border-bottom: #CC0000 solid 1px;
+}
+
+#poststuff .acf_postbox .field.error label.field_label {
+	color: #CC0000;
+}
+
+#poststuff .acf_postbox .field:last-child {
 	border-bottom: none;
 }
 
@@ -25,6 +43,10 @@
     font-weight: bold;
     padding: 20px 0 8px;
     text-shadow: 0 1px 0 #FFFFFF;
+}
+
+#poststuff .acf_postbox label.field_label .required {
+	color: #CC0000;
 }
 
 #poststuff .acf_postbox label.field_label:first-child {
@@ -67,6 +89,10 @@
 	resize: none;
 }
 
+.acf_postbox .field  select{
+	padding: 2px;
+}
+
 /*---------------------------------------------------------------------------------------------
 	Field: WYSIWYG
 ---------------------------------------------------------------------------------------------*/
@@ -75,6 +101,21 @@
     margin-top: 2px !important;
 }
 
+.acf_wysiwyg iframe{ 
+	min-height: 250px;
+}
+
+#post-body .acf_wysiwyg .wp_themeSkin .mceStatusbar a.mceResize {
+	top: -2px !important;
+}
+
+.acf_wysiwyg .editor-toolbar {
+	display: none;
+}
+
+.acf_wysiwyg #editorcontainer {
+	background: #fff;
+}
 
 
 /*---------------------------------------------------------------------------------------------
@@ -195,11 +236,11 @@
 	border-right: 0 none;
 }
 
-.repeater > table > tbody > tr:hover a.remove_field {
+.repeater > table > tbody > tr:hover a.remove_row {
 	visibility: visible;
 }
 
-.repeater.hide_remove_buttons > table > tbody > tr:hover a.remove_field {
+.repeater.hide_remove_buttons > table > tbody > tr:hover a.remove_row {
 	visibility: hidden;
 }
 
@@ -208,7 +249,7 @@
 	padding-top: 0;
 }
 
-a.remove_field {
+a.remove_row {
 	display: block;
 	width: 16px;
 	height: 16px;
@@ -216,7 +257,7 @@ a.remove_field {
 	visibility: hidden;
 }
 
-a.remove_field:hover {
+a.remove_row:hover {
 	background-position: 0 100%;
 }
 
@@ -267,11 +308,13 @@ a.remove_field:hover {
 	padding: 8px 0;
 }
 
-.repeater .table_footer a#add_field{
+.repeater .table_footer a.add_row{
 	display: block;
     float: right;
     margin: 0;
     text-align: center;
+    color: #fff;
+    text-decoration: none;
 }
 
 #acf_input .wp_themeSkin tr.mceFirst td.mceToolbar {
@@ -332,8 +375,8 @@ ul.checkbox_list {
 	font-family: sans-serif;
 	color: #999;
 	position: absolute;
-	margin-top: 4px;
-	margin-left: 7px;
+	margin-top: 5px;
+	margin-left: 10px;
 }
 
 .acf_relationship .widefat {
@@ -350,8 +393,9 @@ ul.checkbox_list {
 	margin: 0;
 	font-size: 12px;
 	line-height: 13px;
-	padding: 5px;
-	border-radius: 13px
+	border-radius: 13px;
+	font-family: sans-serif;
+	padding: 5px 9px !important;
 }
 
 .acf_relationship .relationship_list {
@@ -486,7 +530,7 @@ ul.checkbox_list {
 	border-right: 0 none;
 }
 
-.acf_flexible_content > .values > table > tbody > tr:hover a.remove_field {
+.acf_flexible_content > .values > table > tbody > tr:hover a.remove_row {
 	visibility: visible;
 }
 
@@ -537,11 +581,13 @@ ul.checkbox_list {
 	padding: 8px 0;
 }
 
-.acf_flexible_content .table_footer a#add_field{
+.acf_flexible_content .table_footer a.add_row{
 	display: block;
     float: right;
     margin: 0;
     text-align: center;
+    color: #fff;
+    text-decoration: none;
 }
 
 .acf_popup {
@@ -550,10 +596,18 @@ ul.checkbox_list {
 	right: 0;
 	background: #464646;
 	border-radius: 5px;
-	box-shadow: rgba(0,0,0,0.25) 0 0 13px;
+	box-shadow: rgba(0,0,0,0.4) 0 0 13px;
 	margin-bottom: 25px;
 	margin-right: -5px;
 	display: none;
+}
+
+.has-right-sidebar .acf_popup {
+	margin-right: -17px;
+}
+
+.has-right-sidebar .acf_popup .bit {
+	right: 31px;
 }
 
 .acf_popup .bit {
@@ -561,7 +615,7 @@ ul.checkbox_list {
 	width: 56px;
 	height: 25px;
 	right: 17px;
-	margin-bottom: -25px;
+	margin: -1px 0 0;
 	background: url(../images/popup-bit.png);
 }
 
@@ -573,8 +627,13 @@ ul.checkbox_list {
 
 .acf_popup ul li {
 	display: block;
-	margin: 0;
+	position: relative;
+	margin: -1px 0 0;
 	padding: 0;
+}
+
+.acf_popup ul li:first-child {
+	margin: 0;
 }
 
 .acf_popup ul li a {
@@ -583,11 +642,11 @@ ul.checkbox_list {
 	line-height: 14px;
 	padding: 7px 11px;
 	display: block;
-	border: 1px solid transparent;
-	border-bottom: 1px solid #333333;
-	border-top: 1px solid #555555;
+	border: 1px solid #333333;
+	box-shadow: inset 0 1px 0 #555555;
 	text-decoration: none;
 	min-width: 100px;
+	text-shadow: 0 1px 0 #222222;
 }
 
 .acf_popup ul li:first-child a {
@@ -596,22 +655,22 @@ ul.checkbox_list {
 
 .acf_popup ul li:last-child a {
 	border-radius: 0 0 5px 5px;
-	border-bottom-color: transparent;
 }
 
 .acf_popup ul li:only-child a {
 	border-radius: 5px 5px 5px 5px;
-	border-bottom-color: transparent;
 }
 
 .acf_popup ul li a:hover {
 	background: #2b8ab8;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2b8ab8', endColorstr='#227096'); /* for IE */
-	background: -webkit-gradient(linear, left top, left bottom, from(#2b8ab8), to(#227096)); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #2b8ab8,  #227096); /* for firefox 3.6+ */
-    border: 1px solid #227096 !important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3da0d1', endColorstr='#1f81b2'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#3da0d1), to(#1f81b2)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #3da0d1, #1f81b2); /* for firefox 3.6+ */
+    border: 1px solid #195572 !important;
+    box-shadow: inset 0 1px 0 #54b5e5;
     color: #FFFFFF;
-    text-shadow: 0 1px 0 #227096;
+    text-shadow: 0 1px 0 #082e40;
+    cursor: pointer;
 }
 
 .acf_flexible_content .no_value_message {

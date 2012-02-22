@@ -259,6 +259,46 @@ function acf_register_field($array)
 add_filter('acf_register_field', 'acf_register_field');
 
 
+/*--------------------------------------------------------------------------------------
+*
+*	register_field_group
+*
+*	@author Elliot Condon
+*	@since 3.0.6
+* 
+*-------------------------------------------------------------------------------------*/
+
+$GLOBALS['acf_register_field_group'] = array();
+
+function register_field_group($array)
+{
+	// add id
+	$array['id'] = uniqid();
+	$GLOBALS['acf_register_field_group'][] = $array;
+}
+
+function acf_register_field_group($array)
+{
+	$array = array_merge($array, $GLOBALS['acf_register_field_group']);
+	
+	// order field groups based on menu_order
+	// Obtain a list of columns
+	foreach ($array as $key => $row) {
+	    $menu_order[$key] = $row['menu_order'];
+	}
+	
+	// Sort the array with menu_order ascending
+	// Add $array as the last parameter, to sort by the common key
+	if(isset($menu_order))
+	{
+		array_multisort($menu_order, SORT_ASC, $array);
+	}
+	
+	
+	return $array;
+}
+add_filter('acf_register_field_group', 'acf_register_field_group');
+
 
 /*--------------------------------------------------------------------------------------
 *
@@ -313,5 +353,39 @@ function get_row_layout()
 	return $field[$i]['acf_fc_layout'];
 }
 
+
+/*--------------------------------------------------------------------------------------
+*
+*	shorcode support
+*
+*	@author Elliot Condon
+*	@since 1.1.1
+* 
+*-------------------------------------------------------------------------------------*/
+
+function acf_shortcode( $atts )
+{
+	// extract attributs
+	extract( shortcode_atts( array(
+		'field' => ""
+	), $atts ) );
+	
+	// $field is requird
+	if(!$field || $field == "")
+	{
+		return "";
+	}
+	
+	// get value and return it
+	$value = get_field($field);
+	
+	if(is_array($value))
+	{
+		$value = @implode(', ',$value);
+	}
+	
+	return $value;
+}
+add_shortcode( 'acf', 'acf_shortcode' );
 
 ?>

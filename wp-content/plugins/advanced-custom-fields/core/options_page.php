@@ -156,20 +156,15 @@ class Options_page
 			
 		}
 		
-		$include = $this->parent->get_input_metabox_ids(array('post_id' => 999999999), false);
-		if(empty($include))
+		$metabox_ids = $this->parent->get_input_metabox_ids(array('post_id' => 999999999), false);
+		$style = isset($metabox_ids[0]) ? $this->parent->get_input_style($metabox_ids[0]) : '';
+		echo '<style type="text/css" id="acf_style" >' .$style . '</style>';
+		
+		if(empty($metabox_ids))
 		{
 			$this->data['no_fields'] = true;
 			return false;	
 		}
-		
-		// create tyn mce instance for wysiwyg
-		//add_action('admin_head', 'wp_tiny_mce');
-		
-		// add css + javascript
-		echo '<link rel="stylesheet" type="text/css" href="'.$this->parent->dir.'/css/global.css" />';
-		echo '<link rel="stylesheet" type="text/css" href="'.$this->parent->dir.'/css/input.css" />';
-		//echo '<script type="text/javascript" src="'.$this->parent->dir.'/js/input.js" ></script>';
 		
 		// fields admin_head
 		foreach($this->parent->fields as $field)
@@ -177,36 +172,37 @@ class Options_page
 			$this->parent->fields[$field->name]->admin_head();
 		}
 		
+		// add css + javascript
+		echo '<link rel="stylesheet" type="text/css" href="'.$this->parent->dir.'/css/global.css" />';
+		echo '<link rel="stylesheet" type="text/css" href="'.$this->parent->dir.'/css/input.css" />';
+		echo '<script type="text/javascript" src="'.$this->parent->dir.'/js/input.js" ></script>';
+		echo '<script type="text/javascript">acf.validation_message = "' . __("Validation Failed. One or more fields below are required.",'acf') . '";</script>';
+		
+
 		// get acf's
-		$acfs = get_pages(array(
-			'numberposts' 	=> 	-1,
-			'post_type'		=>	'acf',
-			'sort_column' => 'menu_order',
-			'order' => 'ASC',
-			'include'	=>	$include
-		));
+		$acfs = $this->parent->get_field_groups();
 		if($acfs)
 		{
 			foreach($acfs as $acf)
 			{
-				
-				// load
-				$options = $this->parent->get_acf_options($acf->ID);
-				$fields = $this->parent->get_acf_fields($acf->ID);
-
-				// add meta box
-				add_meta_box(
-					'acf_' . $acf->ID, 
-					$acf->post_title, 
-					array($this->parent, 'meta_box_input'), 
-					'acf_options_page', 
-					$options['position'], 
-					'high', 
-					array( 'fields' => $fields )
-				);
+				// hide / show
+				$show = in_array($acf['id'], $metabox_ids) ? "true" : "false";
+				if($show == "true")
+				{				
+					// add meta box
+					add_meta_box(
+						'acf_' . $acf['id'], 
+						$acf['title'], 
+						array($this->parent, 'meta_box_input'), 
+						'acf_options_page', 
+						$acf['options']['position'], 
+						'high', 
+						array( 'fields' => $acf['fields'], 'options' => $acf['options'], 'show' => $show )
+					);
+				}
 			}
-
 		}
+		
 	}
 	
 	

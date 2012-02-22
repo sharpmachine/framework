@@ -5,7 +5,7 @@ function help_dashboard_widget_function() {
 	echo '
 		<ul style="width:40%;float:left;margin-right:55px;min-width:153px;">
 			<li style="color:#666;font-size:14px;border-bottom-style:solid;border-bottom-width:1px;border-bottom-color:#DFDFDF;padding-bottom:5px;margin-bottom:10px;">WordPress 101 Videos:</li>
-			<li><a href="http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/ target="_blank">The Dashboard</a></li>
+			<li><a href="http://wp.tutsplus.com/tutorials/wp101-video-training-part-1-the-dashboard/" target="_blank">The Dashboard</a></li>
 			<li><a href="http://wp.tutsplus.com/tutorials/wp-101-video-training-part-2-creating-a-new-post/" target="_blank">Creating A New Post</a></li>
 			<li><a href="http://wp.tutsplus.com/tutorials/wp-101-video-training-part-3-edit-existing-post/" target="_blank">Edit Existing Post</a></li>
 			<li><a href="http://wp.tutsplus.com/tutorials/wp-101-video-training-part-4-using-categories-and-tags/" target="_blank">Using Categories and Tag</a></li>

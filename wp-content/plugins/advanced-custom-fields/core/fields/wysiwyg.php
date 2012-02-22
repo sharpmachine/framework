@@ -21,10 +21,29 @@ class acf_Wysiwyg extends acf_Field
 		$this->title = __("Wysiwyg Editor",'acf');
 		
 		add_action('admin_head', array($this, 'add_tiny_mce'));
+		add_filter( 'wp_default_editor', array($this, 'my_default_editor'));
 		
    	}
    	
    	
+   	/*--------------------------------------------------------------------------------------
+	*
+	*	my_default_editor
+	*	- this temporarily fixes a bug which causes the editors to break when the html tab 
+	*	is activeon page load
+	*
+	*	@author Elliot Condon
+	*	@since 3.0.6
+	*	@updated 3.0.6
+	* 
+	*-------------------------------------------------------------------------------------*/
+   	
+   	function my_default_editor()
+   	{
+    	return 'tinymce'; // html or tinymce
+    }
+    
+	
    	/*--------------------------------------------------------------------------------------
 	*
 	*	add_tiny_mce
@@ -122,53 +141,59 @@ class acf_Wysiwyg extends acf_Field
 			$.fn.acf_activate_wysiwyg = function(){
 				
 				// tinymce must exist
-				if(!typeof(tinyMCE) == "object")
+				if(typeof(tinyMCE) != "object")
 				{
 					return false;
 				}
-	
-				
-				
+
 					
 				// add tinymce to all wysiwyg fields
 				$(this).find('.acf_wysiwyg textarea').each(function(){
 					
-					// reset buttons
-					tinyMCE.settings.theme_advanced_buttons1 = $.acf_wysiwyg_buttons.theme_advanced_buttons1;
-					tinyMCE.settings.theme_advanced_buttons2 = $.acf_wysiwyg_buttons.theme_advanced_buttons2;
-				
-					var toolbar = $(this).closest('.acf_wysiwyg').attr('data-toolbar');
-					
-					if(toolbar == 'basic')
+					if(tinyMCE != undefined && tinyMCE.settings != undefined)
 					{
-						tinyMCE.settings.theme_advanced_buttons1 = "bold,italic,formatselect,|,link,unlink,|,bullist,numlist,|,undo,redo";
-						tinyMCE.settings.theme_advanced_buttons2 = "";
-					}
-					else
-					{
-						// add images + code buttons
-						tinyMCE.settings.theme_advanced_buttons2 += ",code";
-					}
+						// reset buttons
+						tinyMCE.settings.theme_advanced_buttons1 = $.acf_wysiwyg_buttons.theme_advanced_buttons1;
+						tinyMCE.settings.theme_advanced_buttons2 = $.acf_wysiwyg_buttons.theme_advanced_buttons2;
 					
+						var toolbar = $(this).closest('.acf_wysiwyg').attr('data-toolbar');
+						
+						if(toolbar == 'basic')
+						{
+							tinyMCE.settings.theme_advanced_buttons1 = "bold,italic,formatselect,|,link,unlink,|,bullist,numlist,|,undo,redo";
+							tinyMCE.settings.theme_advanced_buttons2 = "";
+						}
+						else
+						{
+							// add images + code buttons
+							tinyMCE.settings.theme_advanced_buttons2 += ",code";
+						}
+					}
 
-					//console.log( $(this).attr('id') + ': before: ' + tinyMCE.settings.theme_advanced_buttons1);
-					//tinyMCE.execCommand("mceRemoveControl", false, $(this).attr('id'));
 					tinyMCE.execCommand('mceAddControl', false, $(this).attr('id'));
 
-
 				});
-
 				
 			};
 			
 			
 			$(window).load(function(){
 				
-				// store variables
-				$.acf_wysiwyg_buttons.theme_advanced_buttons1 = tinyMCE.settings.theme_advanced_buttons1;
-				$.acf_wysiwyg_buttons.theme_advanced_buttons2 = tinyMCE.settings.theme_advanced_buttons2;
+				// timout seems to fix duplicate editors
+				setTimeout(function(){
 				
-				$('#poststuff').acf_activate_wysiwyg();
+					// store variables
+					if(tinyMCE != undefined && tinyMCE.settings != undefined)
+					{
+						$.acf_wysiwyg_buttons.theme_advanced_buttons1 = tinyMCE.settings.theme_advanced_buttons1;
+						$.acf_wysiwyg_buttons.theme_advanced_buttons2 = tinyMCE.settings.theme_advanced_buttons2;
+						
+					}
+				
+					$('#poststuff').acf_activate_wysiwyg();
+					
+				}, 10);
+				
 				
 			});
 			
@@ -201,23 +226,6 @@ class acf_Wysiwyg extends acf_Field
 			
 		})(jQuery);
 		</script>
-		<style type="text/css">
-			.acf_wysiwyg iframe{ 
-				min-height: 250px;
-			}
-			
-			#post-body .acf_wysiwyg .wp_themeSkin .mceStatusbar a.mceResize {
-				top: -2px !important;
-			}
-			
-			.acf_wysiwyg .editor-toolbar {
-				display: none;
-			}
-			
-			.acf_wysiwyg #editorcontainer {
-				background: #fff;
-			}
-		</style>
 		<?php
 	}
 	
@@ -325,7 +333,7 @@ class acf_Wysiwyg extends acf_Field
 				<?php endif; ?>
 			<?php endif; ?>
 			<div id="editorcontainer" class="wp-editor-container">
-				<textarea id="<?php echo $field['name']; ?>" name="<?php echo $field['name']; ?>" ><?php echo wp_richedit_pre($field['value']); ?></textarea>
+				<textarea id="<?php echo $id; ?>" name="<?php echo $field['name']; ?>" ><?php echo wp_richedit_pre($field['value']); ?></textarea>
 			</div>
 		</div>
 		<?php
