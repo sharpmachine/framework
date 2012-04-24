@@ -1,6 +1,5 @@
-		<section id="sidebar" class="span-4 last">
-			<div id="primary" class="widget-area" role="complementary">
-				<ul class="xoxo">
+		<section id="sidebar" class="span-5 last">
+				<ul>
 	
 	<?php
 		/* When we call the dynamic_sidebar() function, it'll spit out
