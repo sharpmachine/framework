@@ -50,7 +50,7 @@
     text-shadow: 0 1px 0 #FFFFFF;
 }
 
-#poststuff .acf_postbox label.field_label .required {
+.field.required label span.required {
 	color: #CC0000;
 }
 
@@ -99,8 +99,31 @@
 	resize: none;
 }
 
-.acf_postbox .field  select{
-	padding: 2px;
+
+#poststuff .acf_postbox .field select optgroup {
+	padding: 5px;
+	background: #fff;
+	border-top: #DFDFDF solid 1px;
+}
+
+#poststuff .acf_postbox .field select option {
+	padding: 3px;
+}
+
+#poststuff .acf_postbox .field select optgroup option {
+	padding-left: 6px;
+}
+
+#poststuff .acf_postbox .field select optgroup:nth-child(2n) {
+    background: #F9F9F9;
+}
+
+#poststuff .acf_postbox .field select[multiple] {
+	padding: 0;
+}
+
+#poststuff .acf_postbox .field select[multiple] > optgroup:first-child {
+	border-top: 0 none;
 }
 
 /*---------------------------------------------------------------------------------------------
@@ -179,6 +202,10 @@
 	display: none;
 }
 
+.acf_image_uploader input.button {
+	width: auto;
+}
+
 /*---------------------------------------------------------------------------------------------
 	File Upload
 ---------------------------------------------------------------------------------------------*/
@@ -208,6 +235,10 @@
 	height: 
 }
 
+.acf_file_uploader input.button {
+	width: auto;
+}
+
 /*---------------------------------------------------------------------------------------------
 	Repeater
 ---------------------------------------------------------------------------------------------*/
@@ -220,11 +251,15 @@
 
 }
 
+.repeater > table > thead > tr > th {
+	width: auto;
+}
+
 .repeater > table > tbody > tr > td {
 	background: transparent;
     border-right: 1px solid #ededed;
     border-bottom: 1px solid #ededed;
-    padding: 8px;
+    padding: 8px !important;
     position: relative;
 }
 
@@ -280,10 +315,10 @@ a.remove_row:hover {
 	background-position: 0 100%;
 }
 
-.repeater table tr td.order,
-.repeater table tr th.order{
-	width: 16px;
-	text-align: center;
+.repeater > table > thead > tr > th.order,
+.repeater > table > tbody > tr > td.order{
+	width: 16px !important;
+	text-align: center !important;
 	vertical-align: middle;
 	color: #aaa;
 	text-shadow: #fff 0 1px 0;
@@ -293,8 +328,8 @@ a.remove_row:hover {
 	cursor: move;
 }
 
-.repeater table tr td.remove,
-.repeater table tr th.remove {
+.repeater > table > thead > tr > th.remove,
+.repeater > table > tbody > tr > td.remove{
 	width: 16px;
 	vertical-align: middle;
 }
@@ -559,6 +594,10 @@ ul.checkbox_list {
 	padding-top: 0;
 }
 
+.acf_flexible_content > .values > table > thead > tr > th {
+	width: auto;
+}
+
 .acf_flexible_content table tr td.order,
 .acf_flexible_content table tr th.order{
 	width: 16px;
@@ -693,3 +732,41 @@ ul.checkbox_list {
 	border: #AAAAAA solid 1px;
 	border-radius: 4px;
 }
+
+
+/*---------------------------------------------------------------------------------------------
+	Taxonomy Edit Error
+---------------------------------------------------------------------------------------------*/
+
+.form-table {
+	margin-left: 1px; /* Needed to show the left border - WP has an overflow hidden */
+}
+.form-table .field.error th,
+.form-table .field.error td  {
+	background: #FFEBE8;
+	border: #CC0000 solid 1px;
+}
+
+.form-table .field.error th{
+	border-right: 0 none;
+}
+.form-table .field.error td{
+	border-left: 0 none;
+}
+
+
+.form-table .field.error label {
+	color: #CC0000;
+}
+
+
+/*---------------------------------------------------------------------------------------------
+*
+*	Everythign Field fixes
+*
+*---------------------------------------------------------------------------------------------*/
+
+.media-item .describe .repeater > table > thead > tr > th {
+	width: auto;
+}
+

@@ -223,7 +223,7 @@ class acf_Repeater extends acf_Field
 		<div class="fields">
 
 			<div class="no_fields_message" <?php if(count($field['sub_fields']) > 1){ echo 'style="display:none;"'; } ?>>
-				<?php _e("No fields. Click the \"+ Add Field button\" to create your first field.",'acf'); ?>
+				<?php _e("No fields. Click the \"+ Add Sub Field button\" to create your first field.",'acf'); ?>
 			</div>
 	
 			<?php foreach($field['sub_fields'] as $key2 => $sub_field): ?>
@@ -238,11 +238,11 @@ class acf_Repeater extends acf_Field
 							<td class="field_order"><span class="circle"><?php echo ($key2+1); ?></span></td>
 							<td class="field_label">
 								<strong>
-									<a class="acf_edit_field" title="Edit this Field" href="javascript:;"><?php echo $sub_field['label']; ?></a>
+									<a class="acf_edit_field" title="<?php _e("Edit this Field",'acf'); ?>" href="javascript:;"><?php echo $sub_field['label']; ?></a>
 								</strong>
 								<div class="row_options">
-									<span><a class="acf_edit_field" title="Edit this Field" href="javascript:;">Edit</a> | </span>
-									<span><a class="acf_delete_field" title="Delete this Field" href="javascript:;">Delete</a>
+									<span><a class="acf_edit_field" title="<?php _e("Edit this Field",'acf'); ?>" href="javascript:;"><?php _e("Edit",'acf'); ?></a> | </span>
+									<span><a class="acf_delete_field" title="<?php _e("Delete this Field",'acf'); ?>" href="javascript:;"><?php _e("Delete",'acf'); ?></a>
 								</div>
 							</td>
 							<td class="field_name"><?php echo $sub_field['name']; ?></td>
@@ -330,7 +330,7 @@ class acf_Repeater extends acf_Field
 		</div>
 		<div class="table_footer">
 			<div class="order_message"></div>
-			<a href="javascript:;" id="add_field" class="acf-button"><?php _e('+ Add Field','acf'); ?></a>
+			<a href="javascript:;" id="add_field" class="acf-button"><?php _e('+ Add Sub Field','acf'); ?></a>
 		</div>
 	</div>
 	</td>
@@ -362,8 +362,8 @@ class acf_Repeater extends acf_Field
 			'value'	=>	$field['layout'],
 			'layout'	=>	'horizontal',
 			'choices'	=>	array(
-				'table'	=>	'Table (default)',
-				'row'	=>	'Row'
+				'table'	=>	__("Table (default)",'acf'),
+				'row'	=>	__("Row",'acf')
 			)
 		));
 		?>
@@ -499,7 +499,19 @@ class acf_Repeater extends acf_Field
 	{
 		// vars
 		$values = array();
-		$total = (int) get_post_meta($post_id, $field['name'], true);
+		$total = 0;
+		
+		
+		// get total rows
+		if( is_numeric($post_id) )
+		{
+			$total = (int) get_post_meta($post_id, $field['name'], true);
+		}
+		else
+		{
+			$total = (int) get_option( $post_id . '_' . $field['name'] );
+		}
+		
 		
 		if($total > 0)
 		{
@@ -519,10 +531,9 @@ class acf_Repeater extends acf_Field
 				}
 			}
 			
-			return $values;
 		}
 		
-		return array();
+		return $values;
 	}
 	
 	/*--------------------------------------------------------------------------------------
@@ -538,7 +549,18 @@ class acf_Repeater extends acf_Field
 	{
 		// vars
 		$values = array();
-		$total = (int) get_post_meta($post_id, $field['name'], true);
+		$total = 0;
+		
+		
+		// get total rows
+		if( is_numeric($post_id) )
+		{
+			$total = (int) get_post_meta($post_id, $field['name'], true);
+		}
+		else
+		{
+			$total = (int) get_option( $post_id . '_' . $field['name'] );
+		}
 		
 		if($total > 0)
 		{

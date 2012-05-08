@@ -458,10 +458,6 @@ table#location_rules a.add:hover {
 	background-position: 0 100%;
 }
 
-.location_rules p select {
-	width: 50px;
-}
-
 table#location_rules .acf-loading {
 	margin: 0 auto;
 	margin-top: -2px;
@@ -573,7 +569,7 @@ table.acf_input table.acf_cf_meta select {
 }
 
 #submitdiv a.acf-button {
-	width: 150px;
+	width: auto;
 	margin: 0 0 10px;
 }
 
@@ -587,3 +583,30 @@ table.acf_input table.acf_cf_meta select {
 	display: none;
 }
 
+
+/*---------------------------------------------------------------------------------------------
+*
+*	Select with Optgroup
+*	
+*---------------------------------------------------------------------------------------------*/
+#acf_fields select optgroup,
+#acf_location select optgroup {
+	padding: 5px;
+	background: #F9F9F9;
+	border-bottom: #DFDFDF solid 1px;
+}
+
+#acf_fields select option,
+#acf_location select option {
+	padding: 3px;
+}
+
+#acf_fields select optgroup option,
+#acf_location select optgroup option {
+	padding-left: 6px;
+}
+
+#acf_fields select optgroup:nth-child(2n),
+#acf_location select optgroup:nth-child(2n) {
+    background: #FCFCFC;
+}

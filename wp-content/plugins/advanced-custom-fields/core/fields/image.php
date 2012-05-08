@@ -184,8 +184,8 @@ class acf_Image extends acf_Field
 					'value'	=>	$field['save_format'],
 					'layout'	=>	'horizontal',
 					'choices' => array(
-						'url'	=>	'Image URL',
-						'id'	=>	'Attachment ID'
+						'url'	=>	__("Image URL",'acf'),
+						'id'	=>	__("Attachment ID",'acf')
 					)
 				));
 				?>
@@ -203,10 +203,10 @@ class acf_Image extends acf_Field
 					'value'	=>	$field['preview_size'],
 					'layout'	=>	'horizontal',
 					'choices' => array(
-						'thumbnail'	=>	'Thumbnail',
-						'medium'	=>	'Medium',
-						'large'		=>	'Large',
-						'full'		=>	'Full'
+						'thumbnail'	=>	__("Thumbnail",'acf'),
+						'medium'	=>	__("Medium",'acf'),
+						'large'		=>	__("Large",'acf'),
+						'full'		=>	__("Full",'acf')
 					)
 				));
 				?>

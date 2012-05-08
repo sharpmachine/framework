@@ -365,7 +365,8 @@
 		// does it have options?
 		if(!location_rules.find('td.param select option[value="options_page"]').exists())
 		{
-			location_rules.find('td.param select').append('<option value="options_page" disabled="true">Options Page (Unlock field with activation code)</option>');
+			var html = $('#acf_location_options_deactivated').html();
+			location_rules.find('td.param select').append( html );
 				
 		}
 		

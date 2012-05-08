@@ -46,8 +46,8 @@ var acf = {
 			acf.valdation = true;
 			
 			// show message
-			$('#post').siblings('#message').remove();
-			$('#post').before('<div id="message" class="error"><p>' + acf.validation_message + '</p></div>');
+			$(this).siblings('#message').remove();
+			$(this).before('<div id="message" class="error"><p>' + acf.validation_message + '</p></div>');
 			
 			
 			// hide ajax stuff on submit button
@@ -74,7 +74,7 @@ var acf = {
 	
 	function do_validation(){
 		
-		$('.acf_postbox:visible .field.required').each(function(){
+		$('.field.required:visible, .form-field.required').each(function(){
 			
 			var validation = true;
 
@@ -157,17 +157,17 @@ var acf = {
 	*/
 
 	// inputs / textareas
-	$('.acf_postbox .field.required input, .acf_postbox .field.required textarea, .acf_postbox .field.required select').live('focus', function(){
+	$('.field.required input, .field.required textarea, .field.required select').live('focus', function(){
 		$(this).closest('.field').removeClass('error');
 	});
 	
 	// checkbox
-	$('.acf_postbox .field.required input:checkbox').live('click', function(){
+	$('.field.required input:checkbox').live('click', function(){
 		$(this).closest('.field').removeClass('error');
 	});
 	
 	// wysiwyg
-	$('.acf_postbox .field.required .acf_wysiwyg').live('mousedown', function(){
+	$('.field.required .acf_wysiwyg').live('mousedown', function(){
 		$(this).closest('.field').removeClass('error');
 	});
 	
@@ -189,10 +189,26 @@ var acf = {
 			farbtastic = $.farbtastic('#acf_color_picker');
 		}
 		
+	});
+	
+	
+	// update colors
+	$(document).live('acf/setup_fields', function(e, postbox){
+		
+		$(postbox).find('input.acf_color_picker').each(function(i){
+		
+			$.farbtastic( $(this) ).setColor( $(this).val() ).hsl[2] > 0.5 ? color = '#000' : color = '#fff';
+			$(this).css({ 
+				backgroundColor : $(this).val(),
+				color : color
+			});
+			
+		});
 		
 	});
+	
 				
-	$('#poststuff input.acf_color_picker').live('focus', function(){
+	$('input.acf_color_picker').live('focus', function(){
 		
 		var input = $(this);
 		
@@ -220,7 +236,7 @@ var acf = {
 	*  @created: 1/03/2011
 	*/
 	
-	$('#poststuff .acf_file_uploader .no-file .button').live('click', function(){
+	$('.acf_file_uploader .no-file .button').live('click', function(){
 				
 		// vars
 		var div = $(this).closest('.acf_file_uploader');
@@ -229,12 +245,12 @@ var acf = {
 		window.acf_div = div;
 			
 		// show the thickbox
-		tb_show('Add Image to field', acf.admin_url + 'media-upload.php?post_id=' + acf.post_id + '&type=file&acf_type=file&TB_iframe=1');
+		tb_show('Add File to field', acf.admin_url + 'media-upload.php?post_id=' + acf.post_id + '&type=file&acf_type=file&TB_iframe=1');
 	
 		return false;
 	});
 		
-	$('#poststuff .acf_file_uploader .acf-file-delete').live('click', function(){
+	$('.acf_file_uploader .acf-file-delete').live('click', function(){
 		
 		// vars
 		var div = $(this).closest('.acf_file_uploader');
@@ -253,7 +269,7 @@ var acf = {
 	*  @created: 1/03/2011
 	*/
 	
-	$('#poststuff .acf_image_uploader .button').live('click', function(){
+	$('.acf_image_uploader .button').live('click', function(){
 				
 		// vars
 		var div = $(this).closest('.acf_image_uploader');
@@ -268,7 +284,7 @@ var acf = {
 		return false;
 	});
 		
-	$('#poststuff .acf_image_uploader .remove_image').live('click', function(){
+	$('.acf_image_uploader .remove_image').live('click', function(){
 		
 		// vars
 		var div = $(this).closest('.acf_image_uploader');
@@ -288,7 +304,7 @@ var acf = {
 	*/
 	
 	// on mouse over, make list sortable
-	$('#poststuff .acf_relationship').live('mouseenter', function(){
+	$('.acf_relationship').live('mouseenter', function(){
 		
 		if($(this).attr('data-is_setup')) return false;
 		
@@ -330,7 +346,7 @@ var acf = {
 	};
 	
 	// add from left to right
-	$('#poststuff .acf_relationship .relationship_left .relationship_list a').live('click', function(){
+	$('.acf_relationship .relationship_left .relationship_list a').live('click', function(){
 		
 		// vars
 		var id = $(this).attr('data-post_id');
@@ -360,7 +376,7 @@ var acf = {
 	});
 	
 	// remove from right to left
-	$('#poststuff .acf_relationship .relationship_right .relationship_list a').live('click', function(){
+	$('.acf_relationship .relationship_right .relationship_list a').live('click', function(){
 		
 		// vars
 		var id = $(this).attr('data-post_id');
@@ -383,7 +399,7 @@ var acf = {
 	$.expr[':'].Contains = function(a,i,m){
     	return (a.textContent || a.innerText || "").toUpperCase().indexOf(m[3].toUpperCase())>=0;
 	};
-	$('#poststuff .acf_relationship input.relationship_search').live('change', function()
+	$('.acf_relationship input.relationship_search').live('change', function()
 	{	
 		// vars
 		var filter = $(this).val();
@@ -488,10 +504,19 @@ var acf = {
 		
 	$(window).load(function(){
 		
+		
+		setTimeout(function(){
+		
+			$(document).trigger('acf/setup_fields', $('#poststuff'));
+
+		}, 1);
+		
+		
 		if(typeof(tinyMCE) != "object")
 		{
 			return false;
 		}
+
 
 		// store variables
 		if(tinyMCE != undefined && tinyMCE.settings != undefined)
@@ -500,22 +525,21 @@ var acf = {
 			acf_wysiwyg_buttons.theme_advanced_buttons2 = tinyMCE.settings.theme_advanced_buttons2;
 		}
 		
-		$(document).trigger('acf/setup_fields', $('#poststuff'));
 		
 		// if editor_mode == html, toggle the html mode button on the default editor
 		if(acf.editor_mode && acf.editor_mode == "html")
 		{
 			// click html tab after the wysiwyg has been initialed to prevent dual editor buttons
 			setTimeout(function(){
-				$('#poststuff #postdivrich #content-html').trigger('click');
-			}, 1);
+				$('#postdivrich #content-html').trigger('click');
+			}, 2);
 			
 		}
 		
 	});
 	
 	// Sortable: Start
-	$('#poststuff .repeater > table > tbody, #poststuff .acf_flexible_content > .values').live( "sortstart", function(event, ui) {
+	$('.repeater > table > tbody, .acf_flexible_content > .values').live( "sortstart", function(event, ui) {
 		
 		$(ui.item).find('.acf_wysiwyg textarea').each(function(){
 			tinyMCE.execCommand("mceRemoveControl", false, $(this).attr('id'));
@@ -524,7 +548,7 @@ var acf = {
 	});
 	
 	// Sortable: End
-	$('#poststuff .repeater > table > tbody, #poststuff .acf_flexible_content > .values').live( "sortstop", function(event, ui) {
+	$('.repeater > table > tbody, .acf_flexible_content > .values').live( "sortstop", function(event, ui) {
 		
 		$(ui.item).find('.acf_wysiwyg textarea').each(function(){
 			tinyMCE.execCommand("mceAddControl", false, $(this).attr('id'));
@@ -599,7 +623,7 @@ var acf = {
 	});
 	
 	// add field
-	$('#poststuff .repeater #r_add_row').live('click', function(){
+	$('.repeater #r_add_row').live('click', function(){
 		
 		var div = $(this).closest('.repeater');
 		var row_limit = parseInt(div.attr('data-row_limit'));			
@@ -657,7 +681,7 @@ var acf = {
 	
 	
 	// remove field
-	$('#poststuff .repeater a#r_remove_row').live('click', function(){
+	$('.repeater a#r_remove_row').live('click', function(){
 		
 		var div = $(this).closest('.repeater');
 		var tr = $(this).closest('tr');
@@ -706,7 +730,7 @@ var acf = {
 	
 	
 	// add row
-	$('#poststuff .acf_flexible_content #fc_add_row').live('click', function(){
+	$('.acf_flexible_content #fc_add_row').live('click', function(){
 		
 		if($(this).hasClass('active'))
 		{
@@ -722,7 +746,7 @@ var acf = {
 	
 	
 	// remove row
-	$('#poststuff .acf_flexible_content #fc_remove_row').live('click', function(){
+	$('.acf_flexible_content #fc_remove_row').live('click', function(){
 		
 		var div = $(this).closest('.acf_flexible_content');
 		var table = $(this).closest('table');
@@ -750,7 +774,7 @@ var acf = {
 	
 	
 	// add layout
-	$('#poststuff .acf_flexible_content .table_footer .acf_popup ul li a').live('click', function(){
+	$('.acf_flexible_content .table_footer .acf_popup ul li a').live('click', function(){
 		
 		// vars
 		var layout = $(this).attr('data-layout');
@@ -814,7 +838,7 @@ var acf = {
 	*  @created: 4/03/2011
 	*/
 	
-	$('#poststuff input.acf_datepicker').live('focus', function(){
+	$('input.acf_datepicker').live('focus', function(){
 
 		var input = $(this);
 		

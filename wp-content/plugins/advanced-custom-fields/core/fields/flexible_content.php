@@ -256,7 +256,10 @@ class acf_Flexible_content extends acf_Field
 							'type'	=>	'select',
 							'name'	=>	'fields['.$key.'][layouts][' . $layout_key . '][display]',
 							'value'	=>	$layout['display'],
-							'choices'	=>	array('table' => 'Table', 'row' => 'Row')
+							'choices'	=>	array(
+								'table' => __("Table",'acf'), 
+								'row' => __("Row",'acf')
+							)
 						));
 						?>
 					</td>
@@ -279,7 +282,7 @@ class acf_Flexible_content extends acf_Field
 		<div class="fields">
 
 			<div class="no_fields_message" <?php if(count($layout['sub_fields']) > 1){ echo 'style="display:none;"'; } ?>>
-				<?php _e("No fields. Click the \"+ Add Field button\" to create your first field.",'acf'); ?>
+				<?php _e("No fields. Click the \"+ Add Sub Field button\" to create your first field.",'acf'); ?>
 			</div>
 	
 			<?php foreach($layout['sub_fields'] as $key2 => $sub_field): ?>
@@ -295,11 +298,11 @@ class acf_Flexible_content extends acf_Field
 							<td class="field_order"><span class="circle"><?php echo ($key2+1); ?></span></td>
 							<td class="field_label">
 								<strong>
-									<a class="acf_edit_field" title="Edit this Field" href="javascript:;"><?php echo $sub_field['label']; ?></a>
+									<a class="acf_edit_field" title="<?php _e("Edit this Field",'acf'); ?>" href="javascript:;"><?php echo $sub_field['label']; ?></a>
 								</strong>
 								<div class="row_options">
-									<span><a class="acf_edit_field" title="Edit this Field" href="javascript:;">Edit</a> | </span>
-									<span><a class="acf_delete_field" title="Delete this Field" href="javascript:;">Delete</a>
+									<span><a class="acf_edit_field" title="<?php _e("Edit this Field",'acf'); ?>" href="javascript:;"><?php _e("Edit",'acf'); ?></a> | </span>
+									<span><a class="acf_delete_field" title="<?php _e("Delete this Field",'acf'); ?>" href="javascript:;"><?php _e("Delete",'acf'); ?></a>
 								</div>
 							</td>
 							<td class="field_name"><?php echo $sub_field['name']; ?></td>
@@ -385,7 +388,7 @@ class acf_Flexible_content extends acf_Field
 		</div>
 		<div class="table_footer">
 			<div class="order_message"></div>
-			<a href="javascript:;" id="add_field" class="acf-button"><?php _e('+ Add Field','acf'); ?></a>
+			<a href="javascript:;" id="add_field" class="acf-button"><?php _e('+ Add Sub Field','acf'); ?></a>
 		</div>
 	</div>
 	</td>
@@ -574,7 +577,18 @@ class acf_Flexible_content extends acf_Field
 
 		// vars
 		$values = array();
-		$layout_order = get_post_meta($post_id, $field['name'], true);
+		$layout_order = false;
+		
+		
+		// get total rows
+		if( is_numeric($post_id) )
+		{
+			$layout_order = get_post_meta($post_id, $field['name'], true);
+		}
+		else
+		{
+			$layout_order = get_option( $post_id . '_' . $field['name'] );
+		}
 		
 
 		if($layout_order)
@@ -602,11 +616,9 @@ class acf_Flexible_content extends acf_Field
 					}
 				}
 			}
-			
-			return $values;
 		}
 		
-		return array();	
+		return $values;	
 	}
 	
 	
@@ -629,7 +641,18 @@ class acf_Flexible_content extends acf_Field
 
 		// vars
 		$values = array();
-		$layout_order = get_post_meta($post_id, $field['name'], true);
+		$layout_order = false;
+		
+		
+		// get total rows
+		if( is_numeric($post_id) )
+		{
+			$layout_order = get_post_meta($post_id, $field['name'], true);
+		}
+		else
+		{
+			$layout_order = get_option( $post_id . '_' . $field['name'] );
+		}
 		
 
 		if($layout_order)
