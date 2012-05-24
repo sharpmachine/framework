@@ -486,3 +486,39 @@ function bootstrap_nav_menu_items($items) {
     return $items;
 }
 add_filter( 'wp_nav_menu_items', 'bootstrap_nav_menu_items' );
+
+class Bootstrap_Menu_Walker extends Walker_Nav_Menu{
+	function start_lvl(&$output, $depth) {
+		$indent = str_repeat("\t", $depth);
+		$output .= "\n$indent<ul class=\"dropdown-menu\">\n";
+	}
+	function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
+		if ( !$element )
+			return;
+		$id_field = $this->db_fields['id'];
+		if ( is_array( $args[0] ) )
+			$args[0]['has_children'] = ! empty( $children_elements[$element->$id_field] );		
+		if( ! empty( $children_elements[$element->$id_field] ) )
+			array_push($element->classes,'dropdown');
+		$cb_args = array_merge( array(&$output, $element, $depth), $args);	
+		call_user_func_array(array(&$this, 'start_el'), $cb_args);
+		$id = $element->$id_field;
+		if ( ($max_depth == 0 || $max_depth > $depth+1 ) && isset( $children_elements[$id]) ) {
+			foreach( $children_elements[ $id ] as $child ){
+				if ( !isset($newlevel) ) {
+					$newlevel = true;
+					$cb_args = array_merge( array(&$output, $depth), $args);
+					call_user_func_array(array(&$this, 'start_lvl'), $cb_args);
+				}
+				$this->display_element( $child, $children_elements, $max_depth, $depth + 1, $args, $output );
+			}
+			unset( $children_elements[ $id ] );
+		}
+		if ( isset($newlevel) && $newlevel ){
+			$cb_args = array_merge( array(&$output, $depth), $args);
+			call_user_func_array(array(&$this, 'end_lvl'), $cb_args);
+		}
+		$cb_args = array_merge( array(&$output, $element, $depth), $args);
+		call_user_func_array(array(&$this, 'end_el'), $cb_args);
+	}
+}
