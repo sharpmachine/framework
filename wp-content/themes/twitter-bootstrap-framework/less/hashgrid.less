@@ -1,0 +1,26 @@
+@import "variables.less";
+
+/* Hash Grid - Remove before moving to production
+-------------------------------------------------------------- */
+#grid {
+    width: @gridRowWidth;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -((@gridRowWidth / 2) + 20);
+	div.vert {
+    	width: @gridColumnWidth - 1px;
+    	border: solid darkturquoise;
+    	border-width: 0 1px;
+    	margin-right: @gridGutterWidth - 1px;
+	}
+	div.vert.first-line {
+		margin-left: 20px;
+	}
+	div.horiz {
+		height: @baseLineHeight - 3px;
+	    border-bottom: 1px dotted darkgray;
+	    margin: 0;
+	    padding: 0;
+	}
+}
