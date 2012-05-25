@@ -4397,18 +4397,12 @@ h3#reply-title {
   width: auto;
 }
 #entry-author-info {
-  background: #f2f7fc;
-  border-top: 4px solid #000;
   clear: both;
-  font-size: 14px;
-  line-height: 20px;
   margin: 24px 0;
   overflow: hidden;
   padding: 18px 20px;
 }
 #entry-author-info #author-avatar {
-  background: #fff;
-  border: 1px solid #e7e7e7;
   float: left;
   height: 60px;
   margin: 0 -104px 0 0;
@@ -4417,12 +4411,6 @@ h3#reply-title {
 #entry-author-info #author-description {
   float: left;
   margin: 0 0 0 104px;
-}
-#entry-author-info h2 {
-  color: #000;
-  font-size: 100%;
-  font-weight: bold;
-  margin-bottom: 0;
 }
 .pull-right {
   float: right;
