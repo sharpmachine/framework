@@ -1,4 +1,5 @@
-    </div> <!-- /container -->
+    		</div><!-- .row -->
+		</div> <!-- /container -->
 		<footer role="contentinfo">
 			<div class="container">
 				<div id="site-info">
@@ -34,5 +35,5 @@
 	<script src="<?php bloginfo ('template_directory'); ?>/js/hashgrid.js" type="text/javascript"></script>
 
 <?php wp_footer(); ?>
-  </body>
+	</body>
 </html>
