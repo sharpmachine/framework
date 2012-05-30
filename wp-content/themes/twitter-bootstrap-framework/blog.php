@@ -48,12 +48,7 @@ get_header(); ?>
 
 			<?php endwhile; ?>
 	
-			<?php if (  $wp_query->max_num_pages > 1 ) : ?>
-							<?php if(function_exists('wp_paginate')) {
-			    wp_paginate();
-			} ?>
-			
-			<?php endif; ?>
+		<?php bootstrap_pagination(); ?>
 
 			<?php $wp_query = null; $wp_query = $temp;?>
 			

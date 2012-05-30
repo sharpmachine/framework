@@ -16,16 +16,6 @@
  */
 ?>
 
-<?php /* Display navigation to next/previous pages when applicable */ ?>
-<?php if ( $wp_query->max_num_pages > 1 ) : ?>
-	<!-- WP-Pagination Plugin -->
-	<div id="nav-above" class="navigation">
-		<?php if(function_exists('wp_paginate')) {
-    wp_paginate();
-} ?>
-	</div><!-- #nav-above -->
-<?php endif; ?>
-
 <?php /* If there are no posts to display, such as an empty archive page */ ?>
 <?php if ( ! have_posts() ) : ?>
 	<div id="post-0" class="post error404 not-found">
@@ -171,12 +161,4 @@
 
 <?php endwhile; // End the loop. Whew. ?>
 
-<?php /* Display navigation to next/previous pages when applicable */ ?>
-<?php if (  $wp_query->max_num_pages > 1 ) : ?>
-			<!-- WP-Pagination Plugin -->
-				<div id="nav-below" class="navigation">
-					<?php if(function_exists('wp_paginate')) {
-    wp_paginate();
-} ?>
-				</div><!-- #nav-below -->
-<?php endif; ?>
+<?php bootstrap_pagination(); ?>
