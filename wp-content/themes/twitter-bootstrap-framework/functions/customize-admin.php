@@ -17,8 +17,8 @@ function modify_footer_admin () {
 
 add_filter('admin_footer_text', 'modify_footer_admin');
 
-//Custom logo should be 20 x 20
-function custom_logo() {
+//Admin style overrides
+function admin_overrides() {
   echo '<style type="text/css">
 	#cpt_info_box {
 		display: none !important; /* Hides Custom Post Type info box */
@@ -26,7 +26,7 @@ function custom_logo() {
     </style>';
 }
 
-add_action('admin_head', 'custom_logo');
+add_action('admin_head', 'admin_overrides');
 
 //Login Logo
 function custom_login_logo() {
@@ -103,13 +103,6 @@ function my_admin_bar_link() {
 	'title' => __( 'Docs'),
 	'href' => 'http://docs.'. substr(get_bloginfo('url'), 7).''
 	) );
-
-	// $wp_admin_bar->add_menu( array(
-	// 	'id' => 'test',
-	// 	'parent' => 'wp-logo-external',
-	// 	'title' => __( 'Sharp Hello Media'),
-	// 	'href' => admin_url('add-link.php')
-	// 	) );
 }
 add_action('admin_bar_menu', 'my_admin_bar_link');
 ?>

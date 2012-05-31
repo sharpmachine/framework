@@ -9,7 +9,7 @@ include 'functions/customize-admin.php';
  * is designed for, generally via the style.css stylesheet.
  */
 if ( ! isset( $content_width ) )
-	$content_width = 640;
+	$content_width = 940;
 
 /** Tell WordPress to run smm_setup() when the 'after_setup_theme' hook is run. */
 add_action( 'after_setup_theme', 'smm_setup' );
@@ -34,7 +34,7 @@ if ( ! function_exists( 'smm_setup' ) ):
  * @uses register_default_headers() To register the default custom header images provided with the theme.
  * @uses set_post_thumbnail_size() To set a custom post thumbnail size.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  */
 remove_action('wp_head', 'wp_generator');  
 
@@ -65,114 +65,6 @@ function smm_setup() {
 	register_nav_menus( array(
 		'primary' => __( 'Primary Navigation', 'smm' ),
 	) );
-
-	// This theme allows users to set a custom background
-	add_custom_background();
-
-	// Your changeable header business starts here
-	if ( ! defined( 'HEADER_TEXTCOLOR' ) )
-		define( 'HEADER_TEXTCOLOR', '' );
-
-	// No CSS, just IMG call. The %s is a placeholder for the theme template directory URI.
-	if ( ! defined( 'HEADER_IMAGE' ) )
-		define( 'HEADER_IMAGE', '%s/images/headers/path.jpg' );
-
-	// The height and width of your custom header. You can hook into the theme's own filters to change these values.
-	// Add a filter to smm_header_image_width and smm_header_image_height to change these values.
-	define( 'HEADER_IMAGE_WIDTH', apply_filters( 'smm_header_image_width', 940 ) );
-	define( 'HEADER_IMAGE_HEIGHT', apply_filters( 'smm_header_image_height', 198 ) );
-
-	// We'll be using post thumbnails for custom header images on posts and pages.
-	// We want them to be 940 pixels wide by 198 pixels tall.
-	// Larger images will be auto-cropped to fit, smaller ones will be ignored. See header.php.
-	set_post_thumbnail_size( HEADER_IMAGE_WIDTH, HEADER_IMAGE_HEIGHT, true );
-
-	// Don't support text inside the header image.
-	if ( ! defined( 'NO_HEADER_TEXT' ) )
-		define( 'NO_HEADER_TEXT', true );
-
-	// Add a way for the custom header to be styled in the admin panel that controls
-	// custom headers. See smm_admin_header_style(), below.
-	add_custom_image_header( '', 'smm_admin_header_style' );
-
-	// ... and thus ends the changeable header business.
-
-	// Default custom headers packaged with the theme. %s is a placeholder for the theme template directory URI.
-	register_default_headers( array(
-		'berries' => array(
-			'url' => '%s/images/headers/berries.jpg',
-			'thumbnail_url' => '%s/images/headers/berries-thumbnail.jpg',
-			/* translators: header image description */
-			'description' => __( 'Berries', 'smm' )
-		),
-		'cherryblossom' => array(
-			'url' => '%s/images/headers/cherryblossoms.jpg',
-			'thumbnail_url' => '%s/images/headers/cherryblossoms-thumbnail.jpg',
-			/* translators: header image description */
-			'description' => __( 'Cherry Blossoms', 'smm' )
-		),
-		'concave' => array(
-			'url' => '%s/images/headers/concave.jpg',
-			'thumbnail_url' => '%s/images/headers/concave-thumbnail.jpg',
-			/* translators: header image description */
-			'description' => __( 'Concave', 'smm' )
-		),
-		'fern' => array(
-			'url' => '%s/images/headers/fern.jpg',
-			'thumbnail_url' => '%s/images/headers/fern-thumbnail.jpg',
-			/* translators: header image description */
-			'description' => __( 'Fern', 'smm' )
-		),
-		'forestfloor' => array(
-			'url' => '%s/images/headers/forestfloor.jpg',
-			'thumbnail_url' => '%s/images/headers/forestfloor-thumbnail.jpg',
-			/* translators: header image description */
-			'description' => __( 'Forest Floor', 'smm' )
-		),
-		'inkwell' => array(
-			'url' => '%s/images/headers/inkwell.jpg',
-			'thumbnail_url' => '%s/images/headers/inkwell-thumbnail.jpg',
-			/* translators: header image description */
-			'description' => __( 'Inkwell', 'smm' )
-		),
-		'path' => array(
-			'url' => '%s/images/headers/path.jpg',
-			'thumbnail_url' => '%s/images/headers/path-thumbnail.jpg',
-			/* translators: header image description */
-			'description' => __( 'Path', 'smm' )
-		),
-		'sunset' => array(
-			'url' => '%s/images/headers/sunset.jpg',
-			'thumbnail_url' => '%s/images/headers/sunset-thumbnail.jpg',
-			/* translators: header image description */
-			'description' => __( 'Sunset', 'smm' )
-		)
-	) );
-}
-endif;
-
-if ( ! function_exists( 'smm_admin_header_style' ) ) :
-/**
- * Styles the header image displayed on the Appearance > Header admin panel.
- *
- * Referenced via add_custom_image_header() in smm_setup().
- *
- * @since Twenty Ten 1.0
- */
-function smm_admin_header_style() {
-?>
-<style type="text/css">
-/* Shows the same border as on front end */
-#headimg {
-	border-bottom: 1px solid #000;
-	border-top: 4px solid #000;
-}
-/* If NO_HEADER_TEXT is false, you would style the text with these selectors:
-	#headimg #name { }
-	#headimg #desc { }
-*/
-</style>
-<?php
 }
 endif;
 
@@ -182,7 +74,7 @@ endif;
  * To override this in a child theme, remove the filter and optionally add
  * your own function tied to the wp_page_menu_args filter hook.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  */
 function smm_page_menu_args( $args ) {
 	$args['show_home'] = true;
@@ -196,7 +88,7 @@ add_filter( 'wp_page_menu_args', 'smm_page_menu_args' );
  * To override this length in a child theme, remove the filter and add your own
  * function tied to the excerpt_length filter hook.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  * @return int
  */
 function smm_excerpt_length( $length ) {
@@ -207,7 +99,7 @@ add_filter( 'excerpt_length', 'smm_excerpt_length' );
 /**
  * Returns a "Continue Reading" link for excerpts
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  * @return string "Continue Reading" link
  */
 function smm_continue_reading_link() {
@@ -220,7 +112,7 @@ function smm_continue_reading_link() {
  * To override this in a child theme, remove the filter and add your own
  * function tied to the excerpt_more filter hook.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  * @return string An ellipsis
  */
 function smm_auto_excerpt_more( $more ) {
@@ -234,7 +126,7 @@ add_filter( 'excerpt_more', 'smm_auto_excerpt_more' );
  * To override this link in a child theme, remove the filter and add your own
  * function tied to the get_the_excerpt filter hook.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  * @return string Excerpt with a pretty "Continue Reading" link
  */
 function smm_custom_excerpt_more( $output ) {
@@ -248,10 +140,10 @@ add_filter( 'get_the_excerpt', 'smm_custom_excerpt_more' );
 /**
  * Remove inline styles printed when the gallery shortcode is used.
  *
- * Galleries are styled by the theme in Twenty Ten's style.css. This is just
+ * Galleries are styled by the theme in Twitter Bootstrap Framework's style.css. This is just
  * a simple filter call that tells WordPress to not use the default styles.
  *
- * @since Twenty Ten 1.2
+ * @since Twitter Bootstrap Framework 1.2
  */
 add_filter( 'use_default_gallery_style', '__return_false' );
 
@@ -261,8 +153,8 @@ add_filter( 'use_default_gallery_style', '__return_false' );
  * This function is no longer needed or used. Use the use_default_gallery_style
  * filter instead, as seen above.
  *
- * @since Twenty Ten 1.0
- * @deprecated Deprecated in Twenty Ten 1.2 for WordPress 3.1
+ * @since Twitter Bootstrap Framework 1.0
+ * @deprecated Deprecated in Twitter Bootstrap Framework 1.2 for WordPress 3.1
  *
  * @return string The gallery style filter, with the styles themselves removed.
  */
@@ -282,7 +174,7 @@ if ( ! function_exists( 'smm_comment' ) ) :
  *
  * Used as a callback by wp_list_comments() for displaying the comments.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  */
 function smm_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
@@ -333,7 +225,7 @@ endif;
  * To override smm_widgets_init() in a child theme, remove the action hook and add your own
  * function tied to the init hook.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  * @uses register_sidebar
  */
 function smm_widgets_init() {
@@ -413,10 +305,10 @@ add_action( 'widgets_init', 'smm_widgets_init' );
  * function tied to the widgets_init action hook.
  *
  * This function uses a filter (show_recent_comments_widget_style) new in WordPress 3.1
- * to remove the default style. Using Twenty Ten 1.2 in WordPress 3.0 will show the styles,
- * but they won't have any effect on the widget in default Twenty Ten styling.
+ * to remove the default style. Using Twitter Bootstrap Framework 1.2 in WordPress 3.0 will show the styles,
+ * but they won't have any effect on the widget in default Twitter Bootstrap Framework styling.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  */
 function smm_remove_recent_comments_style() {
 	add_filter( 'show_recent_comments_widget_style', '__return_false' );
@@ -427,7 +319,7 @@ if ( ! function_exists( 'smm_posted_on' ) ) :
 /**
  * Prints HTML with meta information for the current post-date/time and author.
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  */
 function smm_posted_on() {
 	printf( __( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep">by</span> %3$s', 'smm' ),
@@ -450,7 +342,7 @@ if ( ! function_exists( 'smm_posted_in' ) ) :
 /**
  * Prints HTML with meta information for the current post (category, tags and permalink).
  *
- * @since Twenty Ten 1.0
+ * @since Twitter Bootstrap Framework 1.0
  */
 function smm_posted_in() {
 	// Retrieves tag list of current post, separated by commas.
@@ -487,6 +379,7 @@ function bootstrap_nav_menu_items($items) {
 }
 add_filter( 'wp_nav_menu_items', 'bootstrap_nav_menu_items' );
 
+// Add's classes to default wp_nav() output to utilize the Bootstraps menu
 class Bootstrap_Menu_Walker extends Walker_Nav_Menu{
 	function start_lvl(&$output, $depth) {
 		$indent = str_repeat("\t", $depth);
@@ -523,6 +416,7 @@ class Bootstrap_Menu_Walker extends Walker_Nav_Menu{
 	}
 }
 
+// Default WordPress pagination tweaked to use page numbers
 function bootstrap_pagination(){
 	global $wp_query;
 	$total_pages = $wp_query->max_num_pages;
@@ -536,8 +430,15 @@ function bootstrap_pagination(){
 	      'total' => $total_pages,
 	      'prev_text' => 'Prev',
 	      'next_text' => 'Next',
-		'type' => 'list'
+		  'type' => 'list'
 	    ));
 	  echo '</div>';
 	}
 }
+
+// Enqueue jQuery right from the get go for Hashgrid
+function getgo_method() {
+    wp_enqueue_script( 'jquery' );
+}    
+ 
+add_action('wp_enqueue_scripts', 'getgo_method');
