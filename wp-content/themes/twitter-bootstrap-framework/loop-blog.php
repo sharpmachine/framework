@@ -1,6 +1,6 @@
 <?php
 	$temp = $wp_query;
-	$wp_query= null;
+	$wp_query = null;
 	$wp_query = new WP_Query();
 	$wp_query->query('&paged='.$paged);
 	while ($wp_query->have_posts()) : $wp_query->the_post();
@@ -32,8 +32,8 @@
 			</span>
 			<span class="meta-sep">|</span>
 		<?php endif; ?>
-		<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'smm' ), __( '1 Comment', 'smm' ), __( '% Comments', 'smm' ) ); ?></span>
-		<?php edit_post_link( __( 'Edit', 'smm' ), '<span class="meta-sep">|</span> <span class="edit-link">', '</span>' ); ?>
+			<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'smm' ), __( '1 Comment', 'smm' ), __( '% Comments', 'smm' ) ); ?></span>
+			<?php edit_post_link( __( 'Edit', 'smm' ), '<span class="meta-sep">|</span> <span class="edit-link">', '</span>' ); ?>
 		</div><!-- .entry-utility -->
 	</article><!-- #post -->
 
