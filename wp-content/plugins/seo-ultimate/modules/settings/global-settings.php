@@ -21,6 +21,7 @@ class SU_GlobalSettings extends SU_Module {
 		return array(
 			  'attribution_link' => false
 			, 'plugin_notices' => true
+			, 'mark_code' => true
 		);
 	}
 	

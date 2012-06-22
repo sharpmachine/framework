@@ -115,7 +115,7 @@ class SU_MetaDescriptions extends SU_Module {
 		//Do we have a description? If so, output it.
 		if ($desc) {
 			$desc = $this->get_desc_paged($desc);
-			$desc = su_esc_attr($desc);
+			$desc = su_esc_attr(trim($desc));
 			echo "\t<meta name=\"description\" content=\"$desc\" />\n";
 		}
 	}

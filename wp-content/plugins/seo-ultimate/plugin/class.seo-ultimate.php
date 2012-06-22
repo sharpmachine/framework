@@ -1598,7 +1598,7 @@ class SEO_Ultimate {
 	 */
 	function template_head() {
 		
-		if ($markcode = $this->get_setting('mark_code', false, 'settings'))
+		if ($markcode = $this->get_setting('mark_code', true, 'settings'))
 			echo "\n<!-- ".SU_PLUGIN_NAME." (".SU_PLUGIN_URI.") -->\n";
 		
 		//Let modules output head code.
@@ -1607,6 +1607,7 @@ class SEO_Ultimate {
 		//Make sure the blog is public. Telling robots what to do is a moot point if they aren't even seeing the blog.
 		if (get_option('blog_public')) {
 			$robots = implode(',', apply_filters('su_meta_robots', array()));
+			$robots = su_esc_attr($robots);
 			if ($robots) echo "\t<meta name=\"robots\" content=\"$robots\" />\n";
 		}
 		
@@ -1671,38 +1672,37 @@ class SEO_Ultimate {
 			$items[] = array('text' => __('Blog Homepage', 'seo-ultimate'), 'value' => 'obj_home', 'selectedtext' => __('Blog Homepage', 'seo-ultimate'));
 		}
 		
-		if (!$include || in_array('posttype', $include)) {
-			$posttypeobjs = suwp::get_post_type_objects();
-			foreach ($posttypeobjs as $posttypeobj) {
+		
+		$posttypeobjs = suwp::get_post_type_objects();
+		foreach ($posttypeobjs as $posttypeobj) {
+			
+			if ($include && !in_array('posttype', $include) && !in_array('posttype_' . $posttypeobj->name, $include))
+				continue;
+			
+			$stati = get_available_post_statuses($posttypeobj->name);
+			suarr::remove_value($stati, 'auto-draft');
+			$stati = implode(',', $stati);
+			
+			$posts = get_posts(array(
+				  'orderby' => 'title'
+				, 'order' => 'ASC'
+				, 'post_status' => $stati
+				, 'numberposts' => -1
+				, 'post_type' => $posttypeobj->name
+				, 'sentence' => 1
+				, 's' => $_GET['q']
+			));
+			
+			if (count($posts)) {
 				
-				if ($include && !in_array('posttype_' . $posttypeobj->name, $include))
-					continue;
+				$items[] = array('text' => $posttypeobj->labels->name, 'isheader' => true);
 				
-				$stati = get_available_post_statuses($posttypeobj->name);
-				suarr::remove_value($stati, 'auto-draft');
-				$stati = implode(',', $stati);
-				
-				$posts = get_posts(array(
-					  'orderby' => 'title'
-					, 'order' => 'ASC'
-					, 'post_status' => $stati
-					, 'numberposts' => -1
-					, 'post_type' => $posttypeobj->name
-					, 'sentence' => 1
-					, 's' => $_GET['q']
-				));
-				
-				if (count($posts)) {
-					
-					$items[] = array('text' => $posttypeobj->labels->name, 'isheader' => true);
-					
-					foreach ($posts as $post)
-						$items[] = array(
-							  'text' => $post->post_title
-							, 'value' => 'obj_posttype_' . $posttypeobj->name . '/' . $post->ID
-							, 'selectedtext' => $post->post_title . '<span class="type">&nbsp;&mdash;&nbsp;'.$posttypeobj->labels->singular_name.'</span>'
-						);
-				}
+				foreach ($posts as $post)
+					$items[] = array(
+						  'text' => $post->post_title
+						, 'value' => 'obj_posttype_' . $posttypeobj->name . '/' . $post->ID
+						, 'selectedtext' => $post->post_title . '<span class="type">&nbsp;&mdash;&nbsp;'.$posttypeobj->labels->singular_name.'</span>'
+					);
 			}
 		}
 		
