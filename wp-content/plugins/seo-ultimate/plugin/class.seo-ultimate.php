@@ -216,10 +216,11 @@ class SEO_Ultimate {
 			add_action('admin_init', array(&$this, 'admin_init'));
 			
 			//When loading the admin menu, call on our menu constructor function.
-			//For future-proofing purposes, we specifically state the default priority of 10,
+			//For future-proofing purposes, we explicitly state the default priority of 10,
 			//since some modules set a priority of 9 with the specific intention of running
 			//before this main plugin's hook.
-			add_action('admin_menu', array(&$this, 'add_menus'), 10);
+			add_action('admin_menu', array(&$this, 'add_blog_admin_menus'), 10);
+			add_action('network_admin_menu', array(&$this, 'add_network_admin_menus'), 10);
 			
 			//Hook to customize contextual help
 			add_filter('contextual_help', array(&$this, 'admin_help'), 10, 2);
@@ -234,6 +235,7 @@ class SEO_Ultimate {
 			
 			//Add plugin action links
 			add_filter("plugin_action_links_{$this->plugin_basename}", array(&$this, 'plugin_action_links'));
+			add_filter("network_admin_plugin_action_links_{$this->plugin_basename}", array(&$this, 'plugin_action_links'));
 			
 			//Add module links to plugin listing
 			add_filter('plugin_row_meta', array(&$this, 'plugin_row_meta_filter'), 10, 2);
@@ -351,13 +353,13 @@ class SEO_Ultimate {
 	
 	/**
 	 * WordPress will call this when the plugin is activated, as instructed by the register_activation_hook() call in {@link __construct()}.
-	 * Does activation tasks for the plugin itself, not modules.
 	 * 
 	 * @since 0.1
 	 */
-	function activate() {
-	
-		//Nothing here yet
+	function activate() {		
+		foreach ($this->modules as $key => $module) {
+			$this->modules[$key]->activate();
+		}
 	}
 	
 	/**
@@ -366,9 +368,11 @@ class SEO_Ultimate {
 	 * @since 0.1
 	 */
 	function deactivate() {
-	
+		
 		//Let modules run deactivation tasks
-		do_action('su_deactivate');
+		foreach ($this->modules as $key => $module) {
+			$this->modules[$key]->deactivate();
+		}
 		
 		//Unschedule all cron jobs		
 		$this->remove_cron_jobs(true);
@@ -499,6 +503,14 @@ class SEO_Ultimate {
 								$module_disabled = (isset($oldmodules[$module_parent]) && $oldmodules[$module_parent] == SU_MODULE_DISABLED);
 							else
 								$module_disabled = (isset($oldmodules[$module]) && $oldmodules[$module] == SU_MODULE_DISABLED);
+							
+							if (!isset($oldmodules[$module]) && call_user_func(array($class, 'get_default_status')) == SU_MODULE_DISABLED)
+								$module_disabled = true;
+							
+							if (in_array($module, $this->get_invincible_modules())) {
+								$module_disabled = false;
+								$oldmodules[$module] = SU_MODULE_ENABLED;
+							}
 							
 							//If this module is disabled...
 							if ($module_disabled) {
@@ -643,11 +655,34 @@ class SEO_Ultimate {
 	 * @uses SU_Module::admin_page_init()
 	 */
 	function admin_init() {
+		global $pagenow;
+		
 		foreach ($this->modules as $key => $x_module) {
-			if ($this->modules[$key]->is_module_admin_page())
+			if ('post.php' == $pagenow)
+				$this->modules[$key]->editor_init();
+			elseif ($this->modules[$key]->is_module_admin_page())
 				$this->modules[$key]->admin_page_init();
 		}
 	}
+	
+	/********** MODULE FUNCTIONS **********/
+	
+	/**
+	 * @since 7.2.5
+	 */
+	function get_invincible_modules() {
+		$ims = array('modules');
+		
+		if ( ! function_exists( 'is_plugin_active_for_network' ) )
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		
+		if (is_multisite() && is_plugin_active_for_network($this->plugin_basename))
+			$ims[] = 'settings';
+		
+		return $ims;
+	}
+	
+	/********** SETTINGS FUNCTIONS **********/
 	
 	/**
 	 * Gets the value of a module setting.
@@ -667,6 +702,8 @@ class SEO_Ultimate {
 		else
 			return $default;
 	}
+
+	/********** LOGGING FUNCTIONS **********/
 	
 	/**
 	 * Saves the hit data to the database if so instructed by a module.
@@ -771,7 +808,7 @@ class SEO_Ultimate {
 	 * @uses SU_Module::get_page_title()
 	 * @uses key_to_hook()
 	 */
-	function add_menus() {
+	function add_menus($admin_scope = 'blog') {
 		
 		$psdata = (array)get_option('seo_ultimate', array());
 		
@@ -782,24 +819,23 @@ class SEO_Ultimate {
 					&& $module->get_menu_count() > 0
 					&& $module->get_menu_parent() == 'seo'
 					&& $module->is_independent_module()
+					&& $module->belongs_in_admin($admin_scope)
 					)
 				$count += $module->get_menu_count();
 		}
-		$count_code = $this->get_menu_count_code($count);		
+		$main_count_code = $this->get_menu_count_code($count);
 		
-		//Add the "SEO" menu item!
-		add_utility_page(__('SEO Ultimate', 'seo-ultimate'), __('SEO', 'seo-ultimate').$count_code, 'manage_options', 'seo', array(), 'div');
-		
-		//Translations and count codes will mess up the admin page hook, so we need to fix it manually.
-		global $admin_page_hooks;
-		$admin_page_hooks['seo'] = 'seo';
+		$added_main_menu = false;
 		
 		//Add all the subitems
 		foreach ($this->modules as $key => $x_module) {
 			$module =& $this->modules[$key];
 			
-			//Show a module on the menu only if it provides a menu title and it doesn't have an enabled parent module
-			if ($module->get_menu_title() && (!$module->get_parent_module() || !$this->module_exists($module->get_parent_module()))) {
+			//Show a module on the menu only if it provides a menu title, it belongs in the current admin scope (blog/network/user), and it doesn't have an enabled parent module
+			if ($module->get_menu_title()
+					&& $module->belongs_in_admin($admin_scope)
+					&& (!$module->get_parent_module() || !$this->module_exists($module->get_parent_module()))
+					) {
 				
 				//If the module is hidden, put the module under a non-existent menu parent
 				//(this will let the module's admin page be loaded, but it won't show up on the menu)
@@ -815,6 +851,17 @@ class SEO_Ultimate {
 				
 				$hook = $this->key_to_hook($key);
 				
+				if ($parent == 'seo' && !$added_main_menu) {
+					//Add the "SEO" menu item!
+					add_utility_page(__('SEO Ultimate', 'seo-ultimate'), __('SEO', 'seo-ultimate').$main_count_code, 'manage_options', 'seo', array(), 'div');
+					
+					//Translations and count codes will mess up the admin page hook, so we need to fix it manually.
+					global $admin_page_hooks;
+					$admin_page_hooks['seo'] = 'seo';
+					
+					$added_main_menu = true;
+				}
+				
 				add_submenu_page($parent, $module->get_page_title(), $module->get_menu_title().$count_code,
 					'manage_options', $hook, array($module, 'admin_page'));
 				
@@ -822,6 +869,20 @@ class SEO_Ultimate {
 				add_filter("ozh_adminmenu_icon_$hook", array(&$this, 'get_admin_menu_icon_url'));
 			}
 		}
+	}
+	
+	/**
+	 * @since 7.2.5
+	 */
+	function add_blog_admin_menus() {
+		$this->add_menus('blog');
+	}
+	
+	/**
+	 * @since 7.2.5
+	 */
+	function add_network_admin_menus() {
+		$this->add_menus('network');
 	}
 	
 	/**
@@ -1174,7 +1235,7 @@ class SEO_Ultimate {
 		);
 		
 		$change_labels = array(
-			  'module'   => array(__('new module', 'seo-ultimate'), __('new modules', 'seo-ultimate'))
+			  'module'		=> array(__('new module', 'seo-ultimate'), __('new modules', 'seo-ultimate'))
 			, 'feature'     => array(__('new feature', 'seo-ultimate'), __('new features', 'seo-ultimate'))
 			, 'bugfix'      => array(__('bugfix', 'seo-ultimate'), __('bugfixes', 'seo-ultimate'))
 			, 'improvement' => array(__('improvement', 'seo-ultimate'), __('improvements', 'seo-ultimate'))
@@ -1183,7 +1244,7 @@ class SEO_Ultimate {
 			, 'updated-lang'=> array(__('language pack update', 'seo-ultimate'), __('language pack updates', 'seo-ultimate'))
 		);
 		
-		$changes = array();
+		$changes = array_fill_keys($change_types, 0);
 		
 		$versions = $this->download_changelog();
 		if (!is_array($versions) || !count($versions)) return '';
@@ -1279,8 +1340,7 @@ class SEO_Ultimate {
 		);
 		
 		foreach ($su_actions as $module => $anchor) {
-			if ($this->module_exists($module)) {
-				$url = $this->modules[$module]->get_admin_url();
+			if ($this->module_exists($module) && $url = $this->modules[$module]->get_admin_url()) {
 				$actions[] = "<a href='$url'>$anchor</a>";
 			}
 		}
@@ -1294,8 +1354,15 @@ class SEO_Ultimate {
 	 * @since 2.1
 	 */
 	function plugin_row_meta_filter($plugin_meta, $plugin_file) {
-		if ($plugin_file == $this->plugin_basename)
-			echo $this->get_module_links_list('<p id="su-active-modules-list">'.__('Active Modules: ', 'seo-ultimate'), ' | ', '</p>');
+		if ($plugin_file == $this->plugin_basename) {
+			
+			if (is_blog_admin())
+				$title = __('Active Modules: ', 'seo-ultimate');
+			else
+				$title = '';
+			
+			echo $this->get_module_links_list('<p id="su-active-modules-list">'.$title, ' | ', '</p>');
+		}
 		
 		return $plugin_meta;
 	}
@@ -1315,7 +1382,8 @@ class SEO_Ultimate {
 			foreach ($this->modules as $key => $x_module) {
 				$module =& $this->modules[$key];
 				if (strcasecmp(get_parent_class($module), 'SU_Module') == 0 && $module->is_independent_module()) {
-					$modules[$module->get_module_title()] = $module->get_admin_url();
+					if ($url = $module->get_admin_url())
+						$modules[$module->get_module_title()] = $url;
 				}
 			}
 			
@@ -1385,7 +1453,7 @@ class SEO_Ultimate {
 	 * @param mixed $result Passed by reference. Set to the result of the function.
 	 * @return boolean Whether or not the function existed.
 	 */
-	function call_module_func($key, $function, &$result) {
+	function call_module_func($key, $function, &$result = null) {
 		
 		//Wipe passed-by-reference variable clean
 		$result = null;
@@ -1689,6 +1757,7 @@ class SEO_Ultimate {
 				, 'post_status' => $stati
 				, 'numberposts' => -1
 				, 'post_type' => $posttypeobj->name
+				, 'post_mime_type' => isset($_GET['post_mime_type']) ? $_GET['post_mime_type'] : ''
 				, 'sentence' => 1
 				, 's' => $_GET['q']
 			));

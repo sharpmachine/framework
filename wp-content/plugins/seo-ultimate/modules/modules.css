@@ -34,7 +34,8 @@ div.su-module table.widefat td ul {
 	padding-left: 1em;
 }
 
-div.su-module .form-table .regular-text {
+div.su-module .form-table .regular-text,
+div.su-module .form-table .jls_text_dest {
 	width: 325px;
 }
 
@@ -119,6 +120,10 @@ div.su-importmodule div.su-status {
 
 div.su-importmodule #import-status {
 	padding: 1em 0;
+}
+
+div.su-module textarea[disabled] {
+	background-color: #eee;
 }
 
 /* TABS (Heavily based on CSS from the Breadcrumbs NavXT plugin) */

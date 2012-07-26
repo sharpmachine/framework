@@ -5,13 +5,13 @@ These styles are sometimes or always referenced outside of SEO Ultimate's admin 
 
 /* MENU */
 
-.toplevel_page_seo div.wp-menu-image {
+#adminmenu .toplevel_page_seo div.wp-menu-image {
 	background-image: url(images/icon.png);
 	background-position: -1px -33px;
 }
 
-.toplevel_page_seo:hover div.wp-menu-image,
-.toplevel_page_seo .wp-has-current-submenu div.wp-menu-image {
+#adminmenu .toplevel_page_seo:hover div.wp-menu-image,
+#adminmenu .toplevel_page_seo .wp-has-current-submenu div.wp-menu-image {
 	background-position: -1px -1px;
 }
 

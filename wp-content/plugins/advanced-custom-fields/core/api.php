@@ -1,7 +1,7 @@
 <?php
 
-// set some globals
-reset_the_repeater_field();
+// vars
+$GLOBALS['acf_field'] = array();
 
 
 /*--------------------------------------------------------------------------------------
@@ -155,60 +155,83 @@ function the_field($field_name, $post_id = false)
 
 /*--------------------------------------------------------------------------------------
 *
-*	the_repeater_field
+*	has_sub_field
 *
 *	@author Elliot Condon
-*	@since 1.0.3
+*	@since 3.3.4
 * 
 *-------------------------------------------------------------------------------------*/
 
-function the_repeater_field($field_name, $post_id = false)
+function has_sub_field($field_name, $post_id = false)
 {
 	
-	// if no field, create field + reset count
-	if(!$GLOBALS['acf_field'])
+	// empty?
+	if( empty($GLOBALS['acf_field']) )
 	{
-		reset_the_repeater_field();
-		$GLOBALS['acf_field'] = get_field($field_name, $post_id);
+		$GLOBALS['acf_field'][] = array(
+			'name'	=>	$field_name,
+			'value'	=>	get_field($field_name, $post_id),
+			'row'	=>	-1
+		);
 	}
 	
-	// increase order_no
-	$GLOBALS['acf_count']++;
 	
 	// vars
-	$field = $GLOBALS['acf_field'];
-	$i = $GLOBALS['acf_count'];
+	$depth = count( $GLOBALS['acf_field'] ) - 1;
+	$name = $GLOBALS['acf_field'][$depth]['name'];
+	$value = $GLOBALS['acf_field'][$depth]['value'];
+	$row = $GLOBALS['acf_field'][$depth]['row'];
 	
-	if(isset($field[$i]))
+
+	
+	// does the given $field_name match the current field?
+	if( $field_name != $name )
 	{
+		// is this a "new" while loop refering to a sub field?
+		if( isset($value[$row][$field_name]) )
+		{
+			$GLOBALS['acf_field'][] = array(
+				'name'	=>	$field_name,
+				'value'	=>	$value[$row][$field_name],
+				'row'	=>	-1
+			);
+		}
+		
+		
+		// if someone used break; We should see if the parent value has this field_name as a value.
+		if( isset($GLOBALS['acf_field'][$depth-1]) && $GLOBALS['acf_field'][$depth-1]['name'] == $field_name )
+		{
+			unset( $GLOBALS['acf_field'][$depth] );
+			$GLOBALS['acf_field'] = array_values($GLOBALS['acf_field']);
+		}
+		
+	}
+	
+	
+	// update vars
+	$depth = count( $GLOBALS['acf_field'] ) - 1;
+	$value = $GLOBALS['acf_field'][$depth]['value'];
+	$row = $GLOBALS['acf_field'][$depth]['row'];
+
+		
+	// increase row number
+	$GLOBALS['acf_field'][$depth]['row']++;
+	$row++;
+	
+	
+	if( isset($value[$row]) )
+	{
+		// next row exists
 		return true;
 	}
 	
-	// no row, reset the global values
-	reset_the_repeater_field();
+	
+	// no next row! Unset this array and return false to stop while loop
+	unset( $GLOBALS['acf_field'][$depth] );
+	$GLOBALS['acf_field'] = array_values($GLOBALS['acf_field']);
+
 	return false;
 	
-}
-
-function the_flexible_field($field_name, $post_id = false)
-{
-	return the_repeater_field($field_name, $post_id);
-}
-
-
-/*--------------------------------------------------------------------------------------
-*
-*	reset_the_repeater_field
-*
-*	@author Elliot Condon
-*	@since 1.0.3
-* 
-*-------------------------------------------------------------------------------------*/
-
-function reset_the_repeater_field()
-{
-	$GLOBALS['acf_field'] = false;
-	$GLOBALS['acf_count'] = -1;
 }
 
 
@@ -224,16 +247,27 @@ function reset_the_repeater_field()
 function get_sub_field($field_name)
 {
 
+	// no field?
+	if( empty($GLOBALS['acf_field']) )
+	{
+		return false;
+	}
+	
+	
 	// vars
-	$field = $GLOBALS['acf_field'];
-	$i = $GLOBALS['acf_count'];
+	$depth = count( $GLOBALS['acf_field'] ) - 1;
+	$value = $GLOBALS['acf_field'][$depth]['value'];
+	$row = $GLOBALS['acf_field'][$depth]['row'];
 	
-	// no value
-	if(!$field) return false;
-
-	if(!isset($field[$i][$field_name])) return false;
 	
-	return $field[$i][$field_name];
+	// no value at i
+	if( !isset($GLOBALS['acf_field'][$depth]['value'][$row][$field_name]) )
+	{
+		return false;
+	}
+	
+	
+	return $GLOBALS['acf_field'][$depth]['value'][$row][$field_name];
 }
 
 
@@ -246,9 +280,9 @@ function get_sub_field($field_name)
 * 
 *-------------------------------------------------------------------------------------*/
 
-function the_sub_field($field_name, $field = false)
+function the_sub_field($field_name)
 {
-	$value = get_sub_field($field_name, $field);
+	$value = get_sub_field($field_name);
 	
 	if(is_array($value))
 	{
@@ -382,17 +416,11 @@ add_filter('acf_register_options_page', 'acf_register_options_page');
 
 function get_row_layout()
 {
-	
 	// vars
-	$field = $GLOBALS['acf_field'];
-	$i = $GLOBALS['acf_count'];
+	$value = get_sub_field('acf_fc_layout');
 	
-	// no value
-	if(!$field) return false;
-
-	if(!isset($field[$i]['acf_fc_layout'])) return false;
 	
-	return $field[$i]['acf_fc_layout'];
+	return $value;
 }
 
 
@@ -505,12 +533,7 @@ function acf_form_wp_head()
 
 	// Javascript
 	echo '<script type="text/javascript" src="'.$acf->dir.'/js/input-actions.js?ver=' . $acf->version . '" ></script>';
-	echo '<script type="text/javascript">
-		acf.validation_message = "' . __("Validation Failed. One or more fields below are required.",'acf') . '";
-		acf.post_id = ' . $post->ID . ';
-		acf.editor_mode = "wysiwyg";
-		acf.admin_url = "' . admin_url() . '";
-	</script>';
+	echo '<script type="text/javascript">acf.post_id = ' . $post->ID . ';</script>';
 	
 	
 	// add user js + css
@@ -580,11 +603,10 @@ function acf_form($options = null)
 		<input type="hidden" name="acf_save" value="true" />
 		<input type="hidden" name="post_id" value="<?php echo $options['post_id']; ?>" />
 		<input type="hidden" name="return" value="<?php echo $options['return']; ?>" />
-		<?php wp_editor('', 'acf-temp-editor'); ?>
+		<?php wp_editor('', 'acf_settings'); ?>
 	</div>
 	
 	<div id="poststuff">
-	<div class="acf_postbox">
 	<?php
 	
 	// html before fields
@@ -608,11 +630,10 @@ function acf_form($options = null)
 				
 			if($field_group['fields'])
 			{
-				
-				echo '<div class="options" data-layout="' . $field_group['options']['layout'] . '"></div>';
-				
-				$acf->render_fields_for_input($field_group['fields'], $options['post_id']);
-				
+				echo '<div id="acf_' . $field_group['id'] . '" class="postbox acf_postbox"><div class="inside">';
+					echo '<div class="options" data-layout="' . $field_group['options']['layout'] . '" data-show="true"></div>';
+					$acf->render_fields_for_input($field_group['fields'], $options['post_id']);
+				echo '</div></div>';
 			}
 			
 		endforeach;
@@ -622,14 +643,14 @@ function acf_form($options = null)
 	echo $defaults['html_after_fields'];
 	
 	?>
+	<!-- Submit -->
 	<div class="field">
 		<input type="submit" value="<?php echo $options['submit_value']; ?>" />
 	</div>
-	</div>
-	</div>
+	<!-- / Submit -->
+
+	</div><!-- <div id="poststuff"> -->
 	</form>
-	
-	
 	<?php
 	
 }
@@ -684,10 +705,113 @@ function update_field($field_name, $value, $post_id = false)
 	{ 
 		// we can load the field properly! 
 		$field = $acf->get_acf_field($field_key); 
-	} 
+	}
+	
+	
+	// sub fields? They need formatted data
+	if( isset($field['sub_fields']) )
+	{
+		// define sub field keys
+		$sub_field_keys = array();
+		if( $field['sub_fields'] )
+		{
+			foreach( $field['sub_fields'] as $sub_field )
+			{
+				$sub_field_keys[ $sub_field['name'] ] = $sub_field['key'];
+			}
+		}
+		
+		
+		// loop through the values and format the array to use sub field keys
+		if( $value )
+		{
+			foreach( $value as $row_i => $row)
+			{
+				if( $row )
+				{
+					foreach( $row as $sub_field_name => $sub_field_value )
+					{
+						
+						if( isset($sub_field_keys[$sub_field_name]) )
+						{
+							// change the array key from "sub_field_name" to "sub_field_key"
+							$value[$row_i][ $sub_field_keys[$sub_field_name] ] = $sub_field_value;
+							
+							unset( $value[$row_i][$sub_field_name] );
+						}
+						
+					}
+					// foreach( $row as $sub_field_name => $sub_field_value )
+				}
+				// if( $row )
+			}
+			// foreach( $value as $row_i => $row)
+		}
+		// if( $value )
+
+	}
+	
+	
 	
 	
 	$acf->update_value($post_id, $field, $value);
 }
+
+
+/*
+*  Depreceated Functions
+*
+*  @description: 
+*  @created: 23/07/12
+*/
+
+
+/*--------------------------------------------------------------------------------------
+*
+*	reset_the_repeater_field
+*
+*	@author Elliot Condon
+*	@depreciated: 3.3.4 - now use has_sub_field
+*	@since 1.0.3
+* 
+*-------------------------------------------------------------------------------------*/
+
+function reset_the_repeater_field()
+{
+	// do nothing
+}
+
+
+/*--------------------------------------------------------------------------------------
+*
+*	the_repeater_field
+*
+*	@author Elliot Condon
+*	@depreciated: 3.3.4 - now use has_sub_field
+*	@since 1.0.3
+* 
+*-------------------------------------------------------------------------------------*/
+
+function the_repeater_field($field_name, $post_id = false)
+{
+	return has_sub_field($field_name, $post_id);
+}
+
+
+/*--------------------------------------------------------------------------------------
+*
+*	the_flexible_field
+*
+*	@author Elliot Condon
+*	@depreciated: 3.3.4 - now use has_sub_field
+*	@since 3.?.?
+* 
+*-------------------------------------------------------------------------------------*/
+
+function the_flexible_field($field_name, $post_id = false)
+{
+	return has_sub_field($field_name, $post_id);
+}
+
 
 ?>

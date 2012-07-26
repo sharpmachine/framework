@@ -7,6 +7,12 @@
 
 if (class_exists('SU_Module')) {
 
+function su_meta_descriptions_export_filter($all_settings) {
+	unset($all_settings['meta']['taxonomy_descriptions']);
+	return $all_settings;
+}
+add_filter('su_settings_export_array', 'su_meta_descriptions_export_filter');
+
 class SU_MetaDescriptions extends SU_Module {
 	
 	function get_module_title() { return __('Meta Description Editor', 'seo-ultimate'); }

@@ -20,12 +20,21 @@ class SU_Modules extends SU_Module {
 			
 			$psdata = (array)get_option('seo_ultimate', array());
 			
-			foreach ($_POST as $key => $value) {
+			foreach ($_POST as $key => $newvalue) {
 				if (substr($key, 0, 3) == 'su-') {
 					$key = str_replace(array('su-', '-module-status'), '', $key);
-					$value = intval($value);
 					
-					$psdata['modules'][$key] = $value;
+					$newvalue = intval($newvalue);
+					$oldvalue = $psdata['modules'][$key];
+					
+					if ($oldvalue != $newvalue) {
+						if ($oldvalue == SU_MODULE_DISABLED)
+							$this->plugin->call_module_func($key, 'activate');
+						if ($newvalue == SU_MODULE_DISABLED)
+							$this->plugin->call_module_func($key, 'deactivate');
+					}
+					
+					$psdata['modules'][$key] = $newvalue;
 				}
 			}
 			
@@ -75,7 +84,7 @@ STR;
 			$module =& $this->plugin->modules[$key];
 			
 			//On some setups, get_parent_class() returns the class name in lowercase
-			if (strcasecmp(get_parent_class($module), 'SU_Module') == 0 && !in_array($key, array('modules')) && $module->is_independent_module())
+			if (strcasecmp(get_parent_class($module), 'SU_Module') == 0 && !in_array($key, $this->plugin->get_invincible_modules()) && $module->is_independent_module())
 				$modules[$key] = $module->get_module_title();
 		}
 		

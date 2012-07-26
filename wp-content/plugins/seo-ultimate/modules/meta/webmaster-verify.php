@@ -19,19 +19,28 @@ class SU_WebmasterVerify extends SU_Module {
 		add_action('su_head', array(&$this, 'head_tag_output'));
 	}
 	
-	function head_tag_output() {
-		
-		//Supported meta tags and their names
-		$verify = array(
-			  'google' => 'google-site-verification'
-			, 'yahoo' => 'y_key'
-			, 'microsoft' => 'msvalidate.01'
+	function get_supported_search_engines() {
+		return array(
+			  'google' => array(
+				  'title' => __('Google Webmaster Tools', 'seo-ultimate')
+				, 'meta_name' => 'google-site-verification'
+			),'yahoo' => array(
+				  'title' => __('Yahoo! Site Explorer', 'seo-ultimate')
+				, 'meta_name' => 'y_key'
+			), 'microsoft' => array(
+				  'title' => __('Bing Webmaster Center', 'seo-ultimate')
+				, 'meta_name' => 'msvalidate.01'
+			)
 		);
-		
-		//Do we have verification tags? If so, output them.
-		foreach ($verify as $site => $name) {
+	}
+	
+	function head_tag_output() {
+		$verify = $this->get_supported_search_engines();
+		foreach ($verify as $site => $site_data) {
+			$name = $site_data['meta_name'];
+			//Do we have verification tags? If so, output them.
 			if ($value = $this->get_setting($site.'_verify')) {
-				if (sustr::startswith(trim($value), '<meta ') && sustr::endswith(trim($value), '/>'))
+				if (current_user_can('unfiltered_html') && sustr::startswith(trim($value), '<meta ') && sustr::endswith(trim($value), '/>'))
 					echo "\t".trim($value)."\n";
 				else {
 					$value = su_esc_attr($value);
@@ -42,13 +51,33 @@ class SU_WebmasterVerify extends SU_Module {
 	}
 	
 	function admin_page_contents() {
-		$this->child_admin_form_start();
-		$this->textboxes(array(
-				  'google_verify' => __('Google Webmaster Tools', 'seo-ultimate')
-				, 'yahoo_verify' => __('Yahoo! Site Explorer', 'seo-ultimate')
-				, 'microsoft_verify' => __('Bing Webmaster Center', 'seo-ultimate')
-			));
-		$this->child_admin_form_end();
+		
+		$this->child_admin_form_start(false);
+		
+		$this->admin_wftable_start(array(
+			  'portal' => __('Webmaster Portal', 'seo-ultimate')
+			, 'meta_tag_before' => __('Meta Tag', 'seo-ultimate')
+			, 'meta_tag' => ' '
+			, 'meta_tag_after' => ' '
+		));
+		
+		$sites = $this->get_supported_search_engines();
+		
+		foreach ($sites as $site => $site_data) {
+			echo "<tr>\n";
+			echo "<td class='su-webmaster-verify-portal'>" . esc_html($site_data['title']) . "</td>\n";
+			echo "<td class='su-webmaster-verify-meta_tag_before'>&lt;meta name=&quot;"
+				. esc_html($site_data['meta_name']) . "&quot; content=&quot;</td>\n";
+			echo "<td class='su-webmaster-verify-meta_tag'>";
+			$this->textbox("{$site}_verify", '', false, false, array('in_table' => false));
+			echo "</td>\n";
+			echo "<td class='su-webmaster-verify-meta_tag_after'>&quot; /&gt;</td>\n";
+			echo "</tr>\n";
+		}
+		
+		$this->admin_wftable_end();
+		
+		$this->child_admin_form_end(false);
 	}
 
 	function add_help_tabs($screen) {

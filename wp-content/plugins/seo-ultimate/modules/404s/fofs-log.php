@@ -7,6 +7,12 @@
 
 if (class_exists('SU_Module')) {
 
+function su_fofs_log_export_filter($all_settings) {
+	unset($all_settings['404s']['log']);
+	return $all_settings;
+}
+add_filter('su_settings_export_array', 'su_fofs_log_export_filter');
+
 class SU_FofsLog extends SU_Module {
 	
 	function get_parent_module() { return 'fofs'; }
@@ -33,12 +39,6 @@ class SU_FofsLog extends SU_Module {
 	function init() {
 		add_action('admin_enqueue_scripts', array(&$this, 'queue_admin_scripts'));
 		add_action('su_save_hit', array(&$this, 'log_hit'));
-		add_filter('su_settings_export_array', array(&$this, 'filter_export_array'));
-	}
-	
-	function filter_export_array($settings) {
-		unset($settings[$this->get_module_key()]['log']);
-		return $settings;
 	}
 	
 	//Upgrade to new wp_options-only system if needed

@@ -2,8 +2,8 @@
 Contributors: SEO Design Solutions, JohnLamansky
 Tags: seo, SEO Ultimate, suite, google, yahoo, bing, search engines, admin, post, page, custom post types, categories, tags, terms, custom taxonomies, base, title, title tag, wp_title, meta, robots, noindex, nofollow, canonical, HTTP headers, 404, robots.txt, htaccess, slugs, url, anchor, more, link, excerpt, permalink, links, autolinks, code, footer, settings, redirect, 301, 302, 307, modules, uninstallable, reinstallable, downgradable, import, export, CSV, affiliate
 Requires at least: 3.3
-Tested up to: 3.4
-Stable tag: 7.2.3
+Tested up to: 3.4.1
+Stable tag: 7.2.9
 
 This all-in-one SEO plugin gives you control over title tags, noindex, meta tags, slugs, canonical, autolinks, 404 errors, rich snippets, and more.
 
@@ -127,7 +127,7 @@ SEO Ultimate is an all-in-one [SEO](http://www.seodesignsolutions.com/) plugin w
 	* Lets you output your Deeplink Juggernaut Footer Links in a widget
 	* The Siloed Categories widget makes it drag-and-drop-easy to construct siloed navigation on your site
 
-* **Settings Monitor** - NEW in Version 6.9
+* **Settings Monitor** -- NEW in Version 6.9
 	* Keep tabs on the SEO-friendliness of your site's settings with a dashboard of green/yellow/red indicators
 
 * **Settings Manager**
@@ -185,7 +185,11 @@ To install the plugin manually:
 = Compatibility =
 
 * **What's the minimum version of WordPress required to run SEO Ultimate?**
-	In order for all the features to work, you need to be using WordPress 3.3 or above. SEO Ultimate will run on WordPress 3.1.3 or above, but a few features might not work. If you're using a WordPress version older than 3.1.3, SEO Ultimate will refuse to activate.
+	* WordPress 3.3 is required for all of the features to work properly.
+	* WordPress 3.2 is required for SEO Ultimate to run without crashing. (SEO Ultimate will refuse to activate under an older version of WordPress.)
+
+* **Will SEO Ultimate work on multisite setups?**
+	Yes. SEO Ultimate versions 7.2.6 and later are designed to work on networks running WordPress 3.3 or later.
 
 = General FAQ =
 
@@ -225,7 +229,7 @@ To install the plugin manually:
 
 = Module FAQ =
 
-Frequently asked questions, settings help, and troubleshooting tips for SEO Ultimate's modules can be found by clicking the help tabs in the upper-right-hand corner of the module admin pages themselves. The same documentation can also be found in the `seo-ultimate/modules/documentation.txt` file of the SEO Ultimate download.
+Frequently asked questions, settings help, and troubleshooting tips for SEO Ultimate's modules can be found by clicking the help tabs in the upper-right-hand corner of the module admin pages themselves.
 
 
 
@@ -235,31 +239,64 @@ Frequently asked questions, settings help, and troubleshooting tips for SEO Ulti
 2. 404 Monitor logs attempts to access non-existent webpages
 3. 404 Monitor settings
 4. Code Inserter lets you insert custom HTML in various locations on your site
-5. Competition Researcher lets you run investigative search queries
-6. Deeplink Juggernaut lets you build autolinks to content on your site and/or external URLs
-7. Deeplink Juggernaut settings
-8. File Editor lets you customize your robots.txt or .htaccess
-9. Internal Relevance Researcher lets you see which of your site's pages rank best for given keywords
-10. Linkbox Inserter encourages natural linkbuilding activity with link code boxes below your posts/pages
-11. Meta Description Editor lets you specify defaults for different types of pages
-12. The Blog Homepage tab in Meta Description Editor
-13. Meta Description Editor lets you set your meta descriptions all at once
-14. Meta Keywords Editor lets you auto-generate keyword tags for your site
-15. Meta Robot Tags Editor lets you send various instructions to search engine spiders
-16. Meta Robot Tags Editor lets you "noindex" desired parts of your site
-17. Meta Robot Tags Editor lets you "noindex" and/or "nofollow" individual pages on your site
-18. Nofollow Manager lets you add the nofollow attribute to various types of links
-19. Rich Snippet Creator's settings page
-20. Slug Optimizer removes common, keyword-impoverished words from your post URLs
-21. Title Tag Rewriter lets you set default <title> formats for various parts of your site
-22. SEO Ultimate plugin settings
-23. SEO Ultimate lets you import settings from exported files or from other plugins
-24. SEO Ultimate lets you export your settings so you can transfer them to another site
-25. If you ever run into problems with a new version of SEO Ultimate, use the downgrade feature to revert to a version of your choosing
-26. SEO Ultimate puts its modules in the SEO menu and its plugin options under "Settings"
+5. Deeplink Juggernaut lets you build autolinks to content on your site and/or external URLs
+6. Deeplink Juggernaut settings
+7. File Editor lets you customize your robots.txt or .htaccess
+8. Linkbox Inserter encourages natural linkbuilding activity with link code boxes below your posts/pages
+9. Meta Description Editor lets you specify defaults for different types of pages
+10. The Blog Homepage tab in Meta Description Editor
+11. Meta Description Editor lets you set your meta descriptions all at once
+12. Meta Keywords Editor lets you auto-generate keyword tags for your site
+13. Meta Robot Tags Editor lets you send various instructions to search engine spiders
+14. Meta Robot Tags Editor lets you "noindex" desired parts of your site
+15. Meta Robot Tags Editor lets you "noindex" and/or "nofollow" individual pages on your site
+16. Nofollow Manager lets you add the nofollow attribute to various types of links
+17. Rich Snippet Creator's settings page
+18. Slug Optimizer removes common, keyword-impoverished words from your post URLs
+19. Title Tag Rewriter lets you set default <title> formats for various parts of your site
+20. SEO Ultimate plugin settings
+21. SEO Ultimate lets you import settings from exported files or from other plugins
+22. SEO Ultimate lets you export your settings so you can transfer them to another site
+23. If you ever run into problems with a new version of SEO Ultimate, use the downgrade feature to revert to a version of your choosing
+24. SEO Ultimate puts its modules in the SEO menu and its plugin options under "Settings"
 
 
 == Changelog ==
+
+= Version 7.2.9 (July 9, 2012) =
+* Bugfix: Code Inserter no longer calls the `wp_get_current_user` function prematurely during first-time plugin activation (bug introduced in 7.2.6)
+
+= Version 7.2.8 (July 7, 2012) =
+* Bugfix: Permalink Tweaker now removes its changes to WordPress's rewrite rules when SEO Ultimate is deactivated/uninstalled or when Permalink Tweaker is disabled from the Module Manager
+* Bugfix: International characters are no longer stripped from autogenerated meta keywords
+* Compatibility: SEO Ultimate will now refuse to activate on versions of WordPress below 3.2
+
+= Version 7.2.7 (July 5, 2012) =
+* Feature: Canonicalizer now lets you force a URL scheme (`http://` or `https://`) across all canonical URLs
+* Bugfix: Canonicalizer's "Redirect requests for nonexistent pagination" once again works for archive pages
+
+= Version 7.2.6 (July 3, 2012) =
+* Improvement: Updated the Webmaster Verification Assistant interface to further clarify its functionality
+* Security Fix: Webmaster Verification Assistant no longer allows users without the unfiltered_html capability to insert arbitrary `<meta>` tags (and, theoretically, other HTML)
+* Security Fix: Code Inserter now checks for the unfiltered_html capability in addition to the manage_options capability. In other words, site administrators on multisite setups can no longer use Code Inserter. (Security Note: If any users without the unfiltered_html capability previously entered code into Code Inserter, that code will remain active even after upgrading. Network admins may want to check the Code Inserter pages of their network's sites to ensure that site admins have not entered any malicious code.)
+* Bugfix: Fixed broken settings exporter (bug introduced in 5.0)
+* Bugfix: Fixed a bug which caused some modules' settings to be excluded from settings export files (bug introduced in 1.5)
+* Bugfix: 404 Monitor's logs are now excluded from settings export files even if 404 Monitor is disabled (bug introduced in 2.1)
+* Bugfix: The custom title tags and meta data of categories/tags/terms are now excluded from settings export files (bug introduced in 2.9)
+* Bugfix: The dialog box that confirms you want to leave a page without saving changes no longer appears after starting a settings import (bug introduced in 5.7)
+
+= Version 7.2.5 (June 29, 2012) =
+* Improvement: The Upgrade/Downgrade/Reinstall/Uninstall tabs have been moved from the site admin to the network admin in cases where the plugin is network-activated on multisite setups
+* Security Fix: The Uninstall tool now checks for the delete_plugins capability (whereas previously, any user with the manage_options capability could uninstall)
+* Security Fix: The Downgrade and Reinstall tools now check for the install_plugins capability instead of the update_plugins capability
+* Security Fix: The Upgrade/Downgrade/Reinstall/Uninstall tools now check for super admin status on multisite setups
+* Bugfix: SEO Ultimate now hides the Upgrade/Downgrade/Reinstall/Uninstall tabs from users who lack the proper capabilities, rather than merely aborting those functions when attempted by unauthorized users
+* Change: The "Plugin Settings" module can no longer be disabled by site admins when SEO Ultimate is network-activated on a multisite setup
+
+= Version 7.2.4 (June 25, 2012) =
+* Bugfix: Icons no longer disappear from the WordPress admin menu on the Module Manager admin page
+* Bugfix: Fixed a function that generated non-validating HTML on multiple admin pages
+* Removed 2 outdated screenshots
 
 = Version 7.2.3 (June 19, 2012) =
 * Bugfix: Fixed bug that broke the "Only on This Post" boxes in Link Mask Generator and prevented posts from being selected in the "Link Location" boxes of Deeplink Juggernaut's Footer Links editor

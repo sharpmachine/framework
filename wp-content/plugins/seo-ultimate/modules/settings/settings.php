@@ -9,11 +9,52 @@ if (class_exists('SU_Module')) {
 
 class SU_Settings extends SU_Module {
 	
-	function get_module_title() { return __('Plugin Settings', 'seo-ultimate'); }
-	function get_page_title() { return __('SEO Ultimate Plugin Settings', 'seo-ultimate'); }
+	function get_module_title() {
+		if (is_network_admin())
+			return __('Plugin Management', 'seo-ultimate');
+		
+		return __('Plugin Settings', 'seo-ultimate');
+	}
+	
+	function get_page_title() {
+		if (is_network_admin())
+			return __('SEO Ultimate Plugin Management', 'seo-ultimate');
+		
+		return __('SEO Ultimate Plugin Settings', 'seo-ultimate');
+	}
+	
 	function get_menu_title() { return __('SEO Ultimate', 'seo-ultimate'); }
-	function get_menu_parent(){ return 'options-general.php'; }	
+	
+	function get_menu_parent() {
+		if (is_network_admin())
+			return 'plugins.php';
+		
+		return 'options-general.php';
+	}	
+	
 	function admin_page_contents() { $this->children_admin_page_tabs(); }
+	
+	function belongs_in_admin($admin_scope = null) {
+		
+		if ($admin_scope === null)
+			$admin_scope = suwp::get_admin_scope();
+		
+		switch ($admin_scope) {
+			case 'blog':
+				return true;
+			case 'network':
+				
+				if ( ! function_exists( 'is_plugin_active_for_network' ) )
+					require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+				
+				return is_plugin_active_for_network($this->plugin->plugin_basename);
+				
+				break;
+			default:
+				return false;
+				break;
+		}
+	}
 	
 	function add_help_tabs($screen) {
 		

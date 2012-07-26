@@ -7,6 +7,12 @@
 
 if (class_exists('SU_Module')) {
 
+function su_titles_export_filter($all_settings) {
+	unset($all_settings['titles']['taxonomy_titles']);
+	return $all_settings;
+}
+add_filter('su_settings_export_array', 'su_titles_export_filter');
+
 class SU_Titles extends SU_Module {
 	
 	function get_module_title() { return __('Title Tag Rewriter', 'seo-ultimate'); }
