@@ -39,7 +39,7 @@ class SU_UserCode extends SU_Module {
 	
 	function init() {
 		$hooks = array('su_head', 'the_content', 'wp_footer');
-		foreach ($hooks as $hook) add_filter($hook, array(&$this, "{$hook}_code"));
+		foreach ($hooks as $hook) add_filter($hook, array(&$this, "{$hook}_code"), 'su_head' == $hook ? 11 : 10);
 	}
 	
 	function get_admin_page_tabs() {

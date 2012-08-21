@@ -161,6 +161,7 @@ class SU_FofsLog extends SU_Module {
 			
 			$this->clear_log_button();
 			
+			echo "<div id='su-404s-log-table'>\n";
 			$headers = $this->get_admin_table_columns();
 			$this->admin_wftable_start();
 			
@@ -196,7 +197,7 @@ class SU_FofsLog extends SU_Module {
 				
 				if (count($data['referers'])) {
 					
-					echo "<div id='su-404s-hit-$md5url-referers' style='display: none;'>\n";
+					echo "<div id='su-404s-hit-$md5url-referers' class='su-404s-hit-referers-list' style='display: none;'>\n";
 					echo "\t\t\t<div><strong>".__('Referring URLs', 'seo-ultimate')."</strong> &mdash; ";
 					echo "<a href='#' onclick=\"Effect.BlindUp('su-404s-hit-$md5url-referers'); return false;\">".__('Hide list', 'seo-ultimate')."</a>";
 					echo "</div>\n";
@@ -217,7 +218,7 @@ class SU_FofsLog extends SU_Module {
 				echo "\t<tr class='su-404s-hit-user-agents$new'>\n\t\t<td colspan='".count($headers)."'>";
 				
 				if (count($data['user_agents'])) {
-					echo "<div id='su-404s-hit-$md5url-user-agents' style='display: none;'>\n";
+					echo "<div id='su-404s-hit-$md5url-user-agents' class='su-404s-hit-user-agents-list'  style='display: none;'>\n";
 					echo "\t\t\t<div><strong>".__('User Agents', 'seo-ultimate')."</strong> &mdash; ";
 					echo "<a href='#' onclick=\"Effect.BlindUp('su-404s-hit-$md5url-user-agents'); return false;\">".__('Hide list', 'seo-ultimate')."</a>";
 					echo "</div>\n";
@@ -241,6 +242,7 @@ class SU_FofsLog extends SU_Module {
 			$this->update_setting('log', $the404s);
 			
 			$this->admin_wftable_end();
+			echo "</div>\n";
 			
 			$this->clear_log_button();
 		}

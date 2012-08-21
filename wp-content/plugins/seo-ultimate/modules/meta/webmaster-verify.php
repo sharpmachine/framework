@@ -24,9 +24,6 @@ class SU_WebmasterVerify extends SU_Module {
 			  'google' => array(
 				  'title' => __('Google Webmaster Tools', 'seo-ultimate')
 				, 'meta_name' => 'google-site-verification'
-			),'yahoo' => array(
-				  'title' => __('Yahoo! Site Explorer', 'seo-ultimate')
-				, 'meta_name' => 'y_key'
 			), 'microsoft' => array(
 				  'title' => __('Bing Webmaster Center', 'seo-ultimate')
 				, 'meta_name' => 'msvalidate.01'
@@ -87,7 +84,7 @@ class SU_WebmasterVerify extends SU_Module {
 			, 'title' => $this->has_enabled_parent() ? __('Webmaster Verification Assistant', 'seo-ultimate') : __('Overview', 'seo-ultimate')
 			, 'content' => __("
 <ul>
-	<li><strong>What it does:</strong> Webmaster Verification Assistant lets you enter in verification codes for the webmaster portals of the 3 leading search engines.</li>
+	<li><strong>What it does:</strong> Webmaster Verification Assistant lets you enter in verification codes for the webmaster portals of leading search engines.</li>
 	<li><strong>Why it helps:</strong> Webmaster Verification Assistant assists you in obtaining access to webmaster portals, which can provide you with valuable SEO tools.</li>
 	<li><strong>How to use it:</strong> Use a search engine to locate the webmaster portal you&#8217;re interested in, sign up at the portal, and then obtain a verification code. Once you have the code, you can paste it in here, click Save Changes, then return to the portal to verify that you own the site. Once that&#8217;s done, you'll have access to the portal&#8217;s SEO tools.</li>
 </ul>

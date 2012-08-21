@@ -74,6 +74,15 @@ class SU_MetaDescriptions extends SU_Module {
 	
 	function head_tag_output() {
 		
+		$desc = $this->get_meta_desc();
+		
+		//Do we have a description? If so, output it.
+		if ($desc)
+			echo "\t<meta name=\"description\" content=\"$desc\" />\n";
+	}
+	
+	function get_meta_desc() {
+		
 		global $post;
 		
 		$desc = false;
@@ -118,12 +127,16 @@ class SU_MetaDescriptions extends SU_Module {
 			}
 		}
 		
-		//Do we have a description? If so, output it.
-		if ($desc) {
+		$desc = trim($desc);
+		
+		if ($desc)
 			$desc = $this->get_desc_paged($desc);
-			$desc = su_esc_attr(trim($desc));
-			echo "\t<meta name=\"description\" content=\"$desc\" />\n";
-		}
+		
+		$desc = trim($desc);
+		
+		$desc = su_esc_attr($desc);
+		
+		return $desc;
 	}
 	
 	function get_desc_paged($desc) {
@@ -154,12 +167,12 @@ class SU_MetaDescriptions extends SU_Module {
 	}
 	
 	function postmeta_fields($fields) {
-		$id = "_su_description";
+		$id = '_su_description';
 		$value = su_esc_attr($this->get_postmeta('description'));
 		
-		$fields['20|description'] =
-			  "<tr class='textarea' valign='top'>\n<th scope='row'><label for='$id'>".__('Meta Description:', 'seo-ultimate')."</label></th>\n"
-			. "<td><textarea name='$id' id='$id' class='regular-text' cols='60' rows='3' tabindex='2'"
+		$fields['serp'][20]['description'] =
+			  "<tr class='su textarea' valign='top'>\n<th scope='row' class='su'><label for='$id'>".__('Meta Description:', 'seo-ultimate')."</label></th>\n"
+			. "<td class='su'><textarea name='$id' id='$id' class='regular-text' cols='60' rows='3' tabindex='2'"
 			. " onkeyup=\"javascript:document.getElementById('su_meta_description_charcount').innerHTML = document.getElementById('_su_description').value.length\">$value</textarea>"
 			. "<br />".sprintf(__('You&#8217;ve entered %s characters. Most search engines use up to 140.', 'seo-ultimate'), "<strong id='su_meta_description_charcount'>".strlen($value)."</strong>")
 			. "</td>\n</tr>\n"
@@ -169,7 +182,7 @@ class SU_MetaDescriptions extends SU_Module {
 	}
 	
 	function postmeta_help($help) {
-		$help[] = __('<strong>Description</strong> &mdash; The value of the meta description tag. The description will often appear underneath the title in search engine results. Writing an accurate, attention-grabbing description for every post is important to ensuring a good search results clickthrough rate.', 'seo-ultimate');
+		$help[] = __('<strong>Meta Description</strong> &mdash; The value of the meta description tag. The description will often appear underneath the title in search engine results. Writing an accurate, attention-grabbing description for every post is important to ensuring a good search results clickthrough rate.', 'seo-ultimate');
 		return $help;
 	}
 	
