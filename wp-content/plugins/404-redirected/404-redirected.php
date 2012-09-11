@@ -3,7 +3,7 @@
 Plugin Name: 404 Redirected
 Plugin URI: http://www.weberz.com/plugins/404-redirected/
 Description: A smart 404 redirection plugin that provides the ability to log incoming 404 URLs in real time, automatically redirect visitors to most relevant content, and provides page suggestions when relevant content can not be found. Admins can also manually add redirects to system and control automatic deletion of old redirects when they are no longer being used.
-Version: 1.2
+Version: 1.3.2
 Author: Weberz Hosting
 Author URI: http://www.weberz.com
 License: GPLv2
@@ -29,7 +29,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 define('WBZ404_URL', plugin_dir_url(__FILE__) );
 define('WBZ404_PATH', plugin_dir_path(__FILE__) );
 define('WBZ404_NAME', plugin_basename( __FILE__ ) );
-define('WBZ404_VERSION', '1.2');
+define('WBZ404_VERSION', '1.3.2');
 define('WBZ404_HOME', 'http://www.weberz.com/plugins/404-redirected/');
 define('WBZ404_TRANS', 'wbz404_redirected');
 

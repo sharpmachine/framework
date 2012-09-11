@@ -136,14 +136,17 @@ var acf = {
 				validation = false;
 			}
 			
+			
 			// select
 			if($(this).find('select').exists())
 			{
+				validation = true;
 				if($(this).find('select').val() == "null" || !$(this).find('select').val())
 				{
 					validation = false;
 				}
 			}
+
 			
 			// checkbox
 			if($(this).find('input[type="checkbox"]:checked').exists())
@@ -919,12 +922,37 @@ var acf = {
 				max_rows = parseInt( repeater.attr('data-max_rows') );	
 			
 			
-			// move row-clone to be the first element (to avoid double border css bug)
-			var row_clone = repeater.find('> table > tbody > tr.row-clone');
-			
-			if( row_clone.index() != 0 )
+			// set column widths
+			if( ! repeater.find('> table').hasClass('row_layout') )
 			{
-				row_clone.closest('tbody').prepend( row_clone );
+				// accomodate for order / remove th widths
+				var column_width = 93;
+				
+				// find columns that already have a width and remove these amounts from the column_width var
+				repeater.find('> table > thead > tr > th[width]').each(function( i ){
+					
+					column_width -= parseInt( $(this).attr('width') );
+				});
+
+				
+				var ths = repeater.find('> table > thead > tr th').not('[width]').has('span');
+				if( ths.length > 1 )
+				{
+					column_width = column_width / ths.length;
+					
+					ths.each(function( i ){
+						
+						// dont add width to last th
+						if( (i+1) == ths.length  )
+						{
+							return;
+						}
+						
+						$(this).attr('width', column_width + '%');
+						
+					});
+				}
+				
 			}
 			
 			
@@ -996,14 +1024,12 @@ var acf = {
 		
 		
 		// add row
-		if( before )
+		if( !before )
 		{
-			before.before( new_field );
+			before = repeater.find('> table > tbody > .row-clone');
 		}
-		else
-		{
-			repeater.find('> table > tbody').append(new_field); 
-		}
+		
+		before.before( new_field );
 		
 		
 		// trigger mouseenter on parent repeater to work out css margin on add-row button
@@ -1263,7 +1289,7 @@ var acf = {
 	
 	acf.is_clone_field = function( input )
 	{
-		if( input.attr('name').indexOf('[999]') != -1 )
+		if( input.attr('name') && input.attr('name').indexOf('[999]') != -1 )
 		{
 			return true;
 		}

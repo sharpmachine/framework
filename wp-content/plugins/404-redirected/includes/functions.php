@@ -4,6 +4,13 @@
  *
 */
 
+register_activation_hook(WBZ404_NAME,'wbz404_pluginActivation');
+register_deactivation_hook(WBZ404_NAME,'wbz404_pluginRemove');
+add_action('init', 'wbz404_load_translations');
+
+add_action('wbz404_duplicateCronAction', 'wbz404_removeDuplicatesCron');
+add_action('wbz404_cleanupCronAction', 'wbz404_cleaningCron');
+
 function wbz404_load_translations() {
 	$trans_path = WBZ404_PATH . '/translations';
 	load_plugin_textdomain(WBZ404_TRANS, '', $trans_path);
@@ -13,7 +20,19 @@ function wbz404_trans($text = '') {
 	return __($text, WBZ404_TRANS);
 }
 
-function wbz404_getOptions() {
+function wbz404_updateDBVersion() {
+	$options = wbz404_getOptions(1);
+
+	$options['DB_VERSION'] = WBZ404_VERSION;
+
+	if (function_exists('update_option')) {
+		update_option('wbz404_settings', $options);
+	}
+
+	return $options;
+}
+
+function wbz404_getOptions($skip_db_check="0") {
 	$options = get_option('wbz404_settings');
 
 	if ($options == "") {
@@ -35,6 +54,19 @@ function wbz404_getOptions() {
 	if ($missing != 0) {
 		if (function_exists('update_option')) {
 			update_option('wbz404_settings', $options);
+		}
+	}
+
+	if ($skip_db_check == "0") {
+		if ($options['DB_VERSION'] != WBZ404_VERSION) {
+			if (WBZ404_VERSION == "1.3.2") {
+				//Unregister all crons. Some were bad.
+				wbz404_unregisterCrons();
+
+				//Register the good ones
+				wbz404_registerCrons();
+			}
+			$options = wbz404_updateDBVersion();
 		}
 	}
 
@@ -118,15 +150,47 @@ function wbz404_pluginActivation() {
 	) ENGINE=MyISAM " . $charset_collate . " COMMENT='404 Redirected Plugin Logs Table' AUTO_INCREMENT=1";
 	$wpdb->query($query);
 
-	$now = time();
-	wp_schedule_event($now + 86400, 'daily', 'wbz404_cleaningCron');
-	wp_schedule_event($now + 3600, 'hourly', 'wbz404_removeDuplicatesCron');
+	wbz404_registerCrons();
+
+	$options = wbz404_updateDBVersion();
+}
+
+function wbz404_registerCrons() {
+	$timestamp = wp_next_scheduled('wbz404_cleanupCronAction');
+	if ($timestamp == False) {
+		wp_schedule_event(current_time( 'timestamp' ) - 86400, 'daily', 'wbz404_cleanupCronAction');
+	}
+
+	$timestamp = wp_next_scheduled('wbz404_duplicateCronAction');
+	if ($timestamp == False) {
+		wp_schedule_event(current_time( 'timestamp' ) - 3600, 'hourly', 'wbz404_duplicateCronAction');
+	}	
+}
+
+function wbz404_unregisterCrons() {
+
+	$crons = array('wbz404_cleanupCronAction', 'wbz404_duplicateCronAction', 'wbz404_removeDuplicatesCron', 'wbz404_cleaningCron');
+	for ($i=0; $i < count($crons); $i++) {
+		$cron_name = $crons[$i];
+		$timestamp = wp_next_scheduled($cron_name);
+		while ($timestamp != False) {
+			wp_unschedule_event($timestamp, $cron_name);
+			$timestamp = wp_next_scheduled($cron_name);
+		}
+
+		$timestamp = wp_next_scheduled($cron_name, '');
+		while ($timestamp != False) {
+			wp_unschedule_event($timestamp, $cron_name, '');
+			$timestamp = wp_next_scheduled($cron_name, '');
+		}
+
+		wp_clear_scheduled_hook($cron_name);
+	}
 }
 
 function wbz404_pluginRemove() {
 	delete_option('wbz404_settings');
-	wp_clear_scheduled_hook('wbz404_cleaningCron');
-	wp_clear_scheduled_hook('wbz404_removeDuplicatesCron');
+	wbz404_unregisterCrons();
 }
 
 function wbz404_rankPermalinks($url, $includeCats = '1', $includeTags = '1') {
@@ -213,9 +277,10 @@ function wbz404_loadRedirectData($url) {
         $redirect = array();
 
         $query="select * from " . $wpdb->prefix . "wbz404_redirects where url = '" . $wpdb->escape($url) . "'";
+
         $row = $wpdb->get_row($query, ARRAY_A);
         if ($row == NULL) {
-                $redirect[id]=0;
+                $redirect['id']=0;
         } else {
                 $redirect['id'] = $row['id'];
                 $redirect['url'] = $row['url'];
@@ -259,13 +324,19 @@ function wbz404_setupRedirect($url, $status, $type, $final_dest, $code, $disable
 function wbz404_logRedirectHit($id, $action) {
 	global $wpdb;
 	$now = time();
-	
+
+	if (isset($_SERVER['HTTP_REFERER'])) {
+		$referer=$_SERVER['HTTP_REFERER'];
+	} else {
+		$referer = "";
+	}	
+
 	$wpdb->insert($wpdb->prefix . "wbz404_logs",
 		array(
 			'redirect_id' => $id,
 			'timestamp' => $now,
 			'remote_host' => $_SERVER['REMOTE_ADDR'],
-			'referrer' => $_SERVER['HTTP_REFERER'],
+			'referrer' => $referer,
 			'action' => $action,
 		),
 		array(
@@ -365,7 +436,7 @@ function wbz404_cleaningCron() {
 
 function wbz404_removeDuplicatesCron() {
 	global $wpdb;
-	
+
 	$rtable = $wpdb->prefix . "wbz404_redirects";
 	$ltable = $wpdb->prefix . "wbz404_logs";
 	
@@ -391,6 +462,68 @@ function wbz404_removeDuplicatesCron() {
 
 }
 
-register_activation_hook(WBZ404_NAME,'wbz404_pluginActivation');
-register_deactivation_hook(WBZ404_NAME,'wbz404_pluginRemove');
-add_action('init', 'wbz404_load_translations');
+function wbz404_SortQuery($urlParts) {
+	$url = "";
+        if (isset($urlParts['query']) && $urlParts['query'] != "") {
+                $queryString = array();
+                $urlQuery = $urlParts['query'];
+                $queryParts = preg_split("/[;&]/", $urlQuery);
+                foreach ($queryParts as $query) {
+                        if (strpos($query, "=") === false) {
+                                $queryString[$query]='';
+                        } else {
+                                $stringParts = preg_split("/=/", $query);
+                                $queryString[$stringParts[0]]=$stringParts[1];
+                        }
+                }
+                ksort($queryString);
+                $x=0;
+                $newQS = "";
+                foreach ($queryString as $key => $value) {
+                        if ($x != 0) {
+                                $newQS .= "&";
+                        }
+                        $newQS .= $key;
+                        if ($value != "") {
+                                $newQS .= "=" . $value;
+                        }
+                        $x++;
+                }
+
+                if ($newQS != "") {
+                	$url .= "?" . $newQS;
+                }
+        }
+	return $url;
+}
+
+function wbz404_ProcessRedirect($redirect) {
+	//A redirect record has already been found.
+	if (($redirect['status'] == WBZ404_MANUAL || $redirect['status'] == WBZ404_AUTO) && $redirect['disabled'] == 0) {
+		//It's a redirect, not a captured or ignored URL
+		if ($redirect['type'] == WBZ404_EXTERNAL) {
+			//It's a external url setup by the user
+			wbz404_logRedirectHit($redirect['id'], $redirect['final_dest']);
+			wp_redirect($redirect['final_dest'], $redirect['code']);
+			exit;
+		} else {
+			$key="";
+			if ($redirect['type'] == WBZ404_POST) {
+				$key = $redirect['final_dest'] . "|POST";
+			} else if ($redirect['type'] == WBZ404_CAT) {
+				$key = $redirect['final_dest'] . "|CAT";
+			} else if ($redirect['type'] == WBZ404_TAG) {
+				$key = $redirect['final_dest'] . "|TAG";
+			}
+			if ($key != "") {
+				$permalink = wbz404_permalinkInfo($key, 0);
+				wbz404_logRedirectHit($redirect['id'], $permalink['link']);
+				wp_redirect($permalink['link'], $redirect['code']);
+				exit;
+			}
+		}
+	} else {
+		wbz404_logRedirectHit($redirect['id'], '404');
+	}
+}
+
