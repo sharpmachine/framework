@@ -35,7 +35,7 @@ function help_dashboard_widget_function() {
 		<a href="http://google.com/analytics" target="_blank">Analytics Login</a> | 	
 		<a href="http://mail.'. substr(get_bloginfo('url'), 7).'" target="_blank">Mail Login</a>
 		
-		<p>Still stuck?  Give us a call at <strong>(480) 648-8229</strong> or email us at <a href="mailto:info@sharpmachinemedia.com?subject=Help!"><strong>info@sharpmachinemedia.com</strong></a>.
+		<p>Still stuck?  Give us a call at <strong>(530) 638-3581</strong> or email us at <a href="mailto:info@sharpmachinemedia.com?subject=Help!"><strong>info@sharpmachinemedia.com</strong></a>.
 	';
 } 
 

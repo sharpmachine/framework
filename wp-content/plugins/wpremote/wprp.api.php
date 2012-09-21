@@ -45,6 +45,12 @@ foreach( $actions as $action => $value ) {
 
 		break;
 
+		case 'upgrade_core' :
+
+			$actions[$action] = _wprp_upgrade_core();
+
+		break;
+
 		case 'get_plugins' :
 
 			$actions[$action] = _wprp_supports_plugin_upgrade() ? _wprp_get_plugins() : 'not-implemented';
