@@ -112,11 +112,8 @@ function jetpack_shortcodes_more_info_connected() { ?>
 		'audio' => 'http://support.wordpress.com/audio/',
 		'blip.tv' => 'http://support.wordpress.com/videos/bliptv/',
 		'dailymotion' => 'http://support.wordpress.com/videos/dailymotion/',
-		'digg' => 'http://support.wordpress.com/digg/',
 		'flickr' => 'http://support.wordpress.com/videos/flickr-video/',
-		'googlevideo' => 'http://support.wordpress.com/videos/google-video/',
 		'scribd' => 'http://support.wordpress.com/scribd/',
-		'slide' => 'http://support.wordpress.com/slideshows/slide/',
 		'slideshare' => 'http://support.wordpress.com/slideshows/slideshare/',
 		'soundcloud' => 'http://support.wordpress.com/audio/soundcloud-audio-player/',
 		'vimeo' => 'http://support.wordpress.com/videos/vimeo/',
@@ -210,6 +207,40 @@ function stats_load_more_link( $description ) {
 	echo '<a class="button more-info-link" href="http://en.support.wordpress.com/stats/">' . esc_html__( 'Learn More', 'jetpack' ) . '</a>';
 }
 add_filter( 'jetpack_learn_more_button_stats', 'stats_load_more_link' );
+
+
+// Notifications
+function notes_more_info() { ?>
+	<div class="jp-info-img">
+		<a href="http://support.wordpress.com/notifications/">
+			<img class="jp-info-img" src="<?php echo plugins_url( basename( dirname( dirname( __FILE__ ) ) ) . '/_inc/images/screenshots/notes.png' ) ?>" alt="<?php esc_attr_e( 'Notifications', 'jetpack' ) ?>" width="300" height="150" />
+		</a>
+	</div>
+
+	<h4><?php esc_html_e( 'Notifications' , 'jetpack' ); ?></h4>
+	<p><?php esc_html_e( 'Keep up with the latest happenings on all your WordPress sites and interact with other WordPress.com users.', 'jetpack' ) ?></p>
+<?php
+}
+add_action( 'jetpack_module_more_info_notes', 'notes_more_info' );
+
+function notes_more_info_connected() { ?>
+	<div class="jp-info-img">
+		<a href="http://support.wordpress.com/notifications/">
+			<img class="jp-info-img" src="<?php echo plugins_url( basename( dirname( dirname( __FILE__ ) ) ) . '/_inc/images/screenshots/notes.png' ) ?>" alt="<?php esc_attr_e( 'Notifications', 'jetpack' ) ?>" width="300" height="150" />
+		</a>
+	</div>
+
+	<h4><?php esc_html_e( 'Notifications' , 'jetpack' ); ?></h4>
+	<p><?php esc_html_e( 'Keep up with the latest happenings on all your WordPress sites and interact with other WordPress.com users.', 'jetpack' ) ?></p>
+	<p><?php printf( __( 'You can view your notifications in the Toolbar and <a href="%s">on WordPress.com</a>.', 'jetpack' ), 'http://wordpress.com/#!/notifications/' ); ?></p>
+<?php
+}
+add_filter( 'jetpack_module_more_info_connected_notes', 'notes_more_info_connected' );
+
+function notes_load_more_link( $description ) {
+	echo '<a class="button more-info-link" href="http://support.wordpress.com/notifications/">' . esc_html__( 'Learn More', 'jetpack' ) . '</a>';
+}
+add_filter( 'jetpack_learn_more_button_notes', 'notes_load_more_link' );
 
 
 // LaTeX
@@ -373,6 +404,7 @@ function jetpack_subscriptions_more_info() { ?>
 
 	if ( 'jetpack_module_more_info_connected_subscriptions' == current_filter() )
 		printf( '<p>' . __( 'To use the Subscriptions widget, go to Appearance &#8594; <a href="%s">Widgets</a>. Drag the widget labeled &#8220;Blog Subscriptions (Jetpack)&#8221; into one of your sidebars and configure away.', 'jetpack' ) . '</p>', admin_url( 'widgets.php' ) );
+		printf( '<p>' . __( 'You can also make changes to your Subscription settings at the bottom of the <a href="%s">Discussion Settings</a> page.', 'jetpack' ) . '</p>', admin_url( 'options-discussion.php#jetpack-subscriptions-settings' ) );
 }
 add_action( 'jetpack_module_more_info_subscriptions', 'jetpack_subscriptions_more_info' );
 add_action( 'jetpack_module_more_info_connected_subscriptions', 'jetpack_subscriptions_more_info' );
@@ -399,6 +431,25 @@ function jetpack_enhanced_distribution_more_link() {
 	echo '<a class="button more-info-link" href="http://en.wordpress.com/firehose/">' . esc_html__( 'Learn More', 'jetpack' ) . '</a>';
 }
 add_action( 'jetpack_learn_more_button_enhanced-distribution', 'jetpack_enhanced_distribution_more_link' );
+
+// JSON API
+function jetpack_json_api_more_info() { ?>
+	<h4><?php esc_html_e( 'JSON API' , 'jetpack' ); ?></h4>
+
+	<p><?php esc_html_e( 'Jetpack will allow you to authorize applications and services to securely connect to your blog and allow them to use your content in new ways and offer you new functionality.', 'jetpack' ); ?>
+
+	<p><?php _e( "Developers can use WordPress.com's <a href='http://developer.wordpress.com/docs/oauth2/'>OAuth2</a> authentication system and <a href='http://developer.wordpress.com/docs/api/'>WordPress.com REST API</a> to manage and access your site's content.", 'jetpack' ); ?></p>
+
+<?php
+}
+
+add_action( 'jetpack_module_more_info_json-api', 'jetpack_json_api_more_info' );
+add_action( 'jetpack_module_more_info_connected_json-api', 'jetpack_json_api_more_info' );
+
+function jetpack_json_api_more_link() {
+	echo '<a class="button more-info-link" href="http://jetpack.me/support/json-api/">' . esc_html__( 'Learn More', 'jetpack' ) . '</a>';
+}
+add_action( 'jetpack_learn_more_button_json-api', 'jetpack_json_api_more_link' );
 
 // Contact Form: START
 function jetpack_contact_form_learn_more_button() {
@@ -501,3 +552,47 @@ function jetpack_custom_css_more_button() {
 add_action( 'jetpack_learn_more_button_custom-css', 'jetpack_custom_css_more_button' );
 add_action( 'jetpack_module_more_info_custom-css', 'jetpack_custom_css_more_info' );
 // Custom CSS: STOP
+
+// Minileven: START
+function jetpack_minileven_more_info() {
+	?>
+	<div class="jp-info-img">
+		<img class="jp-info-img" src="<?php echo plugins_url( basename( dirname( dirname( __FILE__ ) ) ) . '/_inc/images/screenshots/mobile-theme.png' ) ?>" alt="<?php esc_attr_e( 'Mobile Theme', 'jetpack' ) ?>" width="300" height="150" />
+	</div>
+
+	<h4><?php esc_html_e( 'Mobile Theme', 'jetpack' ); ?></h4>
+	<p><?php esc_html_e( "There's a good chance that visitors to your site will be using a smartphone, and it's important to provide them with a great reading experience while on the small screen.", 'jetpack' ); ?></p>
+	<p><?php esc_html_e( "Jetpack's mobile theme is optimized for small screens. It uses the header image, background, and widgets from your current theme for a great custom look. Post format support is included, so your photos and galleries will look fantastic on a smartphone.", 'jetpack' ); ?></p>
+	<p><?php esc_html_e( 'Visitors on iPhone, Android, Windows Phone, and other mobile devices will automatically see the mobile theme, with the option to view the full site. You can enable or disable the mobile theme by clicking the "Activate" or "Deactive" button above.', 'jetpack' ); ?></p>
+	<?php
+}
+
+function jetpack_minileven_more_button() {
+	echo '<a class="button more-info-link" href="#">' . __( 'Learn More', 'jetpack' ) . '</a>';
+}
+
+add_action( 'jetpack_learn_more_button_minileven', 'jetpack_minileven_more_button' );
+add_action( 'jetpack_module_more_info_minileven', 'jetpack_minileven_more_info' );
+// Minileven: STOP
+
+
+// Mobile Push Notifications: START
+function jetpack_mobile_push_notifications_more_info() { ?>
+	<div class="jp-info-img">
+		<img class="jp-info-img" src="<?php echo plugins_url( basename( dirname( dirname( __FILE__ ) ) ) . '/_inc/images/screenshots/mobile-push-notifications.jpg' ) ?>" alt="<?php esc_attr_e( 'Mobile Push Notifications', 'jetpack' ) ?>" width="300" height="150" />
+	</div>
+	
+	<h4><?php esc_html_e( 'Mobile Push Notifications' , 'jetpack' ); ?></h4>
+
+	<p><?php _e( 'If you have your blog added to the <a href="http://ios.wordpress.org/">WordPress for iOS app</a>, you’ll now be able to opt in to receive push notifications of new comments, which makes it easier than ever to keep up with your readers and moderate comments on the go.', 'jetpack' ); ?></p>
+
+<?php
+}
+
+function jetpack_mobile_push_notifications_more_link() {
+	echo '<a class="button more-info-link" href="#">' . __( 'Learn More', 'jetpack' ) . '</a>';
+}
+
+add_action( 'jetpack_learn_more_button_mobile-push', 'jetpack_mobile_push_notifications_more_link' );
+add_action( 'jetpack_module_more_info_mobile-push', 'jetpack_mobile_push_notifications_more_info' );
+// Mobile Push Notifications: STOP

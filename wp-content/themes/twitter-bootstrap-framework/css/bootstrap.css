@@ -43,6 +43,14 @@ a:hover,
 a:active {
   outline: 0;
 }
+
+.hello {
+  display: block;
+  margin: 0;
+  padding: ;
+  text-align: center;
+}
+
 sub,
 sup {
   position: relative;

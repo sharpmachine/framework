@@ -5,8 +5,8 @@
 	$wp_query->query('&paged='.$paged);
 	while ($wp_query->have_posts()) : $wp_query->the_post();
 ?>
-	
-	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+ <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 		<h2 class="entry-title">
 			<a href="<?php the_permalink(); ?>"><?php the_title();  ?></a>
@@ -41,4 +41,4 @@
 
 <?php bootstrap_pagination(); ?>
 
-	<?php $wp_query = null; $wp_query = $temp;?>
+<?php $wp_query = null; $wp_query = $temp;?>

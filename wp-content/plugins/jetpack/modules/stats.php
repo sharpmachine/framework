@@ -23,6 +23,28 @@ function stats_load() {
 	Jetpack::module_configuration_head( __FILE__, 'stats_configuration_head' );
 	Jetpack::module_configuration_screen( __FILE__, 'stats_configuration_screen' );
 
+	// Tell HQ about changed settings
+	Jetpack_Sync::sync_options( __FILE__,
+		'home',
+		'siteurl',
+		'blogname',
+		'blogdescription',
+		'gmt_offset',
+		'timezone_string',
+		'page_on_front',
+		'permalink_structure',
+		'category_base',
+		'tag_base'
+	);
+
+	// Tell HQ about changed posts
+	$post_stati = get_post_stati( array( 'public' => true ) ); // All public post stati
+	$post_stati[] = 'private';                                 // Content from private stati will be redacted
+	Jetpack_Sync::sync_posts( __FILE__, array(
+		'post_types' => get_post_types( array( 'public' => true ) ), // All public post types
+		'post_stati' => $post_stati,
+	) );
+
 	// Generate the tracking code after wp() has queried for posts.
 	add_action( 'template_redirect', 'stats_template_redirect', 1 );
 
@@ -31,22 +53,6 @@ function stats_load() {
 	add_action( 'jetpack_admin_menu', 'stats_admin_menu' );
 
 	add_action( 'wp_dashboard_setup', 'stats_register_dashboard_widget' );
-
-	// Tell HQ about changed settings
-	add_action( 'update_option_home', 'stats_update_blog' );
-	add_action( 'update_option_siteurl', 'stats_update_blog' );
-	add_action( 'update_option_blogname', 'stats_update_blog' );
-	add_action( 'update_option_blogdescription', 'stats_update_blog' );
-	add_action( 'update_option_timezone_string', 'stats_update_blog' );
-	add_action( 'add_option_timezone_string', 'stats_update_blog' );
-	add_action( 'update_option_gmt_offset', 'stats_update_blog' );
-	add_action( 'update_option_page_on_front', 'stats_update_blog' );
-	add_action( 'update_option_permalink_structure', 'stats_update_blog' );
-	add_action( 'update_option_category_base', 'stats_update_blog' );
-	add_action( 'update_option_tag_base', 'stats_update_blog' );
-
-	// Tell HQ about changed posts
-	add_action( 'save_post', 'stats_update_post', 10, 1 );
 
 	add_filter( 'jetpack_xmlrpc_methods', 'stats_xmlrpc_methods' );
 
@@ -401,7 +407,7 @@ function stats_reports_page() {
 	$url = add_query_arg( $q, $url );
 	$method = 'GET';
 	$timeout = 90;
-	$user_id = 1; // means send the wp.com user_id, not 1
+	$user_id = JETPACK_MASTER_USER; // means send the wp.com user_id
 
 	$get = Jetpack_Client::remote_request( compact( 'url', 'method', 'timeout', 'user_id' ) );
 	$get_code = wp_remote_retrieve_response_code( $get );
@@ -417,8 +423,11 @@ function stats_reports_page() {
 		if ( !empty( $get['headers']['content-type'] ) ) {
 			$type = $get['headers']['content-type'];
 			if ( substr( $type, 0, 5 ) == 'image' ) {
+				$img = $get['body'];
 				header( 'Content-Type: ' . $type );
-				die( $get['body'] );
+				header( 'Content-Length: ' . strlen( $img ) );
+				echo $img;
+				die();
 			}
 		}
 		$body = stats_convert_post_titles( $get['body'] );
@@ -604,14 +613,6 @@ function stats_update_blog() {
 	Jetpack::xmlrpc_async_call( 'jetpack.updateBlog', stats_get_blog() );
 }
 
-function stats_update_post( $post ) {
-	if ( !$stats_post = stats_get_post( $post ) )
-		return;
-
-	$jetpack = Jetpack::init();
-	$jetpack->sync->post( $stats_post->ID, array_keys( get_object_vars( $stats_post ) ) );
-}
-
 function stats_get_blog() {
 	$home = parse_url( trailingslashit( get_option( 'home' ) ) );
 	$blog = array(
@@ -634,36 +635,9 @@ function stats_get_blog() {
 	return array_map( 'esc_html', $blog );
 }
 
-function stats_get_posts( $args ) {
-	list( $post_ids ) = $args;
-	$post_ids = array_map( 'intval', (array) $post_ids );
-	$r = array(
-		'include' => $post_ids,
-		'post_type' => array_values( get_post_types( array( 'public' => true ) ) ),
-		'post_status' => array_values( get_post_stati( array( 'public' => true ) ) ),
-	);
-	$posts = get_posts( $r );
-	foreach ( $posts as $i => $post )
-		$posts[$i] = stats_get_post( $post );
-	return $posts;
-}
-
-function stats_get_post( $post ) {
-	if ( !$post = get_post( $post ) ) {
-		return null;
-	}
-
-	$stats_post = wp_clone( $post );
-	$stats_post->permalink = get_permalink( $post );
-	foreach ( array( 'post_content', 'post_excerpt', 'post_content_filtered', 'post_password' ) as $do_not_want )
-		unset( $stats_post->$do_not_want );
-	return $stats_post;
-}
-
 function stats_xmlrpc_methods( $methods ) {
 	$my_methods = array(
 		'jetpack.getBlog' => 'stats_get_blog',
-		'jetpack.getPosts' => 'stats_get_posts',
 	);
 
 	return array_merge( $methods, $my_methods );
@@ -894,7 +868,7 @@ function stats_dashboard_widget_content() {
 	$url = add_query_arg( $q, $url );
 	$method = 'GET';
 	$timeout = 90;
-	$user_id = 1; // means send the wp.com user_id, not 1
+	$user_id = JETPACK_MASTER_USER;
 
 	$get = Jetpack_Client::remote_request( compact( 'url', 'method', 'timeout', 'user_id' ) );
 	$get_code = wp_remote_retrieve_response_code( $get );
@@ -1036,7 +1010,7 @@ function stats_get_csv( $table, $args = null ) {
 function stats_get_remote_csv( $url ) {
 	$method = 'GET';
 	$timeout = 90;
-	$user_id = 1; // means send the wp.com user_id, not 1
+	$user_id = JETPACK_MASTER_USER;
 
 	$get = Jetpack_Client::remote_request( compact( 'url', 'method', 'timeout', 'user_id' ) );
 	$get_code = wp_remote_retrieve_response_code( $get );

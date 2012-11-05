@@ -2,6 +2,7 @@
 
 		<section id="page" class="span8">
 
+
 <?php
 	if ( have_posts() )
 		the_post();

@@ -7,7 +7,7 @@
 			
 					<?php query_posts('showposts=3'); ?>
 					<?php get_template_part( 'loop', 'home' ); ?>
-		
+
 				</section><!-- #page -->
 
 <?php get_sidebar(); ?>

@@ -114,6 +114,11 @@ class acf_Field
 		// strip slashes
 		$value = stripslashes_deep($value);
 		
+		// apply filters
+		$value = apply_filters('acf_update_value', $value, $field, $post_id );
+		$value = apply_filters('acf_update_value-' . $field['name'], $value, $field, $post_id);
+		$value = apply_filters('acf_update_value-' . $field['key'], $value, $field, $post_id);
+				
 		
 		// if $post_id is a string, then it is used in the everything fields and can be found in the options table
 		if( is_numeric($post_id) )
@@ -175,7 +180,7 @@ class acf_Field
 			$value = get_post_meta( $post_id, $field['name'], false );
 			
 			// value is an array, check and assign the real value / default value
-			if( empty($value) )
+			if( !isset($value[0]) )
 			{
 				if( isset($field['default_value']) )
 				{
@@ -198,7 +203,7 @@ class acf_Field
 			$value = get_user_meta( $post_id, $field['name'], false );
 			
 			// value is an array, check and assign the real value / default value
-			if( empty($value) )
+			if( !isset($value[0]) )
 			{
 				if( isset($field['default_value']) )
 				{
