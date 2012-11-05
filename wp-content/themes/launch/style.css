@@ -1,0 +1,375 @@
+
+/********************************************************************************************
+
+Theme Name: Launch
+Theme URI: http://www.press75.com/
+Description: Create an amazingly simple "Coming Soon" page with the Launch theme... including MailChimp integration, endless customizations options and much more.
+Version: 2.0.1
+Author: Press75.com
+Author URI: http://www.press75.com/
+License: GNU General Public License
+
+*********************************************************************************************/
+
+/* Normalization
+*********************************************************************************************/
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}table{border-collapse:collapse;border-spacing:0;}fieldset,img{border:0;}address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:text-top;}sub{vertical-align:text-bottom;}input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;}input,textarea,select{*font-size:100%;}legend{color:#444;}
+
+/* Setup
+*********************************************************************************************/
+
+body {
+    font: 18px/30px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
+    background-color: #ffffff;
+    color: #444444;
+    text-align: center;
+    padding-top: 100px;
+}
+
+a {
+    color: #444444;
+    text-decoration: none;
+    -webkit-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+}
+
+::selection,
+::-moz-selection { 
+    background: #fff186; 
+}
+
+h1, h2, h3 {
+    font-family: 'Merriweather', serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 42px;
+    margin: 0 0 30px;
+}
+
+/* Palets
+*********************************************************************************************/
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.bg-red {
+    background-color: #c95a5d;
+}
+
+.bg-blue {
+    background-color: #51a6b4;
+}
+
+.bg-green {
+    background-color: #57b551;
+}
+
+.bg-black {
+    background-color: #404040;
+}
+
+.white,
+.white a {
+    color: #ffffff;
+}
+
+.white.shadow,
+.white.shadow a {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+}
+
+.white.translucent,
+.white.translucent a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.white strong {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.black,
+.black a {
+    color: #444444;
+}
+
+.black.shadow,
+.black.shadow a {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.black.translucent,
+.black.translucent a {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.black strong {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Containers
+*********************************************************************************************/
+
+header,
+section,
+nav {
+    width: 600px;
+    margin: 0px auto;
+    padding: 0 0 60px;
+    position: relative;
+}
+
+/* Header
+*********************************************************************************************/
+
+header img {
+    max-width: 250px;
+}
+
+/* Subscribe
+*********************************************************************************************/
+
+form {
+    width: 100%;
+    position: relative;
+}
+
+input[type="text"],
+input[type="email"] {
+    border: none;
+    outline: none;
+    background: #ffffff;
+    color: #888888;
+    font-size: 14px;
+    width: 400px;
+    padding: 12px 0 14px;
+    -webkit-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+    -webkit-appearance: none;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus {
+    color: #444444;
+    -moz-box-shadow: 0 0 10000px #ffffff;
+    -webkit-box-shadow: 0 0 10000px #ffffff;
+    box-shadow: 0 0 10000px #ffffff;
+}
+
+.success {
+    background: #fff186;
+    color: #ab9801;
+    font-size: 14px;
+    width: 200px;
+    padding: 7px 0;
+    margin-left: 200px;
+}
+
+input[type="text"],
+input[type="email"],
+.success {
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    border-radius: 100px;
+    text-align: center;
+    
+}
+
+/* Twitter
+*********************************************************************************************/
+
+a.twitter {
+    border-radius: 4px;
+    background: url(images/twitter.png) no-repeat center center rgba(0, 0, 0, 0.5);
+    background-size: 50px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    z-index: 300;
+    left: 50%;
+    margin-left: -50px;
+}
+
+a.twitter:hover {
+    background-color: #00aced;
+}
+
+/* Nav
+*********************************************************************************************/
+
+nav {
+    font-size: 16px;
+    margin-top: 100px;
+    padding-bottom: 40px;
+}
+
+nav ul {
+    width: 100%;
+    text-align: center;
+}
+
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li:after {
+    content: "/";
+    padding: 0 10px 0 15px;
+}
+
+nav ul li:last-child:after {
+    content: "";
+    padding: 0;
+}
+
+nav a:hover {
+    opacity: 0.8;
+}
+
+/* Panels
+*********************************************************************************************/
+
+.panel {
+    background: #ffffff;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    width: 60%;
+    padding: 20%; 
+    top: 0;
+    left: 0;
+    z-index: 200;
+    overflow: hidden;
+}
+
+/* Profiles
+*********************************************************************************************/
+
+.profile {
+    width: 25%;
+    float: left;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.profile img {
+    border-radius: 200px;
+    width: 80%;
+    margin: 0 10% 10px;
+    -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    -webkit-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+}
+
+.profile a:hover img {
+    opacity: 0.9;
+}
+
+/* Responsive Helpers 0px - 479px
+*********************************************************************************************/
+
+@media screen and (min-width: 0px) and (max-width: 479px) {
+    
+    /* Containers
+    ****************************************/
+
+    header,
+    section,
+    nav {
+        width: 320px;
+    }
+    
+    /* Subscribe
+    ****************************************/
+    
+    input[type="text"],
+    input[type="email"] {
+        width: 300px;
+        font-size: 14px;
+    }
+    
+    .success {
+        margin-left: 60px;
+        font-size: 14px;
+    }
+    
+    /* Profiles
+    ****************************************/
+    
+    .profile {
+        width: 50%;
+    }
+    
+}
+
+/* Responsive Helpers 480px - 767px
+*********************************************************************************************/
+
+@media screen and (min-width: 480px) and (max-width: 767px) {
+
+    /* Containers
+    ****************************************/
+
+    header,
+    section,
+    nav {
+        width: 380px;
+    }
+    
+    /* Subscribe
+    ****************************************/
+    
+    input[type="text"],
+    input[type="email"] {
+        width: 300px;
+    }
+    
+    .success {
+        margin-left: 90px;
+    }
+    
+    /* Profiles
+    ****************************************/
+    
+    .profile {
+        width: 50%;
+    }
+    
+}
+
+/* Responsive Helpers 768px - 1023px
+*********************************************************************************************/
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+    /* Profiles
+    ****************************************/
+    
+    .profile {
+        width: 50%;
+    }
+    
+}
+
+/* Responsive Helpers 950px High & Above
+*********************************************************************************************/
+
+@media screen and (min-height: 950px) and (min-width: 768px) {
+
+    /* Nav
+    ****************************************/
+    
+    nav {
+        position: absolute;
+        bottom: 40px;
+        padding-bottom: 0;
+        left: 50%;
+        margin-left: -300px;
+    }
+    
+    
+}

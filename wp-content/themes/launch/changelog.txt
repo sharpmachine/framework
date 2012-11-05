@@ -1,0 +1,8 @@
+# Version 2.0.1
+- FIXED: Heading Font Weight Bug in Firefox (style.css)
+
+# Version 2.0.0
+- NEW: Initial Release
+
+# Version 1.0.0 
+- NEW: Initial Release
